@@ -1,0 +1,44 @@
+@media  (max-width : $medium){
+	.hide-on-small{
+		display: none;
+	}
+	
+	h2{
+    	font-size: 2.5rem;
+	}
+	p{
+    	font-size: 1.6rem;
+    	line-height: 3rem;
+	}
+	
+	#presentation{
+    	#presentationContent{
+        	.text{
+            	padding: 15px 25px;
+        	}
+    	}
+	}
+	
+	#gallery{
+    	.text{
+        	padding: 15px 25px;
+    	}
+	}
+}
+
+@media  (max-width : $small){
+	.hide-on-tiny{
+		display: none;
+	}
+    .display-on-tiny{
+        display: block;
+    }
+	
+}
+
+
+@media  (min-width : $medium){
+	.hide-on-large{
+		display: none;
+	}
+}

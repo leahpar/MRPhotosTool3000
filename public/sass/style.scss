@@ -1,0 +1,390 @@
+// main.scss
+@import 'main';
+// knacss.scss
+@import 'knacss';
+// icons.scss
+@import 'icons';
+
+
+// functions.scss;
+@import 'functions';
+
+
+
+// VARIABLES ------------------------------------------------------------------------------
+// ex : $pink: #BB3286;
+$red: #D30F4B;
+
+.opensans{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+}
+.montserrat{
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+}
+.abril{
+	font-family: 'Abril Fatface', cursive;
+	font-weight: 400;
+}
+
+
+// GENERAL STYLES ------------------------------------------------------------------------------
+.hide{
+    display: none;
+}
+body{
+	@extend .opensans;
+	
+	background: #000;
+	
+	-webkit-font-smoothing: antialiased;
+}
+
+// BOUTONS
+.button{
+	box-sizing: border-box;
+
+	display: inline-block;
+
+	padding: 20px 20px;
+
+	background: #000;
+	border: 0px solid #000;
+	outline: 0px;
+
+    @extend .montserrat;
+	text-align: center;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #fff;
+	font-size: 14px;
+	a{
+		color: #fff;
+	}
+	
+	.icon{
+		margin-right: 10px;
+		font-size: 13px;
+	}
+}
+.whiteButton{
+	background: #fff;
+	color: $red;
+	
+	&.borderedButton{
+		color: #fff;
+		border-color: #fff;
+		background: none;
+		
+		&:hover{
+			background: darken($red,10%);
+			color: #fff;
+		}
+	}
+	
+	&:hover, &:active{
+		color: darken($red,20%);
+	}
+}
+.redButton{
+	background: $red;
+	color: #fff;
+	
+	&.borderedButton{
+		color: $red;
+		border-color: $red;
+		background: none;
+		
+		&:hover{
+			background: darken($red,10%);
+			color: #fff;
+		}
+	}
+	
+	&:hover, &:active{
+		background: darken($red,5%);
+	}
+}
+.roundedButton{
+	border-radius: 10px;
+}
+.borderedButton{
+	background: none;
+	border-width: 1px;
+}
+.smallButton{
+	font-size: 13px;
+	padding: 5px;
+	//min-width: 100px;
+	
+	.icon{
+		font-size: 10px;
+	}
+}
+
+
+strong{
+	font-weight: normal;
+}
+h1, h2, h3, h4, h5, h6{
+	font-weight: normal;
+}
+h2{
+    margin-bottom: 10px;
+    
+    @extend .abril;
+    color: $red;
+    font-size: 3.1rem;
+}
+p{
+    font-size: 2rem;
+    color: #B5B5B5;
+    line-height: 3.7rem;
+}
+ul{
+	margin: 0px;
+	padding: 0px;
+	
+	li{
+		margin: 0px;
+		padding: 0px;
+		list-style: none;
+	}
+}
+a{
+	color: $red;
+	
+	&:hover{
+    	color: $red;
+    	text-decoration: none;
+	}
+}
+
+
+
+// SPECIFIC STYLES ------------------------------------------------------------------------------
+
+#mainHeader{
+	position: relative;
+	height: 100vh;
+	
+	background-size: cover;
+	background-position: center center;
+	
+	#contactLink{
+		color: #fff;
+		text-decoration: none;
+		@extend .montserrat;
+		font-size: 1.4rem;
+		text-transform: uppercase;
+		
+		.icon{
+			display: inline-block;
+			padding-top: 8px;
+			
+			margin-left: 15px;
+			
+			width: 28px;
+			height: 28px;
+			
+			background: $red;
+			border-radius: 100px;
+			
+			text-align: center;
+			font-size: 1.2rem;
+		}
+		
+		&:hover{
+			text-decoration: underline;
+			
+			.icon{
+				background: #fff;
+				color: $red;
+			}
+		}
+	}
+	
+	#headerText{
+		position: absolute;
+		width: 100%;
+		left: 0px;
+		bottom: 20vh;
+		
+		.headerMainText{
+			@extend .abril;
+			color: #fff;
+			font-size: 5rem;
+			line-height: 5rem;
+		}
+		.headerSignature{
+			@extend .montserrat;
+			color: $red;
+			font-size: 2rem;
+			text-transform: uppercase;
+		}
+	}
+}
+
+#presentation{
+	background: $red;
+	
+	#presentationContent{
+		background: #000;
+		color: #fff;
+		
+		align-items: center;
+		
+		figure{
+    		align-self: flex-end;
+    		justify-content: center;
+    		
+    		img{
+        		align-self: flex-end;
+    		}
+		}
+		
+		
+	}
+}
+
+#gallery{
+    position: relative;
+    
+    height: 2500px;
+    overflow: hidden;
+    
+    .shadow{
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        z-index: 1000;
+        
+        width: 100%;
+        height: 500px;
+        
+        background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.15) 25%, rgba(0,0,0,1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.15) 25%,rgba(0,0,0,1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.15) 25%,rgba(0,0,0,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+    }
+    
+    .picture{
+        position: relative;
+        
+        overflow: hidden;
+        
+        &:hover{
+            .infos{
+                bottom: 0px;
+            }
+        }
+        
+        img{
+            width: 100%;
+        }
+        .infos{
+            position: absolute;
+            left: 0px;
+            bottom: -80px;
+            
+            width: 100%;
+            
+            padding: 5px 15px;
+            
+            background: #151515;
+            
+            @include transition(0.2s);
+            
+            span{
+                position: relative;
+                top: 9px;
+                
+                color: #B5B5B5;
+                font-size: 1.4rem;
+            }
+            
+            p{
+                margin: 0px;
+                
+                @extend .montserrat;
+                color: $red;
+                font-size: 1.6rem;
+                
+                strong{
+                    margin-right: 15px;
+                    
+                    @extend .abril;
+                    color: #fff;
+                    font-size: 2.3rem;
+                }
+            }
+        }
+    }
+    
+    .text{
+        background: #151515;
+    }
+}
+
+
+
+#contact{
+    p{
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    #contactForm{
+        width: 95%;
+        max-width: 300px;
+        margin-right: auto;
+        margin-left: auto;
+        
+        p{
+            margin-bottom: 10px;
+        }
+        input:not([type=submit]), textarea{
+            margin: 0px;
+            padding: 15px;
+            
+            width: 100%;
+            
+            background: none;
+            border: 1px solid #5D5D5D;
+            
+            text-align: center;
+            font-size: 1.6rem;
+            color: #fff;
+        }
+        textarea{
+            height: 200px;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// responsive.scss;
+@import 'responsive';

@@ -1,0 +1,96 @@
+<?php
+
+
+namespace App\EventSubscriber;
+
+
+use App\Entity\Modele;
+use App\Entity\Publication;
+use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+class EasyAdminSubscriber implements EventSubscriberInterface
+{
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private UserPasswordEncoderInterface $passwordEncoder;
+    /**
+     * @var EntityManagerInterface
+     */
+    private EntityManagerInterface $em;
+
+
+    /**
+     * EasyAdminSubscriber constructor.
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+        $this->em = $em;
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            BeforeEntityPersistedEvent::class => [
+                ['encodePassword', 0],
+            ],
+            BeforeEntityUpdatedEvent::class => [
+                ['setPhotosPublicationDetails', 0],
+                ['encodePassword', 0],
+            ]
+        ];
+    }
+
+    public function setPhotosPublicationDetails(BeforeEntityUpdatedEvent $event)
+    {
+        $entity = $event->getEntityInstance();
+
+        if (!($entity instanceof Publication)) {
+            return;
+        }
+
+        // MAJ des données photos
+        $photos = $entity->getPhotos();
+        foreach ($photos as $photo) {
+            $photo->setDescription($entity->getDescription());
+            $photo->setMoreTags($entity->getMoreTags());
+            $photo->setTags($entity->getTags());
+        }
+
+        // Décallage des dates des publications suivantes
+        $publications = $this->em->getRepository(Publication::class)->findPublicationsToUpdate($entity);
+        dump($publications);
+        $date = clone $entity->getDate();
+        /** @var Publication $publication */
+        foreach ($publications as $publication) {
+            $date->modify("monday next week");
+            $publication->setDate(clone $date);
+        }
+    }
+
+    public function encodePassword($event)
+    {
+        $entity = $event->getEntityInstance();
+
+        if (!($entity instanceof Modele)) {
+            return;
+        }
+
+        if (empty($entity->getPlainPassword())) {
+            return;
+        }
+
+        $password = $this->passwordEncoder->encodePassword($entity, $entity->getPlainPassword());
+        $entity->setPassword($password);
+
+    }
+
+
+}

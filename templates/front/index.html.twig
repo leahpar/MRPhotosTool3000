@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% macro picture(photo) %}
+    <div class="picture mam">
+        <img src="{{ photo.thumbnail('front') }}">
+        <!--
+        <div class="infos">
+            <span class="fr">#42</span>
+            <p><strong>Manon</strong>2018</p>
+        </div>
+        -->
+    </div>
+    <div class="clearfix"></div>
+{% endmacro %}
+
+{% block body %}
+
+    <header id="mainHeader" style="background-image: url('{{ cover.thumbnail('full') }}') ;" class="pal">
+
+        <img src="{{ asset('img/mr-photographes-logoV.svg') }}" id="mainLogo" width="85" height="58">
+
+        <ul class="links fr">
+            <!--
+            <li><a href="#contact">Contactez-nous<span class="icon icon-envelop3"></span></a></li>
+            -->
+            <li><a href="https://www.instagram.com/mrphotographes/" target="_blank" title="MR-Photographes sur Instagram"><span class="icon icon-instagram"></span></a></li>
+            <li><a href="https://www.facebook.com/MRphotographes/" target="_blank" title="MR-Photographes sur Facebook"><span class="icon icon-facebook"></span></a></li>
+            <li><a href="https://twitter.com/MrPhotographes" target="_blank" title="MR-Photographes sur Twitter"><span class="icon icon-twitter"></span></a></li>
+            <li><a href="{{ path("front_shootings") }}" title="Accès modèles"><span class="icon icon-camera"></span></a></li>
+        </ul>
+
+        <div id="headerText" class="txtcenter">
+            <p class="headerMainText">&laquo; Une image vaut mieux que mille mots. &raquo;</p>
+            <p class="headerSignature">Confucius</p>
+        </div>
+
+    </header>
+
+    <div id="presentation" class="pal">
+        <div id="presentationContent" class="grid-2-small-1">
+            <figure class="flex-container">
+                <img src="{{ asset('img/photo-mathieu-raphael.jpg') }}">
+            </figure>
+            <div class="text pal flex-container">
+                <h2>Duo photographique</h2>
+                <p>Amis depuis toujours, photographes depuis des années, passionnés par le portrait,
+                    nous réalisons des shootings au gré des saisons et de nos inspirations.</p>
+                <p><strong>Mathieu & Raphaël</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="gallery" style="height: 3000px">
+
+        <div class="shadow">
+            <div class="pal txtcenter" style="position: absolute; bottom: 0px; width: 100%;">
+                <a href="{# TODO #}" class="button redButton roundedButton borderedButton">Voir d'autres photos</a>
+            </div>
+        </div>
+
+        <div class="grid-3-small-2 pam">
+
+            <div class="col1 hide-on-tiny">
+
+                {% for photo in photos1 %}
+                    {{ _self.picture(photo) }}
+                {% endfor %}
+
+            </div>
+
+            <div class="col2">
+
+                <div class="text pal mam">
+                    <h2>Le portrait sous toutes ses formes</h2>
+                    <p>En studio, en sous-bois, dans les champs, en paysage urbain ou industriel
+                        selon ce qui plait et correspond au sujet.</p>
+                    <!--<p><a href="#contact">Contactez-nous</a></p>-->
+                </div>
+                <div class="clearfix"></div>
+
+                {% for photo in photos2 %}
+                    {{ _self.picture(photo) }}
+                {% endfor %}
+
+            </div>
+
+            <div class="col3 hide-on-small display-on-tiny">
+
+                {% for photo in photos3 %}
+                    {{ _self.picture(photo) }}
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

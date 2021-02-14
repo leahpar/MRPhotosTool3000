@@ -1,0 +1,226 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+    <style type="text/css">
+        body {
+            background-color: #101010;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #D30F4B;
+        }
+        header a {
+            color: rgba(100, 100, 100, 0.3);
+        }
+
+        #galerie {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        #galerie img {
+            object-fit: contain;
+            height: 300px;
+            width: 300px;
+            cursor: pointer;
+        }
+
+        #galerie figure {
+            position: relative;
+            margin: 20px;
+            padding: 0;
+        }
+
+        #galerie figcaption {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            color: rgba(100, 100, 100, 0.3);
+
+            font-size: 4em;
+            font-family: sans-serif;
+        }
+    </style>
+
+    <!-- Core CSS file -->
+    <link rel="stylesheet" href="{{ asset('photoswipe/dist/photoswipe.css') }}">
+
+    <!-- Skin CSS file (styling of UI - buttons, caption, etc.)
+         In the folder of skin CSS file there are also:
+         - .png and .svg icons sprite,
+         - preloader.gif (for browsers that do not support CSS animations) -->
+    <link rel="stylesheet" href="{{ asset('photoswipe/dist/default-skin/default-skin.css') }}">
+
+{% endblock css %}
+
+{% block javascripts %}
+    <!-- Core JS file -->
+    <script src="{{ asset('photoswipe/dist/photoswipe.min.js') }}"></script>
+
+    <!-- UI JS file -->
+    <script src="{{ asset('photoswipe/dist/photoswipe-ui-default.min.js') }}"></script>
+
+    <script>
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+
+        // build items array
+        let items = [
+            {% for photo in shooting.photos %}
+                {
+                    src: '{{ photo.thumbnail('full') }}',
+                    w: 3000,
+                    h: {{ 3000*photo.ratio }},
+                },
+            {% endfor %}
+        ];
+
+        // define options (if needed)
+        // https://photoswipe.com/documentation/options.html
+        let options = {
+            // optionName: 'option value'
+            // for example:
+            index: 0,
+
+                preload: [1,2],
+
+                //history:true,
+                //galleryPIDs:true,
+
+                loop: false,
+                escKey: true,
+                arrowKeys: true,
+
+                addCaptionHTMLFn: function(item, captionEl, isFake) {
+                if(!item.title) {
+                    captionEl.children[0].innerText = '';
+                    return false;
+                }
+                captionEl.children[0].innerHTML = item.title;
+                return true;
+            },
+
+            shareButtons: [
+                {% verbatim %}
+                /*
+                {id:'facebook', label:'Share on Facebook', url:'https://www.facebook.com/sharer/sharer.php?u={{url}}'},
+                {id:'twitter', label:'Tweet', url:'https://twitter.com/intent/tweet?text={{text}}&url={{url}}'},
+                {id:'pinterest', label:'Pin it', url:'http://www.pinterest.com/pin/create/button/'+
+                    '?url={{url}}&media={{image_url}}&description={{text}}'},
+                */
+                {id:'download', label:'Download image', url:'{{raw_image_url}}', download:true}
+                {% endverbatim %}
+            ],
+
+        };
+
+        function start(index) {
+        // Initializes and opens PhotoSwipe
+        options.index = index;
+        let gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+        gallery.init();
+        }
+
+    </script>
+{% endblock javascripts %}
+
+
+{% block body %}
+
+    <header>
+        <a href="/">
+            <img src="{{ asset('img/mr-photographes-logoV.svg') }}" id="mainLogo" width="85" height="58">
+        </a>
+        <h1>{{ shooting.nom }}</h1>
+        <p><a href="#{# TODO #}">Télécharger le zip</a></p>
+    </header>
+
+
+    <div id="galerie">
+        {% for photo in shooting.photos %}
+            <figure>
+                <img src="{{ photo.thumbnail('front') }}"
+                     height="300px" width="300px"
+                     onclick="start({{ loop.index0 }});">
+                <figcaption>{{ "%03d"|format(loop.index) }}</figcaption>
+            </figure>
+        {% endfor %}
+    </div>
+
+
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+
+        <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+
+            <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+
+                <div class="pswp__top-bar">
+
+                    <!--  Controls are self-explanatory. Order can be changed. -->
+
+                    <div class="pswp__counter"></div>
+
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                    <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% endblock %}

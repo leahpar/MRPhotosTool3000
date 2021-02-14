@@ -1,0 +1,55 @@
+# See dos how to configure the bundle: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+liip_imagine:
+    # valid drivers options include "gd" or "gmagick" or "imagick"
+    driver: "gd"
+
+    loaders:
+        default:
+            filesystem:
+                data_root: '%shootings_directory%'
+
+    # configure resolvers
+    resolvers :
+        # setup the default resolver
+        default :
+            # use the default web path
+            web_path : ~
+
+    # your filter sets are defined here
+    filter_sets :
+
+        # use the default cache configuration
+        cache : ~
+
+        full: ~
+
+        thumbnail:
+            quality: 60
+            filters:
+                thumbnail: { size : [120, 120], mode : inset }
+
+        cover:
+            quality: 80
+            filters:
+                thumbnail: { size : [2000, 1500], mode : inset }
+        front:
+            quality: 70
+            filters:
+                thumbnail: { size : [500, 700], mode : inset }
+
+        instagram:
+            quality: 90
+            filters:
+                thumbnail:
+                    size: [1080, 1350]
+                    mode: inset
+                background:
+                    #Redéfini au runtime pour une taille dynamique sur le ratio instagram (4:5)
+                    #size: [1080, 1350]
+                    position: center
+                    color: '#FFFFFF'
+                censure_filter:
+                    # Redéfini au runtime, position dans la Photo
+                    #positions: ['500,500', '200,100']
+                    size: 20
+                    enabled: false

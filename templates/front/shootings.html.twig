@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+
+{% block css %}
+    <style type="text/css">
+        body {
+            background-color: #101010;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #D30F4B;
+        }
+        header a {
+            color: rgba(100, 100, 100, 0.3);
+        }
+
+        #galerie {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        #galerie img {
+            object-fit: contain;
+            height: 300px;
+            width: 300px;
+            cursor: pointer;
+        }
+
+        #galerie figure {
+            position: relative;
+            margin: 20px;
+            padding: 0;
+        }
+
+        #galerie figcaption {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            color: rgba(100, 100, 100, 0.3);
+
+            font-size: 4em;
+            font-family: sans-serif;
+        }
+    </style>
+
+{% endblock css %}
+
+
+{% block body %}
+
+    <header>
+        <a href="/">
+            <img src="{{ asset('img/mr-photographes-logoV.svg') }}" id="mainLogo" width="85" height="58">
+        </a>
+    </header>
+
+    <div id="galerie">
+        {% for shooting in shootings %}
+            <figure>
+                {% set couv = shooting.couv ? shooting.couv.thumbnail('front') : '' %}
+                <a href="{{ path("front_shooting", {slug: shooting.slug}) }}">
+                    <img src="{{ couv }}" height="300px" width="300px">
+                <figcaption>
+                    {{ shooting.nom }}
+                    {{ shooting.date|date("Y-m-d") }}
+                    {{ shooting.bookshoot }}
+                    {% for modele in shooting.modeles %}
+                        {{ modele.nom }}
+                    {% endfor %}
+                </figcaption>
+                </a>
+            </figure>
+        {% endfor %}
+    </div>
+
+{% endblock %}

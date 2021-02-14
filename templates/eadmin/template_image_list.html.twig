@@ -1,0 +1,49 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var field \EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+
+{% set photo = entity.instance %}
+{% set html_id = 'ea-lightbox-' ~ photo.id %}
+
+{% set classes = [] %}
+
+{# Galeries #}
+{% for galerie in photo.galeries %}
+    {% set classes = classes | merge(["galerie-" ~ galerie.slug]) %}
+{% endfor %}
+
+{# Photo planifiée #}
+{% if photo.datePlanifiee %}
+    {% set classes = classes | merge(["planifiee"]) %}
+{% endif %}
+
+{# Photo publiée #}
+{% if photo.datePublication %}
+    {% set classes = classes | merge(["publiee"]) %}
+{% endif %}
+
+{# Photo censurée #}
+{% if photo.censure|length > 0 %}
+    {% set classes = classes | merge(["censuree"]) %}
+{% endif %}
+
+<div class="{{ classes|join(" ") }}">
+    <img src="{{ asset(photo.thumbnail) }}" style="width: 120px; height: 120px; object-fit: contain">
+
+    <a href="#" data-featherlight="#{{ html_id }}" data-featherlight-close-on-click="anywhere">
+        <i class="fa fa-expand"></i>
+    </a>
+
+    {#
+    {% if photo.datePlanifiee %}
+        {{ photo.datePlanifiee | date("Y-m-d")}}
+    {% endif %}
+    #}
+
+    {# ... #}
+</div>
+
+{#  Lightbox #}
+<div id="{{ html_id }}" class="ea-lightbox">
+    <img src="{{ asset(photo.thumbnail("cover")) }}">
+</div>

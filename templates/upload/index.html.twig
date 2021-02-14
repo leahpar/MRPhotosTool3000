@@ -1,0 +1,36 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title %}
+    BS{{ shooting.bookshoot }}
+    -
+    {{ shooting.nom }}
+{% endblock %}
+
+{% block page_content %}
+
+
+    <form action="{{ path('admin_upload_img', {id: shooting.id}) }}" class="dropzone" id="my-dropzone">
+    </form>
+
+    <link rel="stylesheet" href="{{ asset("vendor/dropzone/dropzone.css") }}" />
+    <script src="{{ asset('vendor/dropzone/dropzone.js') }}"></script>
+    <script>
+        Dropzone.options.myDropzone = {
+            paramName: "file",
+            parallelUploads: 8,
+            acceptedFiles: "image/*",
+
+            //params: {
+            //    param1: "value2",
+            //    param2: "value2",
+            //}
+
+            //createImageThumbnails: true,
+            //thumbnailWidth: 120,
+            //thumbnailHeight: 120,
+            //thumbnailMethod: 'crop',
+
+        };
+    </script>
+{% endblock %}
+

@@ -1,0 +1,15 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var field \EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+
+<div>
+{% for id, image in field.value %}
+    {% set url = ea_url()
+        .setController('App\\Controller\\PhotoCrudController')
+        .setAction('edit')
+        .setEntityId(id) %}
+    <a href="{{ url }}">
+    <img src="{{ asset(image) }}" style="width: 120px; height: 120px; object-fit: contain">
+    </a>
+{% endfor %}
+</div>
