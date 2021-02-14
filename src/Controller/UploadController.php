@@ -52,7 +52,7 @@ class UploadController extends AbstractController
                 $iptc = iptcparse($infos['APP13']??null);
                 $motsCles = [];
                 if ($iptc) {
-                    $motsCles = $iptc["2#025"];
+                    $motsCles = $iptc["2#025"] ?? [];
                 }
                 //dump($infos, $iptc, $iptc["2#025"]);
                 $ratio = round($height/$width,3);
