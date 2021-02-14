@@ -66,6 +66,11 @@ class PublishService
         $date = $date ? clone $date : (new \DateTime());
 
         $publication = $this->getPublicationSemaine($date);
+
+        if (!$publication) {
+            throw new \Exception("Aucune publication planifiée à cette date");
+        }
+
         $photos = $publication->getPhotos();
 
         $cpt = count($photos);
