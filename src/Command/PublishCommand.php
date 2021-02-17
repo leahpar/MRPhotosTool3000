@@ -63,7 +63,12 @@ class PublishCommand extends Command
                     $io->success($photo->getShooting()->getNom()." (".$photo->getFile().") publiée");
                 }
                 else {
-                    $io->success($photo->getShooting()->getNom() . " (" . $photo->getFile() . ") à publier");
+                    if ($photo->isPublished()) {
+                        $io->warning($photo->getShooting()->getNom() . " (" . $photo->getFile() . ") déjà publiée");
+                    }
+                    else {
+                        $io->success($photo->getShooting()->getNom() . " (" . $photo->getFile() . ") à publier");
+                    }
                 }
             }
             else {
