@@ -28,19 +28,33 @@
 {% endif %}
 
 <div class="{{ classes|join(" ") }}">
-    <img src="{{ asset(photo.thumbnail) }}" style="width: 120px; height: 120px; object-fit: contain">
+    <img src="{{ asset(photo.thumbnail("mini")) }}" style="width: 280px; height: 280px; object-fit: contain">
 
+    <!-- Lien lightbox -->
     <a href="#" data-featherlight="#{{ html_id }}" data-featherlight-close-on-click="anywhere">
         <i class="fa fa-expand"></i>
     </a>
 
-    {#
     {% if photo.datePlanifiee %}
-        {{ photo.datePlanifiee | date("Y-m-d")}}
+        <!-- photo planifiée -->
+        <div class="isUsed">
+            <span class="badge bg-primary">
+                <i class="fa-fw fas fa-calendar"></i>
+                {{ photo.datePlanifiee | date("d/m/Y")}}
+            </span>
+        </div>
     {% endif %}
-    #}
 
-    {# ... #}
+    {% if photo.datePublication %}
+        <!-- photo planifiée -->
+        <div class="isUsed">
+            <span class="badge bg-primary">
+                <i class="fa-fw fas fa-calendar"></i>
+                {{ photo.datePublication | date("d/m/Y")}}
+            </span>
+        </div>
+    {% endif %}
+
 </div>
 
 {#  Lightbox #}

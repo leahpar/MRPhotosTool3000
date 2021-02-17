@@ -82,3 +82,115 @@
     object-fit: contain;
 }
 
+.index-Photo .content-panel, .index-Photo .content-panel .content-panel-body, .index-Photo .content-panel .table.datagrid{
+    background: none;
+    box-shadow: none;
+}
+.index-Photo .content-panel .table.datagrid thead{
+    display: none;
+}
+.index-Photo .content-panel .table.datagrid tbody{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.index-Photo .content-panel .table.datagrid tbody tr{
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+
+    width: 280px;
+
+    margin: 10px;
+}
+.index-Photo .content-panel .table.datagrid tbody tr td{
+    border: 0px;
+}
+.index-Photo .content-panel .table.datagrid tbody tr.selected-row td{
+    background: none;
+}
+.index-Photo .content-panel .table.datagrid tbody tr td:not(.field-image, :first-child, .actions){
+    display: none;
+}
+.index-Photo .content-panel .table.datagrid tbody tr td.field-image{
+    height: 280px;
+    padding: 0px;
+    margin: 0px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 5px 5px rgba(0,0,0,.1);
+    overflow: hidden;
+}
+.index-Photo .content-panel .table.datagrid tbody tr td.field-image .photoThumb{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: inherit;
+}
+.index-Photo .content-panel .table.datagrid tbody tr td.field-image .photoThumb img{
+    width: 280px !important;
+    height: 280px !important;
+    object-fit: contain !important;
+    overflow: hidden;
+}
+.index-Photo .content-panel .table.datagrid tbody tr td:first-child{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+
+    width: 280px;
+    height: 280px;
+
+    margin: 0px;
+    padding: 0px;
+
+    display: flex;
+
+    border-radius: 5px;
+}
+.index-Photo .content-panel .table.datagrid tbody tr td:first-child:hover{
+    background: none;
+}
+.index-Photo .content-panel .table.datagrid tbody tr td:first-child input{
+    -webkit-appearance: none;
+    width: 280px;
+    height: 280px;
+    background: none;
+    border-radius: 10px;
+}
+.index-Photo .content-panel .table.datagrid tbody tr td:first-child input:checked{
+    border: 3px solid var(--color-primary);
+    box-shadow: 0px 0px 15px rgba(255,255,255,1);
+}
+.index-Photo .content-panel .table.datagrid tbody tr td:first-child input:focus{
+    outline: none;
+}
+
+.index-Photo .content-panel .table.datagrid tbody tr:hover td:not(.field-image){
+    background: none;
+}
+.index-Photo .content-panel .table.datagrid tbody tr:hover td:first-child{
+    display: flex;
+}
+
+.photoThumb{
+    position: relative;
+}
+.photoThumb .isUsed{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.photoThumb .isUsed span{
+    color: #fff;
+    font-size: 11px;
+}
+.photoThumb .infosSite{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+

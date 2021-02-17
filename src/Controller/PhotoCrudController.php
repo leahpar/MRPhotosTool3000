@@ -106,7 +106,7 @@ class PhotoCrudController extends AbstractCrudController
         return [
 
             Field\ImageField::new('photo')
-                ->setTemplatePath('eadmin/template_image_list.html.twig')
+                ->setTemplatePath('eadmin/_photocrud_index_field_photo.html.twig')
                 ->onlyOnIndex(),
 
             Field\AssociationField::new('shooting')
@@ -128,16 +128,17 @@ class PhotoCrudController extends AbstractCrudController
                 ->setFormTypeOption('by_reference', false)
                 ->setTextAlign('left')
                 //->addCssClass(fn(Photo $p) => $p->isCouv() ? "couv" : "" )
+                ->onlyOnForms()
             ,
 
             Field\TextField::new('motsCles'),
 
-            Field\DateField::new('datePlanifiee')
-                //->setFormat()
-                ->onlyOnIndex(),
+            //Field\DateField::new('datePlanifiee')
+            //    //->setFormat()
+            //    ->onlyOnIndex(),
 
-            Field\DateField::new('datePublication')
-                ->onlyOnIndex(),
+            //Field\DateField::new('datePublication')
+            //    ->onlyOnIndex(),
 
             Field\TextareaField::new('description')
                 ->onlyOnForms(),
@@ -154,8 +155,8 @@ class PhotoCrudController extends AbstractCrudController
                 ->setLabel("Tags additionnels")
                 ->onlyOnForms(),
 
-            Field\ArrayField::new('censure')
-                ->onlyOnIndex(),
+            //Field\ArrayField::new('censure')
+            //    ->onlyOnIndex(),
 
         ];
     }

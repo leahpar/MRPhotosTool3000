@@ -28,6 +28,11 @@ liip_imagine:
             filters:
                 thumbnail: { size : [120, 120], mode : inset }
 
+        mini:
+            quality: 60
+            filters:
+                thumbnail: { size : [280, 280], mode : inset }
+
         cover:
             quality: 80
             filters:

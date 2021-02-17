@@ -28,7 +28,7 @@ class AdminDashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             // the name visible to end users
-            ->setTitle('MRPhotosTool')
+            ->setTitle('MR Photo Tool 3000')
             // you can include HTML contents too (e.g. to link to an image)
             //->setTitle('<img src="..."> ACME <span class="text-small">Corp.</span>')
 
