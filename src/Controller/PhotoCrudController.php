@@ -234,8 +234,11 @@ class PhotoCrudController extends AbstractCrudController
         /** @var Publication $lastPub */
         if ($lastPub) {
             $date = (clone ($lastPub->getDate()))->modify("monday next week");
-            $publication->setDate($date);
         }
+        else {
+            $date = (new \DateTime())->modify("monday next week");
+        }
+        $publication->setDate($date);
 
         foreach ($ids as $id) {
             $photo = $em->getRepository(Photo::class)->find($id);

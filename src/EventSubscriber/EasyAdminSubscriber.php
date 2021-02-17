@@ -66,7 +66,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         // Décallage des dates des publications suivantes
         $publications = $this->em->getRepository(Publication::class)->findPublicationsToUpdate($entity);
-        dump($publications);
         $date = clone $entity->getDate();
         /** @var Publication $publication */
         foreach ($publications as $publication) {
