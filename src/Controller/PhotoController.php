@@ -54,7 +54,7 @@ class PhotoController extends AbstractController
             $profiler->disable();
         }
 
-        $filter = $request->query->get('filter', 'full');
+        $filter = $request->query->get('filter', 'thumbnail');
 
         if ($filter == "instagram") {
             list($width, $height, $type, $attr) = getimagesize($this->getParameter('shootings_directory') . '/' . $path);
