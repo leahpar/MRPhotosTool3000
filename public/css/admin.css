@@ -154,12 +154,13 @@
 .index-Photo .content-panel .table.datagrid tbody tr td:first-child:hover{
     background: none;
 }
-.index-Photo .content-panel .table.datagrid tbody tr td:first-child input{
+.index-Photo .content-panel .table.datagrid tbody tr td:first-child input[type=checkbox]{
     -webkit-appearance: none;
     width: 280px;
     height: 280px;
     background: none;
     border-radius: 10px;
+    cursor: pointer;
 }
 .index-Photo .content-panel .table.datagrid tbody tr td:first-child input:checked{
     border: 3px solid var(--color-primary);
