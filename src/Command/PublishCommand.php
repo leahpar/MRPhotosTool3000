@@ -55,7 +55,7 @@ class PublishCommand extends Command
             $photo = $this->pubService->getPhotoToPublish($date);
             if ($photo) {
                 $this->pubService->publishPhoto($photo);
-                $photo->setDatePublication($date);
+                $this->em->persist($photo);
                 $this->em->flush();
                 $io->success($photo->getShooting()->getNom()." (".$photo->getFile().") publiée");
             }
