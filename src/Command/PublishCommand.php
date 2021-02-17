@@ -42,6 +42,7 @@ class PublishCommand extends Command
     {
         $this
             ->setDescription('Add a short description for your command')
+            ->addOption('test', 't', InputOption::VALUE_OPTIONAL, 'Test', false)
         ;
     }
 
@@ -49,15 +50,21 @@ class PublishCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        $testMode = ($input->getOption('test') !== false);
         try {
             //$date = new \DateTime("friday next week");
             $date = null;
             $photo = $this->pubService->getPhotoToPublish($date);
             if ($photo) {
-                $this->pubService->publishPhoto($photo);
-                $this->em->persist($photo);
-                $this->em->flush();
-                $io->success($photo->getShooting()->getNom()." (".$photo->getFile().") publiée");
+                if (!$testMode) {
+                    $this->pubService->publishPhoto($photo);
+                    $this->em->persist($photo);
+                    $this->em->flush();
+                    $io->success($photo->getShooting()->getNom()." (".$photo->getFile().") publiée");
+                }
+                else {
+                    $io->success($photo->getShooting()->getNom() . " (" . $photo->getFile() . ") à publier");
+                }
             }
             else {
                 $io->success("Aucune photo à publier aujourd'hui");
