@@ -32,16 +32,13 @@ class PhotoController extends AbstractController
      */
     public function photo(Request $request, Shooting $shooting, Photo $photo, FilterService $imagine, ?Profiler $profiler): Response
     {
-        $this->denyAccessUnlessGranted('view', $photo);
+        $filter = $request->query->get('filter', 'thumbnail');
 
-        /** @var Modele $user */
-        $user = $this->getUser();
-
-        if (!$this->isGranted("ROLE_ADMIN")
-            && !$shooting->hasModele($user)
-            && $shooting->getStatut() != "Public"
-        ) {
-            $this->createAccessDeniedException();
+        // Accès instagram autorisé sur les photos publiées
+        if ($filter != "instagram" || !$photo->isPublished()) {
+            // Sinon, contrôle d'accès classique
+            $this->denyAccessUnlessGranted('view', $photo);
+            // $this->createAccessDeniedException();
         }
 
         /** @var string */
@@ -53,8 +50,6 @@ class PhotoController extends AbstractController
             // (voir aussi config/services_dev.yaml)
             $profiler->disable();
         }
-
-        $filter = $request->query->get('filter', 'thumbnail');
 
         if ($filter == "instagram") {
             list($width, $height, $type, $attr) = getimagesize($this->getParameter('shootings_directory') . '/' . $path);
