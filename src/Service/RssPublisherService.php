@@ -60,9 +60,10 @@ class RssPublisherService implements PublisherInterface
             $tags[] = $tag->getTags();
         }
 
-        $str = implode(", ", $modeles);
-        $str .= "\n";
+        $str = "";
         $str .= $photo->getDescription();
+        $str .= "\n";
+        $str .= implode(", ", $modeles);
         $str .= "\n";
         $str .= "\n";
         $str .= implode(" ", $tags);
