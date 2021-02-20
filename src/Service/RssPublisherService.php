@@ -63,7 +63,7 @@ class RssPublisherService implements PublisherInterface
         $str = "";
         $str .= $photo->getDescription();
         $str .= "\n";
-        $str .= implode(", ", $modeles);
+        $str .= "⭐️ ".implode(", ", $modeles)." ⭐️";
         $str .= "\n";
         $str .= "\n";
         $str .= implode(" ", $tags);

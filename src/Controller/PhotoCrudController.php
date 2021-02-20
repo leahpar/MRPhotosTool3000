@@ -28,15 +28,12 @@ class PhotoCrudController extends AbstractCrudController
             // the names of the Doctrine entity properties where the search is made on
             // (by default it looks for in all properties)
             // use dots (e.g. 'seller.email') to search in Doctrine associations
-            ->setSearchFields(['file', 'motsCles', 'shooting.nom', 'galeries.nom'])
+            ->setSearchFields(['file', 'motsCles', 'shooting.nom', 'galeries.nom', 'shooting.modeles'])
 
             // the max number of entities to display per page
-            ->setPaginatorPageSize(30)
+            ->setPaginatorPageSize(48)
 
-            // these are advanced options related to Doctrine Pagination
-            // (see https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html)
-            //->setPaginatorUseOutputWalkers(true)
-            //->setPaginatorFetchJoinCollection(true)
+            ->setDefaultSort(['shooting.date' => 'DESC'])
         ;
     }
 
@@ -67,7 +64,7 @@ class PhotoCrudController extends AbstractCrudController
 
         $actions->add(
             Crud::PAGE_INDEX,
-            Action::new('Galerie Front')
+            Action::new('Site front')
             ->createAsBatchAction()
             ->linkToCrudAction('addToGalerieFront')
             ->addCssClass('btn btn-primary')
@@ -75,7 +72,7 @@ class PhotoCrudController extends AbstractCrudController
         );
         $actions->add(
             Crud::PAGE_INDEX,
-            Action::new('Galerie Covers')
+            Action::new('Site covers')
             ->createAsBatchAction()
             ->linkToCrudAction('addToGalerieCovers')
             ->addCssClass('btn btn-primary')
@@ -83,7 +80,7 @@ class PhotoCrudController extends AbstractCrudController
         );
         $actions->add(
             Crud::PAGE_INDEX,
-            Action::new('Galerie Couvs')
+            Action::new('Couvs')
             ->createAsBatchAction()
             ->linkToCrudAction('addToGalerieCouvs')
             ->addCssClass('btn btn-primary')
@@ -131,7 +128,8 @@ class PhotoCrudController extends AbstractCrudController
                 ->onlyOnForms()
             ,
 
-            Field\TextField::new('motsCles'),
+            Field\TextField::new('motsCles')
+                ->onlyOnForms(),
 
             //Field\DateField::new('datePlanifiee')
             //    //->setFormat()

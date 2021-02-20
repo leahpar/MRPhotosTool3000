@@ -34,7 +34,7 @@ class ShootingCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $action = Action::new('upload', '', 'fa fa-upload')
+        $action = Action::new('Upload', '', 'fa fa-upload')
             ->linkToRoute('admin_upload', function (Shooting $shooting) {
                 return [
                     'id' => $shooting->getId(),
