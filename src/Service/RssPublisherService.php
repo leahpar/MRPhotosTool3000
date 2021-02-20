@@ -34,8 +34,8 @@ class RssPublisherService implements PublisherInterface
             "filter" => "instagram",
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        //$link = "https://www.mr-photographes.fr/boudoirs.jpg";
-        $desc = nl2br($this->getDescription($photo));
+        //$desc = nl2br($this->getDescription($photo));
+        $desc = str_replace("\n", "<br>", $this->getDescription($photo));
 
         $xml = $this->createXml($link, $desc);
         file_put_contents($this->publicDirectory."/publication.rss", $xml);

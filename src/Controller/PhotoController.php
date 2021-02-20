@@ -4,13 +4,10 @@
 namespace App\Controller;
 
 
-use App\Entity\Modele;
 use App\Entity\Photo;
 use App\Entity\Shooting;
 use Doctrine\ORM\EntityManagerInterface;
 use Liip\ImagineBundle\Service\FilterService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
