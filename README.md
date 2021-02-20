@@ -69,10 +69,15 @@ final class BeforeEntityDeletedEvent
 
 ### DESIGN
 
-- /login
-- page d'erreur générique
+- [ ] /login
+- [ ] page d'erreur générique
 
 ### DEV
 
-- accessvoter pour la gestion des photos / shootings / galeries / public / privé / couv...
+- [x] ajout emoji étoile
+- [x] Photos > recherche par nom de modèle
+- [x] Photos > nombre par pages %4
+- [x] Photos > tri date de shooting DESC
+- [ ] Shooting > lien voir les photos (photos filtre shooting)
+- [ ] accessvoter pour la gestion des photos / shootings / galeries / public / privé / couv...
 
