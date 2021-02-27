@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -7,18 +7,22 @@
         <meta name="description" content="MR photographes, c'est un duo de photographes amis depuis toujours, photographes depuis des années.">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 
+        <!-- PWA -->
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="theme-color" content="#D30F4B">
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
         <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Montserrat:700|Abril+Fatface" rel="stylesheet">
-
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Montserrat:700|Abril+Fatface" rel="stylesheet">
 
         {% block css %}{% endblock %}
     </head>
 
     <body>
         {% block body %}{% endblock %}
+
+        <script src="{{ asset('js/main.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
