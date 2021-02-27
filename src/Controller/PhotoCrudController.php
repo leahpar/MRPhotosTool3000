@@ -24,21 +24,25 @@ class PhotoCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
+        $searchFields = [
+            'file',
+            'motsCles',
+            'shooting.modeles.pseudo',
+            'shooting.modeles.nom',
+            'shooting.nom',
+            'galeries.slug',
+        ];
+
         return $crud
             // the names of the Doctrine entity properties where the search is made on
             // (by default it looks for in all properties)
             // use dots (e.g. 'seller.email') to search in Doctrine associations
-            ->setSearchFields([
-                'file',
-                'motsCles',
-                'shooting.modeles.pseudo',
-                'shooting.modeles.nom',
-                'shooting.nom',
-                'galeries.slug',
-            ])
+            ->setSearchFields($searchFields)
+            ->setHelp("index", "Recherche sur : " . implode(" / ", $searchFields))
 
             // the max number of entities to display per page
             ->setPaginatorPageSize(48)
+
 
             ->setDefaultSort(['shooting.date' => 'DESC', 'file' => 'ASC'])
         ;
