@@ -1,2 +1,8 @@
+# https://symfony.com/doc/current/reference/configuration/twig.html
 twig:
     default_path: '%kernel.project_dir%/templates'
+    
+    # If true, whenever a template is rendered, Symfony checks first if its source code has changed since it was compiled.
+    # If it has changed, the template is compiled again automatically.
+    auto_reload: true
+    
