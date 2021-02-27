@@ -295,7 +295,7 @@ class Photo
 
     public function isCensure(): bool
     {
-        return count($this->censure) > 0;
+        return count($this->censure ?? []) > 0;
     }
 
     public function isCouv(): bool

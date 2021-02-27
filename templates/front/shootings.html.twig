@@ -159,8 +159,8 @@
 
     <div id="galerie" class="{% if shootings|length == 1 %}oneShooting{% endif %} {% if shootings|length == 2 %}twoShooting{% endif %} {% if shootings|length == 3 %}threeShooting{% endif %}">
         {% for shooting in shootings %}
-        {% set couv = shooting.couv ? shooting.couv.thumbnail('front') : '' %}
-            <figure >
+            {% set couv = shooting.couv ? shooting.couv.thumbnail('front') : '' %}
+            <figure>
                 
                 <div class="bgblur" style="background-image: url({{ couv }});"></div>
                 
@@ -169,15 +169,18 @@
                     <h2>{{ shooting.nom }}</h2>
                     <p>{{shooting.date|date("%B %Y")}} - {{shooting.photos|length}} photos</p>
                     
-                <!--<figcaption>
-                    {{ shooting.nom }}
-                    {{ shooting.date|date("Y-m-d") }}
-                    {{ shooting.bookshoot }}
-                    {% for modele in shooting.modeles %}
-                        {{ modele.nom }}
-                    {% endfor %}
-                </figcaption>-->
+                    {#
+                    <figcaption>
+                        {{ shooting.nom }}
+                        {{ shooting.date|date("Y-m-d") }}
+                        {{ shooting.bookshoot }}
+                        {% for modele in shooting.modeles %}
+                            {{ modele.nom }}
+                        {% endfor %}
+                    </figcaption>
+                    #}
                 </a>
+
                 <div class="buttons">
                     <p><a href="{{ path("front_shooting", {slug: shooting.slug}) }}" class="button redButton roundedButton mediumButton">Voir les photos</a></p>
                     <p><a href="#" class="button redButton borderedButton roundedButton mediumButton">Télécharger le zip</a></p>

@@ -1,0 +1,67 @@
+<!-- Core JS file -->
+<script src="{{ asset('photoswipe/dist/photoswipe.min.js') }}"></script>
+
+<!-- UI JS file -->
+<script src="{{ asset('photoswipe/dist/photoswipe-ui-default.min.js') }}"></script>
+
+<script>
+    let pswpElement = document.querySelectorAll('.pswp')[0];
+
+    // build items array
+    let items = [
+        {% for photo in shooting.photos %}
+        {
+            src: '{{ photo.thumbnail('full') }}',
+            w: 3000,
+            h: {{ 3000*photo.ratio }},
+        },
+        {% endfor %}
+    ];
+
+    // define options (if needed)
+    // https://photoswipe.com/documentation/options.html
+    let options = {
+        // optionName: 'option value'
+        // for example:
+        index: 0,
+
+        preload: [1,2],
+
+        //history:true,
+        //galleryPIDs:true,
+
+        loop: false,
+        escKey: true,
+        arrowKeys: true,
+
+        addCaptionHTMLFn: function(item, captionEl, isFake) {
+            if(!item.title) {
+                captionEl.children[0].innerText = '';
+                return false;
+            }
+            captionEl.children[0].innerHTML = item.title;
+            return true;
+        },
+
+        shareButtons: [
+            {% verbatim %}
+            /*
+            {id:'facebook', label:'Share on Facebook', url:'https://www.facebook.com/sharer/sharer.php?u={{url}}'},
+            {id:'twitter', label:'Tweet', url:'https://twitter.com/intent/tweet?text={{text}}&url={{url}}'},
+            {id:'pinterest', label:'Pin it', url:'http://www.pinterest.com/pin/create/button/'+
+                '?url={{url}}&media={{image_url}}&description={{text}}'},
+            */
+            {id:'download', label:'Download image', url:'{{raw_image_url}}', download:true}
+            {% endverbatim %}
+        ],
+
+    };
+
+    function start(index) {
+        // Initializes and opens PhotoSwipe
+        options.index = index;
+        let gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+        gallery.init();
+    }
+
+</script>

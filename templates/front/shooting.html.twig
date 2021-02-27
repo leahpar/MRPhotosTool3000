@@ -62,77 +62,6 @@
 
 {% endblock css %}
 
-{% block javascripts %}
-    <!-- Core JS file -->
-    <script src="{{ asset('photoswipe/dist/photoswipe.min.js') }}"></script>
-
-    <!-- UI JS file -->
-    <script src="{{ asset('photoswipe/dist/photoswipe-ui-default.min.js') }}"></script>
-
-    <script>
-        let pswpElement = document.querySelectorAll('.pswp')[0];
-
-        // build items array
-        let items = [
-            {% for photo in shooting.photos %}
-                {
-                    src: '{{ photo.thumbnail('full') }}',
-                    w: 3000,
-                    h: {{ 3000*photo.ratio }},
-                },
-            {% endfor %}
-        ];
-
-        // define options (if needed)
-        // https://photoswipe.com/documentation/options.html
-        let options = {
-            // optionName: 'option value'
-            // for example:
-            index: 0,
-
-                preload: [1,2],
-
-                //history:true,
-                //galleryPIDs:true,
-
-                loop: false,
-                escKey: true,
-                arrowKeys: true,
-
-                addCaptionHTMLFn: function(item, captionEl, isFake) {
-                if(!item.title) {
-                    captionEl.children[0].innerText = '';
-                    return false;
-                }
-                captionEl.children[0].innerHTML = item.title;
-                return true;
-            },
-
-            shareButtons: [
-                {% verbatim %}
-                /*
-                {id:'facebook', label:'Share on Facebook', url:'https://www.facebook.com/sharer/sharer.php?u={{url}}'},
-                {id:'twitter', label:'Tweet', url:'https://twitter.com/intent/tweet?text={{text}}&url={{url}}'},
-                {id:'pinterest', label:'Pin it', url:'http://www.pinterest.com/pin/create/button/'+
-                    '?url={{url}}&media={{image_url}}&description={{text}}'},
-                */
-                {id:'download', label:'Download image', url:'{{raw_image_url}}', download:true}
-                {% endverbatim %}
-            ],
-
-        };
-
-        function start(index) {
-        // Initializes and opens PhotoSwipe
-        options.index = index;
-        let gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
-        gallery.init();
-        }
-
-    </script>
-{% endblock javascripts %}
-
-
 {% block body %}
 
     <header>
@@ -144,9 +73,10 @@
     <div class="pal txtcenter">
         
         <h2>{{ shooting.nom }}</h2>
+        {% if type == "shooting" %}
         <p><a href="#{# TODO #}" class="button redButton borderedButton mediumButton">Télécharger le zip</a></p>
+        {% endif %}
     </div>
-
 
     <div id="galerie">
         {% for photo in shooting.photos %}
@@ -154,78 +84,17 @@
                 <img src="{{ photo.thumbnail('front') }}"
                      height="300px" width="300px"
                      onclick="start({{ loop.index0 }});">
-                <!--<figcaption>{{ "%03d"|format(loop.index) }}</figcaption>-->
+                {# <figcaption>{{ "%03d"|format(loop.index) }}</figcaption> #}
             </figure>
         {% endfor %}
     </div>
 
-
-    <!-- Root element of PhotoSwipe. Must have class pswp. -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-        <!-- Background of PhotoSwipe.
-             It's a separate element as animating opacity is faster than rgba(). -->
-        <div class="pswp__bg"></div>
-
-        <!-- Slides wrapper with overflow:hidden. -->
-        <div class="pswp__scroll-wrap">
-
-            <!-- Container that holds slides.
-                PhotoSwipe keeps only 3 of them in the DOM to save memory.
-                Don't modify these 3 pswp__item elements, data is added later on. -->
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-
-            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-            <div class="pswp__ui pswp__ui--hidden">
-
-                <div class="pswp__top-bar">
-
-                    <!--  Controls are self-explanatory. Order can be changed. -->
-
-                    <div class="pswp__counter"></div>
-
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                    <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                    <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
-                    <!-- element will get class pswp__preloader--active when preloader is running -->
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
+    {# photoswipe template #}
+    {% include "front/_photoswipe_template.html.twig" %}
 
 {% endblock %}
+
+{% block javascripts %}
+    {# photoswipe JS #}
+    {% include "front/_photoswipe_js.html.twig" %}
+{% endblock javascripts %}

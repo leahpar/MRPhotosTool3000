@@ -61,7 +61,7 @@ class ShootingCrudController extends AbstractCrudController
             Field\ChoiceField::new('statut')->setChoices([
                 "Brouillon" => "Brouillon",
                 "Privé" => "Privé",
-                "Public" => "Public",
+                //"Public" => "Public",
             ]),
             Field\AssociationField::new('photos')
                 ->onlyOnIndex(),

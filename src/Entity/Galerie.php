@@ -31,12 +31,6 @@ class Galerie
     private $nom;
 
     /**
-     * @Gedmo\Slug(
-     *     fields={"nom"},
-     *     separator="-",
-     *     updatable=true,
-     *     unique=true,
-     *     dateFormat="Y-m-d")
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $slug;

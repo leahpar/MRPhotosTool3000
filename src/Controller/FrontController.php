@@ -65,22 +65,6 @@ class FrontController extends AbstractController
     }
 
     /**
-     * @Route("/galeries", name="front_galeries")
-     * @Security("is_granted('ROLE_ADMIN')")
-     * @TODO GalerieAccessVoter
-     *
-     * @param EntityManagerInterface $em
-     * @return Response
-     */
-    public function galeries(EntityManagerInterface $em): Response
-    {
-        $galerieCouvs = $em->getRepository(Galerie::class)->findAll();
-        return $this->render('front/shootings.html.twig', [
-            'galerie_couvs' => $galerieCouvs,
-        ]);
-    }
-
-    /**
      * @Route("/shootings", name="front_shootings")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_MODELE')")
      *
@@ -121,6 +105,36 @@ class FrontController extends AbstractController
 
         return $this->render('front/shooting.html.twig', [
             'shooting' => $shooting,
+            'type' => 'shooting',
+        ]);
+    }
+
+    /**
+     * @Route("/galeries")
+     * @return Response
+     */
+    public function galeries(): Response
+    {
+        return $this->redirectToRoute("index");
+    }
+
+    /**
+     * @Route("/galeries/{slug}", name="front_galerie")
+     *
+     * @param Galerie $galerie
+     * @return Response
+     * @throws \Exception
+     */
+    public function galerie(Galerie $galerie): Response
+    {
+        // @TODO GalerieAccessVoter ?
+        if ($galerie->getStatut() != "Public") {
+            throw new \Exception("Accès interdit", 403);
+        }
+
+        return $this->render('front/shooting.html.twig', [
+            'shooting' => $galerie,
+            'type' => 'galerie',
         ]);
     }
 

@@ -88,7 +88,7 @@ class Modele implements UserInterface
 
     public function setInstagram(?string $instagram): self
     {
-        $this->instagram = $instagram;
+        $this->instagram = str_replace('@', '', $instagram);
 
         return $this;
     }

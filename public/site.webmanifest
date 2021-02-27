@@ -1,8 +1,8 @@
 {
-  "short_name": "ATQP",
-  "name": "ATQP",
-  "theme_color": "#009688",
-  "background_color": "#e8e8e8",
+  "short_name": "MRPhotos",
+  "name": "MR-Photographes",
+  "theme_color": "#D30F4B",
+  "background_color": "#000000",
   "display": "standalone",
   "Scope": "/",
   "orientation": "any",

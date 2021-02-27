@@ -1,0 +1,16 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var field \EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+
+{% set url = absolute_url(path('front_galerie', {slug: field.value})) %}
+<a href="{{ url }}" target="_blank">
+    {{ field.value }}
+</a>
+
+<a href="#" onclick="navigator.clipboard.writeText('{{ url }}').then(result => {
+    document.querySelectorAll('.icon-copy').forEach(element => element.classList.remove('text-success'));
+    document.getElementById('icon-copy-{{ field.value }}').classList.add('text-success');
+    }); return false;">
+    <i id="icon-copy-{{ field.value }}" class="icon-copy fa-fw fas fa-copy"></i>
+</a>
+

@@ -18,9 +18,12 @@ class GalerieCrudController extends AbstractCrudController
     {
         return [
             Field\TextField::new('nom'),
+            Field\TextField::new('slug')
+                ->setTemplatePath('eadmin/_galeriecrud_index_slug.html.twig')
+            ,
             Field\AssociationField::new('photos'),
             Field\ChoiceField::new('statut')->setChoices([
-                "Brouillon" => "Brouillon",
+                //"Brouillon" => "Brouillon",
                 "Privé" => "Privé",
                 "Public" => "Public",
             ]),

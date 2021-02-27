@@ -66,7 +66,6 @@ class PhotoAccessVoter extends Voter
                 foreach ($photo->getGaleries() as $galerie) {
                     if ($galerie->getStatut() == "Public"
                      || $galerie->isCover()
-                    // || $galerie->isCouv()
                      || $galerie->isFront()
                     ) {
                         return true;
