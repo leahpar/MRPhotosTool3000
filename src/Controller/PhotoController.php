@@ -62,7 +62,6 @@ class PhotoController extends AbstractController
                 ],
             ];
 
-            dump($photo, $photo->getCensure());
             if (count($photo->getCensure()??[]) > 0) {
                 $runtimeConfig += [
                     'censure_filter' => [
@@ -124,7 +123,6 @@ class PhotoController extends AbstractController
         $resourcePath = $imagine->getUrlOfFilteredImage($path, 'thumbnail');
 
         $filename = parse_url($resourcePath, PHP_URL_PATH);
-        dump($filename);
         $file = $this->getParameter('public_directory') . $filename;
 
         $response = new BinaryFileResponse($file);
@@ -158,10 +156,7 @@ class PhotoController extends AbstractController
         /** @var array $arr */
         $arr = $request->query->all();
 
-        dump($arr);
-
         if (isset($arr["delete"])) {
-            dump("here");
             $photo->setCensure(null);
             $em->flush();
 
@@ -172,7 +167,6 @@ class PhotoController extends AbstractController
             unlink($file);
         }
         else if (count($arr) > 0) {
-            dump("here2");
             $arr = array_flip($arr);
             $pos = array_shift($arr);
             //$pos = explode(',', $pos);

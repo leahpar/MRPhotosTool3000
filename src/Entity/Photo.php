@@ -293,11 +293,34 @@ class Photo
         return $this;
     }
 
+    public function isCensure(): bool
+    {
+        return count($this->censure) > 0;
+    }
+
     public function isCouv(): bool
     {
         /** @var Galerie $galery */
         foreach ($this->galeries as $galerie) {
             if ($galerie->isCouv()) return true;
+        }
+        return false;
+    }
+
+    public function isCover(): bool
+    {
+        /** @var Galerie $galery */
+        foreach ($this->galeries as $galerie) {
+            if ($galerie->isCover()) return true;
+        }
+        return false;
+    }
+
+    public function isSite(): bool
+    {
+        /** @var Galerie $galery */
+        foreach ($this->galeries as $galerie) {
+            if ($galerie->isFront()) return true;
         }
         return false;
     }

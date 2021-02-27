@@ -69,8 +69,10 @@ final class BeforeEntityDeletedEvent
 
 ### DESIGN
 
-- [ ] /login
-- [ ] page d'erreur générique
+- [X] /login
+- [X] page d'accueil des shootings
+- [ ] Shooting > lien "retour" 
+- [ ] page d'erreur
 
 ### DEV
 
@@ -78,6 +80,8 @@ final class BeforeEntityDeletedEvent
 - [x] Photos > recherche par nom de modèle
 - [x] Photos > nombre par pages %4
 - [x] Photos > tri date de shooting DESC
-- [ ] Shooting > lien voir les photos (photos filtre shooting)
+- [x] Front > Affichage mois des shootings en fr
+- [ ] Admin Shooting > lien voir les photos (photos filtre shooting)
+- [ ] Front > Lien dl zip
 - [ ] accessvoter pour la gestion des photos / shootings / galeries / public / privé / couv...
 
