@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Modele;
 use App\Entity\Shooting;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 
 class ShootingCrudController extends AbstractCrudController
 {
@@ -39,14 +39,31 @@ class ShootingCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $action = Action::new('Upload', '', 'fa fa-upload')
+        $action1 = Action::new('Upload', '', 'fa fa-upload')
             ->linkToRoute('admin_upload', function (Shooting $shooting) {
                 return [
                     'id' => $shooting->getId(),
                 ];
             });
 
-        return $actions->add(Crud::PAGE_INDEX, $action);
+        /** @var AdminUrlGenerator $adminUrlGenerator */
+        $adminUrlGenerator = $this->get(AdminUrlGenerator::class);
+
+        $action2 = Action::new('Photos', '', 'fa fa-images')
+            ->linkToUrl(function (Shooting $shooting) use ($adminUrlGenerator) {
+                return $adminUrlGenerator//->build()
+                ->setController(PhotoCrudController::class)
+                    ->setAction('index')
+                    ->set('query', $shooting->getNom())
+                    ->generateUrl();
+            }
+            );
+
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $action1)
+            ->add(Crud::PAGE_INDEX, $action2)
+        ;
     }
 
     public function configureFields(string $pageName): iterable

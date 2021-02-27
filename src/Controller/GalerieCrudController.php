@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Galerie;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 
 class GalerieCrudController extends AbstractCrudController
 {
@@ -30,5 +34,24 @@ class GalerieCrudController extends AbstractCrudController
 
         ];
     }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        /** @var AdminUrlGenerator $adminUrlGenerator */
+        $adminUrlGenerator = $this->get(AdminUrlGenerator::class);
+
+        $action = Action::new('Photos', '', 'fa fa-images')
+            ->linkToUrl(function (Galerie $galerie) use ($adminUrlGenerator) {
+                return $adminUrlGenerator//->build()
+                    ->setController(PhotoCrudController::class)
+                    ->setAction('index')
+                    ->set('query', $galerie->getSlug())
+                    ->generateUrl();
+            }
+        );
+
+        return $actions->add(Crud::PAGE_INDEX, $action);
+    }
+
 
 }

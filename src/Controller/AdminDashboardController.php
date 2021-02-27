@@ -47,7 +47,7 @@ class AdminDashboardController extends AbstractDashboardController
             // query parameter (to "hack" the backend) the signature won't match and EasyAdmin
             // triggers an error. If this causes any issue in your backend, call this method
             // to disable this feature and remove all URL signature checks
-            //->disableUrlSignatures()
+            ->disableUrlSignatures()
         ;
     }
 

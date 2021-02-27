@@ -81,7 +81,8 @@ final class BeforeEntityDeletedEvent
 - [x] Photos > nombre par pages %4
 - [x] Photos > tri date de shooting DESC
 - [x] Front > Affichage mois des shootings en fr
-- [ ] Admin Shooting > lien voir les photos (photos filtre shooting)
+- [X] Admin Shooting > lien voir les photos (photos filtre shooting)
+- [X] Admin Galeries > lien voir les photos (photos filtre shooting)
 - [ ] Front > Lien dl zip
 - [ ] accessvoter pour la gestion des photos / shootings / galeries / public / privé / couv...
 
