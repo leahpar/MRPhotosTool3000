@@ -38,17 +38,17 @@ class Galerie
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isCover;
+    private $isCover = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isCouv;
+    private $isCouv = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isFront;
+    private $isFront = false;
 
     /**
      * @ORM\Column(type="string", length=255)
