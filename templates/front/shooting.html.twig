@@ -10,6 +10,7 @@
         header {
             text-align: center;
             padding: 20px;
+            background: #D30F4B;
         }
 
         h1 {
@@ -138,9 +139,13 @@
         <a href="/">
             <img src="{{ asset('img/mr-photographes-logoV.svg') }}" id="mainLogo" width="85" height="58">
         </a>
-        <h1>{{ shooting.nom }}</h1>
-        <p><a href="#{# TODO #}">Télécharger le zip</a></p>
     </header>
+    
+    <div class="pal txtcenter">
+        
+        <h2>{{ shooting.nom }}</h2>
+        <p><a href="#{# TODO #}" class="button redButton borderedButton mediumButton">Télécharger le zip</a></p>
+    </div>
 
 
     <div id="galerie">
@@ -149,7 +154,7 @@
                 <img src="{{ photo.thumbnail('front') }}"
                      height="300px" width="300px"
                      onclick="start({{ loop.index0 }});">
-                <figcaption>{{ "%03d"|format(loop.index) }}</figcaption>
+                <!--<figcaption>{{ "%03d"|format(loop.index) }}</figcaption>-->
             </figure>
         {% endfor %}
     </div>

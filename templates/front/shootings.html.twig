@@ -11,6 +11,7 @@
         header {
             text-align: center;
             padding: 20px;
+            background: #D30F4B;
         }
 
         h1 {
@@ -23,7 +24,6 @@
         #galerie {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-evenly;
             align-items: center;
         }
 
@@ -36,8 +36,82 @@
 
         #galerie figure {
             position: relative;
-            margin: 20px;
-            padding: 0;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+            margin: 0px;
+            padding: 15px;
+            
+            width: 100%;
+            max-width: 25%;
+            
+            height: 100vh;
+            max-height: 750px;
+            
+            overflow: hidden;
+        }
+        #galerie.oneShooting figure{
+            max-width: 100%;
+        }
+        #galerie.twoShooting figure{
+            max-width: 50%;
+        }
+        #galerie.threeShooting figure{
+            max-width: 33%;
+        }
+        #galerie.threeShooting figure:nth-child(3n){
+            max-width:34%;
+        }
+        #galerie figure .bgblur{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 1;
+            
+            width: 100%;
+            height: 100%;
+            
+            background-size: cover;
+            background-position: center ;
+            
+            filter: blur(30px);
+            opacity: .9;
+            transform:scale(1.2);
+        }
+        #galerie figure a{
+            position: relative;
+            z-index: 2;
+            
+            text-align: center;
+            text-decoration: none;
+            
+            transition: all .2s ease-in-out;
+        }
+        #galerie figure a img{
+            transition: all .2s ease-in-out;
+        }
+        #galerie figure a:hover img{
+            transform: scale(1.1) rotate(1deg);
+        }
+        #galerie figure a img{
+            box-shadow: 0px 10px 40px rgba(0,0,0,.7);
+        }
+        #galerie figure a p{
+            font-size: 1.4rem;
+            line-height: 1.6rem;
+            color: #eee;
+            text-shadow: 0px 2px 2px rgba(0,0,0,.3);
+        }
+        #galerie figure .buttons{
+            position: relative;
+            z-index: 2;
+            
+            margin-top: 60px;
+            
+            text-align: center;
         }
 
         #galerie figcaption {
@@ -49,6 +123,27 @@
             font-size: 4em;
             font-family: sans-serif;
         }
+        
+        
+        @media screen and (min-width: 1100px) and (max-width: 1500px) {
+          #galerie figure{
+              max-width: 33%;
+          }
+          #galerie figure:nth-child(3n){
+                max-width:34%;
+            }
+        }
+        @media screen and (max-width: 1100px) {
+              #galerie figure{
+                  max-width: 50%;
+              }
+            }
+        @media screen and (max-width: 700px) {
+              #galerie figure{
+                  max-width: 100%;
+              }
+            }
+        
     </style>
 
 {% endblock css %}
@@ -62,21 +157,31 @@
         </a>
     </header>
 
-    <div id="galerie">
+    <div id="galerie" class="{% if shootings|length == 1 %}oneShooting{% endif %} {% if shootings|length == 2 %}twoShooting{% endif %} {% if shootings|length == 3 %}threeShooting{% endif %}">
         {% for shooting in shootings %}
-            <figure>
-                {% set couv = shooting.couv ? shooting.couv.thumbnail('front') : '' %}
+        {% set couv = shooting.couv ? shooting.couv.thumbnail('front') : '' %}
+            <figure >
+                
+                <div class="bgblur" style="background-image: url({{ couv }});"></div>
+                
                 <a href="{{ path("front_shooting", {slug: shooting.slug}) }}">
-                    <img src="{{ couv }}" height="300px" width="300px">
-                <figcaption>
+                    <img src="{{ couv }}" height="300" width="300">
+                    <h2>{{ shooting.nom }}</h2>
+                    <p>{{shooting.date|date("%B %Y")}} - {{shooting.photos|length}} photos</p>
+                    
+                <!--<figcaption>
                     {{ shooting.nom }}
                     {{ shooting.date|date("Y-m-d") }}
                     {{ shooting.bookshoot }}
                     {% for modele in shooting.modeles %}
                         {{ modele.nom }}
                     {% endfor %}
-                </figcaption>
+                </figcaption>-->
                 </a>
+                <div class="buttons">
+                    <p><a href="{{ path("front_shooting", {slug: shooting.slug}) }}" class="button redButton roundedButton mediumButton">Voir les photos</a></p>
+                    <p><a href="#" class="button redButton borderedButton roundedButton mediumButton">Télécharger le zip</a></p>
+                </div>
             </figure>
         {% endfor %}
     </div>

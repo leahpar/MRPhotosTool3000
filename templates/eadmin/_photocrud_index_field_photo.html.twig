@@ -27,13 +27,10 @@
     {% set classes = classes | merge(["censuree"]) %}
 {% endif %}
 
-<div class="{{ classes|join(" ") }}">
+<div class="photoThumb {{ classes|join(" ") }}">
     <img src="{{ asset(photo.thumbnail("mini")) }}" style="width: 280px; height: 280px; object-fit: contain">
 
-    <!-- Lien lightbox -->
-    <a href="#" data-featherlight="#{{ html_id }}" data-featherlight-close-on-click="anywhere">
-        <i class="fa fa-expand"></i>
-    </a>
+
 
     {% if photo.datePlanifiee %}
         <!-- photo planifiée -->
@@ -54,6 +51,30 @@
             </span>
         </div>
     {% endif %}
+    
+    {% if photo.isCover or photo.isSite or photo.isCouv %}
+    <div class="infosSite">
+        <span class="badge bg-secondary">
+            {% if photo.isCouv %}
+            <i class="fa-fw fas fa-book"></i>
+            {% endif %}
+            {% if photo.isSite %}
+            <i class="fa-fw fas fa-laptop"></i>
+            {% endif %}
+            {% if photo.isCover %}
+            <i class="fa-fw fas fa-laptop-medical"></i>
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
+    
+    <div class="localActions">
+        <!-- Lien lightbox -->
+        <a href="#" data-featherlight="#{{ html_id }}" data-featherlight-close-on-click="anywhere">
+            <i class="fa fa-expand"></i>
+        </a>
+        <a href="{{path("photo_censure",{id:photo.id})}}" target="_blank" class="censure"><i class="action-icon fa fa-eye-slash {{photo.isCensure ? "active":""}}"></i></a>
+    </div>
 
 </div>
 
