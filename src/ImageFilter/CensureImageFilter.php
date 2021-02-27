@@ -40,10 +40,10 @@ class CensureImageFilter implements LoaderInterface
     public function load(ImageInterface $image, array $options = []): ImageInterface
     {
         if ($options["enabled"]) {
-dump($options['positions']);
+
             foreach ($options['positions'] as $position) {
                 $pos = explode(',', $position);
-                dump($pos);
+                //dump($pos);
                 $w = 50;
                 $h = 50;
                 $x = $pos[0] - $w/2;

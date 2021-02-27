@@ -29,6 +29,11 @@ class ShootingCrudController extends AbstractCrudController
             // the Symfony Security permission needed to manage the entity
             // (none by default, so you can manage all instances of the entity)
             //->setEntityPermission('ROLE_EDITOR')
+
+            // the max number of entities to display per page
+            ->setPaginatorPageSize(30)
+
+            ->setDefaultSort(['date' => 'DESC'])
             ;
     }
 

@@ -22,7 +22,6 @@ class PublishController extends AbstractController
         // https://www.php.net/manual/fr/datetime.formats.relative.php
         $date = new \DateTime("last friday");
         $photo = $pubService->getPhotoToPublish($date);
-        dump($date, $photo);
 
         if ($photo) {
             $rssService->publish($photo);

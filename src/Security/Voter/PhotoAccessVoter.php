@@ -39,7 +39,7 @@ class PhotoAccessVoter extends Voter
 
         /** @var Photo $photo */
         $photo = $subject;
-        dump($photo);
+        //dump($photo);
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
@@ -64,7 +64,6 @@ class PhotoAccessVoter extends Voter
 
                 /** @var Galerie $galerie */
                 foreach ($photo->getGaleries() as $galerie) {
-                    dump($galerie);
                     if ($galerie->getStatut() == "Public"
                      || $galerie->isCover()
                     // || $galerie->isCouv()

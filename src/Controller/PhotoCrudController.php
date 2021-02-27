@@ -28,12 +28,12 @@ class PhotoCrudController extends AbstractCrudController
             // the names of the Doctrine entity properties where the search is made on
             // (by default it looks for in all properties)
             // use dots (e.g. 'seller.email') to search in Doctrine associations
-            ->setSearchFields(['file', 'motsCles', 'shooting.nom', 'galeries.nom', 'shooting.modeles'])
+            ->setSearchFields(['file', 'motsCles', 'shooting.modeles.pseudo', 'shooting.nom', 'galeries.nom', 'shooting.modeles.nom'])
 
             // the max number of entities to display per page
             ->setPaginatorPageSize(48)
 
-            ->setDefaultSort(['shooting.date' => 'DESC'])
+            ->setDefaultSort(['shooting.date' => 'DESC', 'file' => 'ASC'])
         ;
     }
 
@@ -50,6 +50,7 @@ class PhotoCrudController extends AbstractCrudController
             fn (Action $a) => $a->setIcon('fa fa-pencil-alt')->setLabel(false)
         );
 
+        /*
         $actions->add(
             Crud::PAGE_INDEX,
             Action::new('Censure')
@@ -60,7 +61,7 @@ class PhotoCrudController extends AbstractCrudController
                 //->setHtmlAttributes(["target" => "_blank"])
                 ->setLabel(false)
         );
-
+        */
 
         $actions->add(
             Crud::PAGE_INDEX,
