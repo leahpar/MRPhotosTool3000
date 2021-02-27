@@ -28,7 +28,14 @@ class PhotoCrudController extends AbstractCrudController
             // the names of the Doctrine entity properties where the search is made on
             // (by default it looks for in all properties)
             // use dots (e.g. 'seller.email') to search in Doctrine associations
-            ->setSearchFields(['file', 'motsCles', 'shooting.modeles.pseudo', 'shooting.nom', 'galeries.nom', 'shooting.modeles.nom'])
+            ->setSearchFields([
+                'file',
+                'motsCles',
+                'shooting.modeles.pseudo',
+                'shooting.modeles.nom',
+                'shooting.nom',
+                'galeries.slug',
+            ])
 
             // the max number of entities to display per page
             ->setPaginatorPageSize(48)
