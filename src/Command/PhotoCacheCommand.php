@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Galerie;
 use App\Entity\Photo;
 use App\Service\PhotoFilterService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,18 +42,33 @@ class PhotoCacheCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $photos = $this->em->getRepository(Photo::class)->findAll();
+        // Covers
+        /** @var Galerie $galerie */
+        $photos = $this->em->getRepository(Photo::class)->findByGalerieIsCover();
+        $io->info("Front covers");
 
         /** @var Photo $photo */
         foreach ($photos as $photo) {
-            foreach (['front', 'cover', 'mini'] as $filter) {
-                $io->write("Photo ". str_pad($photo->getFile() . " ($filter) ...", 40));
-                $t = microtime(true);
-                $this->filterService->getFilteredPhoto($photo, $filter);
-                $t = str_pad(round((microtime(true) - $t) * 1000), 5, ' ', STR_PAD_LEFT);
-                $io->writeln("OK $t ms");
-            }
+            $io->write("Photo ". str_pad($photo->getFile() . "...", 40));
+            $t = microtime(true);
+            $this->filterService->getFilteredPhoto($photo, 'cover');
+            $t = str_pad(round((microtime(true) - $t) * 1000), 5, ' ', STR_PAD_LEFT);
+            $io->writeln("OK $t ms");
         }
+
+        // Front
+        $photos = $this->em->getRepository(Photo::class)->findByGalerieIsFront();
+        $io->info("Front site");
+
+        /** @var Photo $photo */
+        foreach ($photos as $photo) {
+            $io->write("Photo ". str_pad($photo->getFile() . "...", 40));
+            $t = microtime(true);
+            $this->filterService->getFilteredPhoto($photo, "front");
+            $t = str_pad(round((microtime(true) - $t) * 1000), 5, ' ', STR_PAD_LEFT);
+            $io->writeln("OK $t ms");
+        }
+
 
         $io->success('OK');
 

@@ -30,4 +30,15 @@ class PhotoRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByGalerieIsCover()
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin("p.galeries", 'g')
+            ->andWhere('g.isCover = :true')
+            ->setParameter(':true', true)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 }
