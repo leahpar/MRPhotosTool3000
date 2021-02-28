@@ -1,5 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% block head %}
+<!-- OpenGraph -->
+<meta property="og:title" content="MR-Photographes | {{ shooting.nom }}">
+<meta property="og:url" content="{{ absolute_url(path('front_' ~ type, {slug: shooting.slug})) }}">
+<meta property="og:type" content="article">
+<meta property="og:description" content="{{ shooting.nom }}">
+<meta property="og:image" content="{{ absolute_url(shooting.photos[0].thumbnail('instagram')) }}">
+{# <meta property="og:image:width" content=""> #}
+{# <meta property="og:image:height" content=""> #}
+{% endblock head %}
+
+
 {% block css %}
     <style type="text/css">
         body {
@@ -73,14 +85,14 @@
 
     <header>
         <ul class="links inverse">
-            <li><a href="/shootings" title="Retour aux galeries"><span class="icon icon-arrow-left"></span></a></li>
+            <li><a href="{{ path('front_shootings') }}" title="Retour aux galeries"><span class="icon icon-arrow-left"></span></a></li>
         </ul>
         <a href="/">
             <img src="{{ asset('img/mr-photographes-logoV.svg') }}" id="mainLogo" width="85" height="58">
         </a>
         <ul class="links inverse right">
-            <li><a href="/" title="Retour à l'accueil"><span class="icon icon-home"></span></a></li>
-            <li><a href="/logout" title="Se déconnecter"><span class="icon icon-user-cancel"></span></a></li>
+            <li><a href="{{ path('index') }}" title="Retour à l'accueil"><span class="icon icon-home"></span></a></li>
+            <li><a href="{{ path('app_logout') }}" title="Se déconnecter"><span class="icon icon-user-cancel"></span></a></li>
         </ul>
     </header>
     
@@ -88,7 +100,13 @@
         
         <h2>{{ shooting.nom }}</h2>
         {% if type == "shooting" %}
-        <p><a href="#{# TODO #}" class="button redButton borderedButton mediumButton">Télécharger le zip</a></p>
+        <p>
+            <a href="{{ path('front_shooting_zip', {slug: shooting.slug}) }}"
+               onclick="this.innerHTML='Téléchargement en cours...'"
+               class="button redButton borderedButton mediumButton">
+                Télécharger le zip
+            </a>
+        </p>
         {% endif %}
     </div>
 

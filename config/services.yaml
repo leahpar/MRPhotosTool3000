@@ -19,6 +19,7 @@ services:
 
         bind:
             string $public_directory: '%public_directory%'
+            string $shootings_directory: '%shootings_directory%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

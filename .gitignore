@@ -17,6 +17,7 @@
 
 ###> liip/imagine-bundle ###
 /public/media/cache/
+/public/media/zip/
 ###< liip/imagine-bundle ###
 php_errors.log
 public/publication.rss

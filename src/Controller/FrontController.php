@@ -6,10 +6,13 @@ use App\Entity\Galerie;
 use App\Entity\Modele;
 use App\Entity\Photo;
 use App\Entity\Shooting;
+use App\Service\ZipService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FrontController extends AbstractController
@@ -107,6 +110,34 @@ class FrontController extends AbstractController
             'shooting' => $shooting,
             'type' => 'shooting',
         ]);
+    }
+
+    /**
+     * @Route("/shootings/{slug}/zip", name="front_shooting_zip")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_MODELE')")
+     * @TODO ShootingAccessVoter
+     *
+     * @param Shooting $shooting
+     * @return Response
+     */
+    public function shootingZip(Shooting $shooting, ZipService $zipService): Response
+    {
+        /** @var Modele $user */
+        $user = $this->getUser();
+
+        if (!$this->isGranted("ROLE_ADMIN")
+            && !$shooting->hasModele($user)
+        ) {
+            throw new \Exception("Accès interdit", 403);
+        }
+
+        $filename = $shooting->getSlug().".zip";
+        $file = $zipService->zip($shooting, $filename);
+
+        $response = new BinaryFileResponse($file);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $filename);
+
+        return $response;
     }
 
     /**
