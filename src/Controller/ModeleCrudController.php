@@ -22,6 +22,8 @@ class ModeleCrudController extends AbstractCrudController
             // the labels used to refer to this entity in titles, buttons, etc.
             ->setEntityLabelInSingular('Modèle')
             ->setEntityLabelInPlural('Modèles')
+            ->setPaginatorPageSize(50)
+            ->setDefaultSort(['nom' => 'ASC'])
             ;
     }
 

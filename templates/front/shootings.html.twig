@@ -9,6 +9,9 @@
         }
 
         header {
+            display: grid;
+            grid-template-columns: 150px 1fr 150px;
+            align-items: center;
             text-align: center;
             padding: 20px;
             background: #D30F4B;
@@ -19,6 +22,10 @@
         }
         header a {
             color: rgba(100, 100, 100, 0.3);
+        }
+        header .links.right{
+            display: flex;
+            justify-content: flex-end;
         }
 
         #galerie {
@@ -49,10 +56,13 @@
             max-width: 25%;
             
             height: 100vh;
+            min-height: 650px;
             max-height: 750px;
             
             overflow: hidden;
         }
+        
+            
         #galerie.oneShooting figure{
             max-width: 100%;
         }
@@ -81,23 +91,86 @@
             opacity: .9;
             transform:scale(1.2);
         }
+        #galerie figure .gradient{
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            z-index: 2;
+            
+            width: 100%;
+            height: 400px;
+            
+            background: rgb(0,0,0);
+            background: linear-gradient(0deg, rgba(0,0,0,.90) 5%, rgba(0,0,0,0) 100%);
+        }
         #galerie figure a{
             position: relative;
-            z-index: 2;
+            z-index: 3;
             
             text-align: center;
             text-decoration: none;
             
             transition: all .2s ease-in-out;
+            
+            perspective: 1800px;
+        }
+        #galerie figure a .illus{
+            position: relative;
+            width: 300px;
+            transform-style: preserve-3d;
+            transition: all .4s ease-in-out;
+            box-shadow: 0px 10px 40px rgba(0,0,0,.7);
+        }
+        #galerie figure a:hover .illus{
+            transform: rotate3d(.5,1,-0.05,40deg);
+        }
+        #galerie figure a .illus .dessous{
+            position: absolute;
+            bottom: -7px;
+            right: 0px;
+            width: 299px;
+            height: 16px;
+            background: #fff;
+            transform: rotate3d(1,0,0, -90deg);
+            transform-style: preserve-3d;
+        }
+        #galerie figure a .illus .cote{
+            position: absolute;
+            top: 0px;
+            left: -7px;
+            width: 16px;
+            height: 300px;
+            background: #000;
+            transform: rotate3d(0,1,0, -90deg);
+            transform-style: preserve-3d;
+        }
+        #galerie figure a .illus .cote p{
+            transform-origin: 0 0;
+            margin: 0px;
+            padding: 0px;
+            transform: rotate(90deg) translateY(-16px);
+            
+            width: 300px;
+            height: 16px;
+            
+            white-space: nowrap;
+            
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #D30F4B;
+            color: #fff;
+            font-size: 10px;
+            text-align: center;
         }
         #galerie figure a img{
+            transform: translateZ(8px);
+            transform-origin: 0% 100%;
+            transform-style: preserve-3d;
             transition: all .2s ease-in-out;
+            
         }
         #galerie figure a:hover img{
-            transform: scale(1.1) rotate(1deg);
-        }
-        #galerie figure a img{
-            box-shadow: 0px 10px 40px rgba(0,0,0,.7);
+            /*transform: scale(1.1) rotate(1deg);*/
         }
         #galerie figure a p{
             font-size: 1.4rem;
@@ -107,7 +180,7 @@
         }
         #galerie figure .buttons{
             position: relative;
-            z-index: 2;
+            z-index: 3;
             
             margin-top: 60px;
             
@@ -135,14 +208,14 @@
         }
         @media screen and (max-width: 1100px) {
               #galerie figure{
-                  max-width: 50%;
+                  max-width: 50% !important;
               }
             }
         @media screen and (max-width: 700px) {
-              #galerie figure{
-                  max-width: 100%;
-              }
-            }
+          #galerie figure{
+              max-width: 100% !important;
+          }
+        }
         
     </style>
 
@@ -152,9 +225,14 @@
 {% block body %}
 
     <header>
+        <div></div>
         <a href="/">
             <img src="{{ asset('img/mr-photographes-logoV.svg') }}" id="mainLogo" width="85" height="58">
         </a>
+        <ul class="links inverse right">
+            <li><a href="/" title="Retour à l'accueil"><span class="icon icon-home"></span></a></li>
+            <li><a href="/logout" title="Se déconnecter"><span class="icon icon-user-cancel"></span></a></li>
+        </ul>
     </header>
 
     <div id="galerie" class="{% if shootings|length == 1 %}oneShooting{% endif %} {% if shootings|length == 2 %}twoShooting{% endif %} {% if shootings|length == 3 %}threeShooting{% endif %}">
@@ -163,9 +241,14 @@
             <figure>
                 
                 <div class="bgblur" style="background-image: url({{ couv }});"></div>
+                <div class="gradient"></div>
                 
                 <a href="{{ path("front_shooting", {slug: shooting.slug}) }}">
-                    <img src="{{ couv }}" height="300" width="300">
+                    <div class="illus">
+                        <img src="{{ couv }}" height="300" width="300">
+                        <div class="cote"><p>BookShoot n°{{ shooting.bookshoot }}</p></div>
+                        <div class="dessous"></div>
+                    </div>
                     <h2>{{ shooting.nom }}</h2>
                     <p>{{shooting.date|date("%B %Y")}} - {{shooting.photos|length}} photos</p>
                     

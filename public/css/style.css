@@ -7002,7 +7002,7 @@ ul.is-unstyled, ul.unstyled {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400; }
 
-.montserrat, #gallery .picture .infos p, #mainHeader #headerText .headerSignature, #mainHeader .links a, .button {
+.montserrat, #gallery .picture .infos p, .links a, #mainHeader #headerText .headerSignature, .button {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700; }
 
@@ -7117,31 +7117,6 @@ a {
   height: 100vh;
   background-size: cover;
   background-position: center center; }
-  #mainHeader .links {
-    margin: 0px;
-    padding: 0px; }
-    #mainHeader .links li {
-      float: left; }
-    #mainHeader .links a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.4rem;
-      text-transform: uppercase; }
-      #mainHeader .links a .icon {
-        display: inline-block;
-        padding-top: 8px;
-        margin-left: 15px;
-        width: 28px;
-        height: 28px;
-        background: #D30F4B;
-        border-radius: 100px;
-        text-align: center;
-        font-size: 1.2rem; }
-      #mainHeader .links a:hover {
-        text-decoration: underline; }
-        #mainHeader .links a:hover .icon {
-          background: #fff;
-          color: #D30F4B; }
   #mainHeader #headerText {
     position: absolute;
     width: 100%;
@@ -7155,6 +7130,38 @@ a {
       color: #D30F4B;
       font-size: 2rem;
       text-transform: uppercase; }
+
+.links {
+  margin: 0px;
+  padding: 0px; }
+  .links li {
+    float: left; }
+  .links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.4rem;
+    text-transform: uppercase; }
+    .links a .icon {
+      display: inline-block;
+      padding-top: 8px;
+      margin-left: 15px;
+      width: 28px;
+      height: 28px;
+      background: #D30F4B;
+      border-radius: 100px;
+      text-align: center;
+      font-size: 1.2rem;
+      transition: all .1s ease-in-out; }
+    .links a:hover {
+      text-decoration: underline; }
+      .links a:hover .icon {
+        background: #fff;
+        color: #D30F4B;
+        transform: scale(1.4); }
+  .links.inverse a {
+    color: #D30F4B; }
+    .links.inverse a .icon {
+      background: #fff; }
 
 #presentation {
   background: #D30F4B; }
