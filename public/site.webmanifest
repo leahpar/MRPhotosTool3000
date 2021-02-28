@@ -8,8 +8,13 @@
   "orientation": "any",
   "icons": [
     {
-        "src": "favicon.png",
+        "src": "/img/app_icon.png",
         "sizes": "192x192",
+        "type": "image/png"
+    },
+    {
+        "src": "/img/splash_screen.png",
+        "sizes": "512x512",
         "type": "image/png"
     }
   ],

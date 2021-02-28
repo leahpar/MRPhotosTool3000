@@ -22,14 +22,14 @@ class ShootingRepository extends ServiceEntityRepository
 
     public function searchByModele(Modele $modele)
     {
-        $query = $this->createQueryBuilder('s')
-            ->leftJoin('s.modeles', 'm');
+        $query = $this->createQueryBuilder('s');
 
         if ($modele->hasRole("ROLE_ADMIN")) {
             // Pas de filtre
         }
         else {
             $query
+                ->leftJoin('s.modeles', 'm')
                 ->andWhere('m = :modele')
                 ->setParameter(':modele', $modele)
                 ->andWhere('s.statut != :statut')
