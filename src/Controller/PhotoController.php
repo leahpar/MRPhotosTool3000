@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Photo;
 use App\Entity\Shooting;
+use App\Service\PhotoFilterService;
 use Doctrine\ORM\EntityManagerInterface;
 use Liip\ImagineBundle\Service\FilterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,7 +28,7 @@ class PhotoController extends AbstractController
      * @param Photo $photo
      * @return Response
      */
-    public function photo(Request $request, Shooting $shooting, Photo $photo, FilterService $imagine, ?Profiler $profiler): Response
+    public function photo(Request $request, Shooting $shooting, Photo $photo, PhotoFilterService $filterService, ?Profiler $profiler): Response
     {
         $filter = $request->query->get('filter', 'thumbnail');
 
@@ -38,9 +39,6 @@ class PhotoController extends AbstractController
             // $this->createAccessDeniedException();
         }
 
-        /** @var string */
-        $path = $shooting->getSlug().'/'.$photo->getFile();
-
         if ($profiler) {
             // Désactivation du profiler, inutile ici
             // https://symfony.com/doc/current/profiler.html#enabling-the-profiler-conditionally
@@ -48,49 +46,7 @@ class PhotoController extends AbstractController
             $profiler->disable();
         }
 
-        if ($filter == "instagram") {
-            list($width, $height, $type, $attr) = getimagesize($this->getParameter('shootings_directory') . '/' . $path);
-            $ratioImg = $height / $width;
-            $ratioInsta = 5 / 4;
-
-            $runtimeConfig = [
-                'background' => [
-                    'size' => [
-                        1080,
-                        (int)min(1350, 1080 * $ratioImg),
-                    ]
-                ],
-            ];
-
-            if (count($photo->getCensure()??[]) > 0) {
-                $runtimeConfig += [
-                    'censure_filter' => [
-                        'enabled' => true,
-                        'positions' => $photo->getCensure()
-                    ],
-                ];
-            }
-
-            $resourcePath = $imagine->getUrlOfFilteredImageWithRuntimeFilters(
-                $path,
-                'instagram',
-                $runtimeConfig
-            );
-            $filename = parse_url($resourcePath, PHP_URL_PATH);
-            $file = $this->getParameter('public_directory') . $filename;
-        }
-        elseif ($filter == "full") {
-            $resourcePath = $this->getParameter('shootings_directory') . '/' . $path;
-            //$filename = parse_url($resourcePath, PHP_URL_PATH);
-            //$file = $this->getParameter('public_directory') . $filename;
-            $file = $resourcePath;
-        }
-        else {
-            $resourcePath = $imagine->getUrlOfFilteredImage($path, $filter);
-            $filename = parse_url($resourcePath, PHP_URL_PATH);
-            $file = $this->getParameter('public_directory') . $filename;
-        }
-
+        $file = $filterService->getFilteredPhoto($photo, $filter);
 
         $response = new BinaryFileResponse($file);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $photo->getFile());

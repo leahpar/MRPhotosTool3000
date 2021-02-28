@@ -71,7 +71,7 @@ final class BeforeEntityDeletedEvent
 
 - [X] /login
 - [X] page d'accueil des shootings
-- [ ] Shooting > lien "retour" 
+- [X] Shooting > lien "retour" 
 - [ ] page d'erreur
 
 ### DEV
@@ -83,6 +83,16 @@ final class BeforeEntityDeletedEvent
 - [x] Front > Affichage mois des shootings en fr
 - [X] Admin Shooting > lien voir les photos (photos filtre shooting)
 - [X] Admin Galeries > lien voir les photos (photos filtre shooting)
-- [ ] Front > Lien dl zip
+- [X] Front > Lien dl zip
 - [ ] accessvoter pour la gestion des photos / shootings / galeries / public / privé / couv...
 
+
+curl 'https://mr-photographes.fr/shootings/2019-06-26-brise-dete/001-IMG_7597-Modifier.jpg?filter=front' \
+-H 'Connection: keep-alive' \
+-H 'Sec-Fetch-Site: same-origin' \
+-H 'Sec-Fetch-Mode: same-origin' \
+-H 'Sec-Fetch-Dest: empty' \
+-H 'Referer: https://mr-photographes.fr/shootings/2019-06-26-brise-dete' \
+-H 'Cookie: PHPSESSID=stlueh442qpna688ld7evponrh' \
+-H 'If-Modified-Since: Sun, 28 Feb 2021 10:13:59 GMT' \
+--compressed
