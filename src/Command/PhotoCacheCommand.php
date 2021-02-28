@@ -57,7 +57,8 @@ class PhotoCacheCommand extends Command
         }
 
         // Front
-        $photos = $this->em->getRepository(Photo::class)->findByGalerieIsFront();
+        //$photos = $this->em->getRepository(Photo::class)->findByGalerieIsFront();
+        $photos = $this->em->getRepository(Photo::class)->findAll();
         $io->info("Front site");
 
         /** @var Photo $photo */
@@ -68,7 +69,6 @@ class PhotoCacheCommand extends Command
             $t = str_pad(round((microtime(true) - $t) * 1000), 5, ' ', STR_PAD_LEFT);
             $io->writeln("OK $t ms");
         }
-
 
         $io->success('OK');
 
