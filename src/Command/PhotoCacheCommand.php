@@ -44,7 +44,7 @@ class PhotoCacheCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         // Covers
-        /** @var Galerie $galerie */
+
         $photos = $this->em->getRepository(Photo::class)->findByGalerieIsCover();
         $io->info("Front covers");
 
@@ -58,12 +58,15 @@ class PhotoCacheCommand extends Command
         }
 
         // Front
-        // TODO: shooting par shooting (juste pour l'affichage console)
+
         $shootings = $this->em->getRepository(Shooting::class)->findAll();
         /** @var Shooting $shooting */
         foreach ($shootings as $shooting) {
             $io->info("Front site - " . $shooting->getNom());
-            $photos = $this->em->getRepository(Photo::class)->findBy(['shooting' => $shootings]);
+            $photos = $this->em->getRepository(Photo::class)->findBy(
+                ['shooting' => $shooting],
+                ['file' => 'ASC'],
+            );
 
             /** @var Photo $photo */
             foreach ($photos as $photo) {
