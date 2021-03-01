@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\Galerie;
 use App\Entity\Photo;
+use App\Entity\Shooting;
 use App\Service\PhotoFilterService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -57,17 +58,21 @@ class PhotoCacheCommand extends Command
         }
 
         // Front
-        //$photos = $this->em->getRepository(Photo::class)->findByGalerieIsFront();
-        $photos = $this->em->getRepository(Photo::class)->findAll();
-        $io->info("Front site");
+        // TODO: shooting par shooting (juste pour l'affichage console)
+        $shootings = $this->em->getRepository(Shooting::class)->findAll();
+        /** @var Shooting $shooting */
+        foreach ($shootings as $shooting) {
+            $io->info("Front site - " . $shooting->getNom());
+            $photos = $this->em->getRepository(Photo::class)->findBy(['shooting' => $shootings]);
 
-        /** @var Photo $photo */
-        foreach ($photos as $photo) {
-            $io->write("Photo ". str_pad($photo->getFile() . "...", 40));
-            $t = microtime(true);
-            $this->filterService->getFilteredPhoto($photo, "front");
-            $t = str_pad(round((microtime(true) - $t) * 1000), 5, ' ', STR_PAD_LEFT);
-            $io->writeln("OK $t ms");
+            /** @var Photo $photo */
+            foreach ($photos as $photo) {
+                $io->write("Photo " . str_pad($photo->getFile() . "...", 40));
+                $t = microtime(true);
+                $this->filterService->getFilteredPhoto($photo, "front");
+                $t = str_pad(round((microtime(true) - $t) * 1000), 5, ' ', STR_PAD_LEFT);
+                $io->writeln("OK $t ms");
+            }
         }
 
         $io->success('OK');
