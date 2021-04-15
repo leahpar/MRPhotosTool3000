@@ -56,19 +56,16 @@ class PublishCommand extends Command
             $date = null;
             $photo = $this->pubService->getPhotoToPublish($date);
             if ($photo) {
-                if (!$testMode) {
-                    $this->pubService->publishPhoto($photo);
-                    $this->em->persist($photo);
-                    $this->em->flush();
-                    $io->success($photo->getShooting()->getNom()." (".$photo->getFile().") publiée");
+                if ($photo->isPublished()) {
+                    $io->warning($photo->getShooting()->getNom() . " (" . $photo->getFile() . ") déjà publiée");
                 }
                 else {
-                    if ($photo->isPublished()) {
-                        $io->warning($photo->getShooting()->getNom() . " (" . $photo->getFile() . ") déjà publiée");
+                    if (!$testMode) {
+                        $this->pubService->publishPhoto($photo);
+                        $this->em->persist($photo);
+                        $this->em->flush();
                     }
-                    else {
-                        $io->success($photo->getShooting()->getNom() . " (" . $photo->getFile() . ") à publier");
-                    }
+                    $io->success($photo->getShooting()->getNom()." (".$photo->getFile().") à publier");
                 }
             }
             else {
@@ -80,7 +77,6 @@ class PublishCommand extends Command
             $io->error($e->getMessage());
             return Command::FAILURE;
         }
-
     }
 
 }

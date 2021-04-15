@@ -68,7 +68,8 @@ class PublishService
         $publication = $this->getPublicationSemaine($date);
 
         if (!$publication) {
-            throw new \Exception("Aucune publication planifiée à cette date");
+            //throw new \Exception("Aucune publication planifiée à cette date");
+            return null;
         }
 
         $photos = $publication->getPhotos();
