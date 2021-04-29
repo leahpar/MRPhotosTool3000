@@ -61,7 +61,12 @@ class AdminDashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Tags', 'fas fa-tags', Tag::class),
             MenuItem::linkToCrud('Photos', 'fas fa-images', Photo::class),
             MenuItem::linkToCrud('Galeries', 'fas fa-folder-open', Galerie::class),
+            // TODO: publications passées / publications à venir
             MenuItem::linkToCrud('Publications', 'fas fa-bullhorn', Publication::class),
+
+            MenuItem::section(),
+            MenuItem::linkToUrl('Instagram', 'fas fa-instagram', 'https://www.instagram.com/mrphotographes/'),
+            MenuItem::linktoRoute('Statistiques', 'fas fa-chart-line', 'admin_stats'),
         ];
     }
 

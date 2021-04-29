@@ -10,6 +10,8 @@ parameters:
     router.request_context.host: '%env(ROUTER_HOST)%'
     router.request_context.scheme: '%env(ROUTER_SCHEME)%'
     #router.request_context.base_url: ''
+    
+    ig_token: '%env(IG_TOKEN)%'
 
 services:
     # default configuration for services in *this* file
@@ -20,6 +22,7 @@ services:
         bind:
             string $public_directory: '%public_directory%'
             string $shootings_directory: '%shootings_directory%'
+            string $ig_token: '%ig_token%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

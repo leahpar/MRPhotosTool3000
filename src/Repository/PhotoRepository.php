@@ -41,4 +41,15 @@ class PhotoRepository extends ServiceEntityRepository
         ;
     }
 
+    public function stats(\DateTime $from)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.datePublication >= :date')
+            ->setParameter(':date', $from)
+            ->orderBy('p.datePublication', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

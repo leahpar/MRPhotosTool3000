@@ -15,7 +15,25 @@ if ("serviceWorker" in navigator) {
             })
             .then(function (reg) {
                 console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
-            });
+//                    reg.periodicSync.register('content-sync', {
+//                        // An interval of one day.
+//                        minInterval: 5 * 60 * 1000,
+//                    });
+//                    console.log("register('content-sync')");
+                }
+            );
+
+//        self.addEventListener('periodicsync', (event) => {
+//            if (event.tag === 'content-sync') {
+//                console.log("event('content-sync')");
+//                // See the "Think before you sync" section for
+//                // checks you could perform before syncing.
+//                event.waitUntil(
+//                    navigator.setAppBadge(Math.floor(Math.random()*100))
+//                );
+//            }
+//        });
+
     }
 }
 else {

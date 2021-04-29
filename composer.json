@@ -9,6 +9,7 @@
         "ext-exif": "*",
         "ext-iconv": "*",
         "ext-zip": "*",
+        "ext-json": "*",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.2",
@@ -106,5 +107,7 @@
             "type": "vcs",
             "url": "https://github.com/leahpar/EasyAdminBundle"
         }
-    ]
+    ],
+    "name": "leahpar/mrphototool",
+    "description": ""
 }

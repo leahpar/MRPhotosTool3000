@@ -1,0 +1,135 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title %}
+    Statistiques
+{% endblock %}
+
+{% block page_content %}
+
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <!-- ChartJS 3.2
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.js"
+            integrity="sha512-opXrgVcTHsEVdBUZqTPlW9S8+99hNbaHmXtAdXXc61OUU6gOII5ku/PzZFqexHXc3hnK8IrJKHo+T7O4GRIJcw=="
+            crossorigin="anonymous"></script>
+    -->
+
+    <!-- ChartJS 2.9 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css" integrity="sha512-C7hOmCgGzihKXzyPU/z4nv97W0d9bv4ALuuEbSf6hm93myico9qa0hv4dODThvCsqQUmKmLcJmlpRmCaApr83g==" crossorigin="anonymous" />
+
+    <script>
+        const modeles = [
+            {% for photo in publications %}
+                "{{ photo.modeles }}",
+            {% endfor %}
+        ];
+
+        const data = {
+            datasets: [{
+                type: 'line',
+                label: 'followers',
+                borderColor: '#D30F4B',
+                fill: false,
+                spanGaps: true,
+                yAxisID: 'Y1',
+                data: [
+                    {% for stat in stats %}
+                    {
+                        x: new Date("{{ stat.date|date('Y-m-d') }}"),
+                        y: {{ stat.value??'null' }},
+                    },
+                    {% endfor %}
+                ],
+            },
+            {
+                label: 'publications',
+                borderColor: 'blue',
+                backgroundColor: '#4374bd',
+                type: 'bar',
+                fill: false,
+                barPercentage: 0.1,
+                yAxisID: 'Y2',
+                data: [
+                    {% for photo in publications %}
+                    {
+                        x: new Date("{{ photo.datePublication|date('Y-m-d') }}"),
+                        y: 1,
+                    },
+                    {% endfor %}
+                ],
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                    display: false,
+                },
+                title: {
+                    display: false,
+                    text: 'Statistiques Instagram'
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            tooltipFormat: 'D MMM',
+                        },
+                        ticks: {
+                            source: 'data',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    }],
+                    yAxes: [{
+                        id: 'Y1',
+                        title: {
+                            display: true,
+                            text: 'value'
+                        }
+                    },
+                    {
+                        id: 'Y2',
+                        display: false,
+                        ticks: {
+                            min: 0,
+                            max: 1,
+                        }
+                    }]
+                },
+                tooltips: {
+                    position: 'nearest',
+                    mode: 'nearest',
+                    intersect: false,
+                    callbacks: {
+                        label: function(tooltipItem, datasets) {
+                            //console.log(tooltipItem, datasets);
+                            if (tooltipItem['datasetIndex'] === 1) {
+                                return modeles[tooltipItem['index']];
+                            }
+                            return tooltipItem['label'];
+                        }
+                    }
+                }
+            },
+        };
+
+        let myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+    </script>
+
+
+{% endblock %}
+

@@ -179,6 +179,16 @@ class Photo
         return $this->shooting->getNom().' - '.$this->file;
     }
 
+    public function getModeles(): string
+    {
+        //return implode('\n', array_map(
+        //    function (Modele $m) { return $m->getNom();},
+        //    $this->getShooting()->getModeles()->toArray()
+        //));
+        return implode('\n',
+            $this->getShooting()->getModeles()->toArray()
+        );
+    }
 
     public function setTags(Collection $tags): self
     {
