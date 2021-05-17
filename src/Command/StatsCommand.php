@@ -5,9 +5,7 @@ namespace App\Command;
 use App\Entity\Stat;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -15,12 +13,14 @@ class StatsCommand extends Command
 {
     protected static $defaultName = 'app:stats';
     private string $ig_token;
+    private string $hc_token;
     private EntityManagerInterface $em;
 
-    public function __construct(string $ig_token, EntityManagerInterface $em)
+    public function __construct(string $ig_token, string $hc_token, EntityManagerInterface $em)
     {
         parent::__construct();
         $this->ig_token = $ig_token;
+        $this->hc_token = $hc_token;
         $this->em = $em;
     }
 
@@ -51,11 +51,17 @@ class StatsCommand extends Command
             $this->em->persist($stat);
             $this->em->flush();
 
+            if ($this->hc_token) {
+                file_get_contents('https://hc-ping.com/'.$this->hc_token);
+            }
             $io->success('OK');
             return Command::SUCCESS;
         }
         catch (\Exception $e) {
             $io->error($e->getMessage());
+            if ($this->hc_token) {
+                file_get_contents('https://hc-ping.com/'.$this->hc_token.'/fail');
+            }
             return Command::FAILURE;
         }
     }

@@ -112,11 +112,11 @@
                     intersect: false,
                     callbacks: {
                         label: function(tooltipItem, datasets) {
-                            //console.log(tooltipItem, datasets);
+                            console.log(tooltipItem, datasets);
                             if (tooltipItem['datasetIndex'] === 1) {
                                 return modeles[tooltipItem['index']];
                             }
-                            return tooltipItem['label'];
+                            return tooltipItem['value'];
                         }
                     }
                 }
