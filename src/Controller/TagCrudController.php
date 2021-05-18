@@ -13,22 +13,13 @@ class TagCrudController extends AbstractCrudController
         return Tag::class;
     }
 
-    /*
-    public function configureFields(string $pageName): iterable
-    {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
-    }
-    */
-
     public function configureFields(string $pageName): iterable
     {
         return [
             'nom',
             'tags',
+            Field\TextareaField::new('tags')
+            ->setCustomOption(Field\TextareaField::OPTION_MAX_LENGTH, 1024)
         ];
     }
 
