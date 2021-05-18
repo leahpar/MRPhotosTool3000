@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Publication;
-use App\Field\PhotosField;
-use App\Form\CustomPhotosDisplayType;
-use App\Form\PhotoType;
+use App\Filter\DateSemaineFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field;
 
@@ -31,6 +30,13 @@ class PublicationCrudController extends AbstractCrudController
             //->overrideTemplates([
             //    'crud/field/association' => 'eadmin/template_images_form.html.twig'
             //])
+        ;
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(DateSemaineFilter::new('date', "Date de publication"))
         ;
     }
 

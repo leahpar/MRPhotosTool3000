@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\EventSubscriber;
-
 
 use App\Entity\Modele;
 use App\Entity\Publication;
@@ -22,7 +20,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
      * @var EntityManagerInterface
      */
     private EntityManagerInterface $em;
-
 
     /**
      * EasyAdminSubscriber constructor.
@@ -88,8 +85,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         $password = $this->passwordEncoder->encodePassword($entity, $entity->getPlainPassword());
         $entity->setPassword($password);
-
     }
-
 
 }
