@@ -26,7 +26,6 @@ class DateSemaineFilter implements FilterInterface
 
     public function apply(QueryBuilder $queryBuilder, FilterDataDto $filterDataDto, ?FieldDto $fieldDto, EntityDto $entityDto): void
     {
-        dump($filterDataDto->getValue());
         if ($filterDataDto->getValue() == 0) {
             // à publier
             $queryBuilder->andWhere(sprintf('%s.%s >= :thisweek', $filterDataDto->getEntityAlias(), $filterDataDto->getProperty()))
