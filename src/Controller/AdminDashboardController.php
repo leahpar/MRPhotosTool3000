@@ -67,6 +67,9 @@ class AdminDashboardController extends AbstractDashboardController
             MenuItem::section(),
             MenuItem::linkToUrl('Instagram', 'fas fa-instagram', 'https://www.instagram.com/mrphotographes/'),
             MenuItem::linktoRoute('Statistiques', 'fas fa-chart-line', 'admin_stats'),
+
+            MenuItem::section(),
+            MenuItem::linktoRoute('Retour site MRP', 'fas fa-reply', 'index'),
         ];
     }
 
