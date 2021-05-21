@@ -69,7 +69,8 @@ class AdminDashboardController extends AbstractDashboardController
             MenuItem::linktoRoute('Statistiques', 'fas fa-chart-line', 'admin_stats'),
 
             MenuItem::section(),
-            MenuItem::linktoRoute('Retour site MRP', 'fas fa-reply', 'index'),
+            MenuItem::linktoRoute('Site MRP', 'fas fa-reply', 'index'),
+            MenuItem::linktoRoute('Galeries', 'fas fa-book', 'front_shootings'),
         ];
     }
 
