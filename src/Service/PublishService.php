@@ -83,10 +83,6 @@ class PublishService
 
     public function publishPhoto(Photo $photo)
     {
-        if ($photo->isPublished()) {
-            throw new \Exception("Photo déjà publiée");
-        }
-
         $photo->setDatePublication(new \DateTime());
         $this->publisher->publish($photo);
     }
