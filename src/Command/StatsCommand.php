@@ -38,6 +38,7 @@ class StatsCommand extends Command
 
         try {
             $url = "https://graph.facebook.com/v9.0/17841406271014748?fields=id%2Cname%2Cfollowers_count&access_token=" . $this->ig_token;
+            // TODO: gestion erreur HTTP != 200
             $json = file_get_contents($url);
             $data = json_decode($json);
 

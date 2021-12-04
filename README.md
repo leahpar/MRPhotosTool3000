@@ -42,6 +42,26 @@ final class BeforeEntityDeletedEvent
 }
 ```
 
+### InvalidArgumentException: "A coordinate cannot be positioned outside of a bounding box (x: 0, y: -0.5 given)"
+
+```php
+# ./vendor/imagine/imagine/src/Image/Point.php
+public function __construct($x, $y)
+{
+    $this->x = ($x < 0 ? 0 : $x);
+    $this->y = ($y < 0 ? 0 : $y);
+
+    /*
+    if ($x < 0 || $y < 0) {
+        throw new InvalidArgumentException(sprintf('A coordinate cannot be positioned outside of a bounding box (x: %s, y: %s given)', $x, $y));
+    }
+
+    $this->x = $x;
+    $this->y = $y;
+    */
+}
+```
+
 ### InvalidArgumentException - The controller for URI "" is not callable
 
 ```twig
@@ -65,6 +85,23 @@ final class BeforeEntityDeletedEvent
 - https://medium.com/swlh/using-your-own-forks-with-composer-699358db05d9
 - https://stackoverflow.com/questions/6022302/how-to-apply-unmerged-upstream-pull-requests-from-other-forks-into-my-fork
 
+### Facebook
+
+Obtention d'un token longue durée :
+
+https://developers.facebook.com/docs/facebook-login/access-tokens/refreshing/
+
+curl -i -X GET "https://graph.facebook.com/v9.0/oauth/access_token\
+?grant_type=fb_exchange_token\
+&client_id=xxxx\
+&client_secret=xxxx\
+&fb_exchange_token=xxxx"
+
+`fb_exchange_token` = 'token utilisteur' sur https://developers.facebook.com/tools/explorer/
+
+`client_id` et `client_secret` = 'identifiant d'application' et 'clé secrète' sur https://developers.facebook.com/apps/<APP>/settings/basic/ 
+
+
 ## TODO
 
 ### DESIGN
@@ -72,6 +109,7 @@ final class BeforeEntityDeletedEvent
 - [X] /login
 - [X] page d'accueil des shootings
 - [X] Shooting > lien "retour" 
+- [X] Accès admin sur la page d'accueil
 - [ ] page d'erreur
 
 ### DEV
@@ -96,4 +134,7 @@ curl 'https://mr-photographes.fr/shootings/2019-06-26-brise-dete/001-IMG_7597-Mo
 -H 'Cookie: PHPSESSID=stlueh442qpna688ld7evponrh' \
 -H 'If-Modified-Since: Sun, 28 Feb 2021 10:13:59 GMT' \
 --compressed
+
+
+
 

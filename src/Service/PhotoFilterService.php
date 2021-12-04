@@ -57,6 +57,8 @@ class PhotoFilterService
                 ];
             }
 
+            dump($runtimeConfig);
+
             $resourcePath = $this->imagine->getUrlOfFilteredImageWithRuntimeFilters(
                 $path,
                 'instagram',

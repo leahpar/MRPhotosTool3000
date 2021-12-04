@@ -18,15 +18,12 @@ use Liip\ImagineBundle\Imagine\Filter\Loader\LoaderInterface;
 class CensureImageFilter implements LoaderInterface
 {
 
-    /**
-     * @var ImagineInterface
-     */
-    private ImagineInterface $imagine;
-
-    public function __construct(ImagineInterface $imagine)
-    {
-        $this->imagine = $imagine;
-    }
+//    private ImagineInterface $imagine;
+//
+//    public function __construct(ImagineInterface $imagine)
+//    {
+//        $this->imagine = $imagine;
+//    }
 
     /**
      * Si besoin, voir exemple
@@ -51,6 +48,12 @@ class CensureImageFilter implements LoaderInterface
 
                 $point = new Point($x, $y);
                 $box = new Box($w, $h);
+
+                if (!$image->getSize()->contains($box, $point)) {
+                    // Point hors images
+                    // TODO: remonter l'erreur
+                    continue;
+                }
 
                 // Application plusieurs fois du filtre car il est très faible
                 // https://www.php.net/manual/fr/function.imagefilter.php#114750
