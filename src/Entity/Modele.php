@@ -6,12 +6,13 @@ use App\Repository\ModeleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ModeleRepository::class)
  */
-class Modele implements UserInterface
+class Modele implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id

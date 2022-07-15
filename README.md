@@ -31,6 +31,8 @@ protected $validTypes = [
 
 ### Attempted to call an undefined method named "isPropagationStopped"
 
+**plus nécessaire**
+
 ```php
 # ./vendor/easycorp/easyadmin-bundle/src/Event/BeforeEntityDeletedEvent.php
 # line 10
