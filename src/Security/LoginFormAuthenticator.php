@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\Modele;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,13 +47,19 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        /** @var Modele $user */
+        $user = $token->getUser();
+
+        //if ($user->hasRole("ROLE_ADMIN")) {
+        //    return new RedirectResponse("/admin");
+        //}
+        if ($user->hasRole("ROLE_MODELE")) {
+            return new RedirectResponse($this->urlGenerator->generate('front_shootings'));
+        }
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-
-        // For example:
-        return new RedirectResponse($this->urlGenerator->generate('index'));
-        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl(Request $request): string
