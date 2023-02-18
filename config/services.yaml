@@ -21,8 +21,8 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
         bind:
-            string $public_directory: '%public_directory%'
-            string $shootings_directory: '%shootings_directory%'
+            string $publicDirectory: '%public_directory%'
+            string $shootingsDirectory: '%shootings_directory%'
             string $ig_token: '%ig_token%'
             string $hc_token: '%hc_token%'
 
@@ -72,5 +72,4 @@ services:
     # C'est le RssPublisherService qui sert de publisher
     # https://symfony.com/doc/current/service_container/autowiring.html#working-with-interfaces
     App\Service\PublisherInterface: '@App\Service\RssPublisherService'
-    
     

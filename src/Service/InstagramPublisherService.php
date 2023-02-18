@@ -12,7 +12,6 @@ class InstagramPublisherService implements PublisherInterface
 
     }
 
-
     private function createMediaContainer()
     {
 

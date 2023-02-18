@@ -9,11 +9,10 @@ use Symfony\Component\Uid\Uuid;
 
 class RssPublisherService implements PublisherInterface
 {
-    /**
-     * RssService constructor.
-     */
-    public function __construct(private readonly string $publicDirectory, private readonly UrlGeneratorInterface $router)
-    {
+    public function __construct(
+        private readonly string $publicDirectory,
+        private readonly UrlGeneratorInterface $router
+    ) {
     }
 
     public function publish(Photo $photo)

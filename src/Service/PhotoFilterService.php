@@ -10,8 +10,11 @@ use Liip\ImagineBundle\Service\FilterService;
 
 class PhotoFilterService
 {
-    public function __construct(private readonly FilterService $imagine, private readonly string $publicDirectory, private readonly string $shootingsDirectory)
-    {
+    public function __construct(
+        private readonly FilterService $imagine,
+        private readonly string $publicDirectory,
+        private readonly string $shootingsDirectory
+    ) {
     }
 
     public function getFilteredPhoto(Photo $photo, string $filter): string

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\Config\RectorConfig;
-use Rector\Set\ValueObject\LevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
@@ -17,6 +16,9 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
 
     $rectorConfig->sets([
-        LevelSetList::UP_TO_PHP_82
+        //Rector\Set\ValueObject\LevelSetList::UP_TO_PHP_82,       // ✅
+        //Rector\Symfony\Set\SymfonySetList::SYMFONY_62            // ⚠️ Sf6.2 bloqué par la version maison de EasyAdmin
+        //Rector\Symfony\Set\SymfonySetList::SYMFONY_CODE_QUALITY  // ✅
+        //Rector\Symfony\Set\SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES // TODO
     ]);
 };

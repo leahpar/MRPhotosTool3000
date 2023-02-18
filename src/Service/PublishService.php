@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service;
-
 
 use App\Entity\Photo;
 use App\Entity\Publication;
@@ -22,12 +20,10 @@ class PublishService
         7 => [1,   2,   3,   4,   5,   6,   7   ],
     ];
 
-    /**
-     * PublishService constructor.
-     */
-    public function __construct(private readonly EntityManagerInterface $em, private readonly PublisherInterface $publisher)
-    {
-    }
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly PublisherInterface $publisher
+    ) {}
 
     /**
      * Retourne la publication de la semaine demandée
