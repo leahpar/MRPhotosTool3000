@@ -16,13 +16,10 @@ class PublishCommand extends Command
 {
     protected static $defaultName = 'app:publish';
 
-    /**
-     * PublishCommand constructor.
-     * @param PublishService $pubService
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(private readonly PublishService $pubService, private readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        private readonly PublishService $pubService,
+        private readonly EntityManagerInterface $em
+    ) {
         parent::__construct();
     }
 
@@ -40,7 +37,6 @@ class PublishCommand extends Command
 
         $testMode = ($input->getOption('test') !== false);
         try {
-            //$date = new \DateTime("friday next week");
             $date = null;
             $photo = $this->pubService->getPhotoToPublish($date);
             if ($photo) {

@@ -13,11 +13,14 @@ class StatsCommand extends Command
 {
     protected static $defaultName = 'app:stats';
 
-    public function __construct(private readonly string $ig_token, private readonly string $hc_token, private readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        private readonly string $igToken,
+        private readonly string $igAccountId,
+        private readonly string $hcToken,
+        private readonly EntityManagerInterface $em
+    ) {
         parent::__construct();
     }
-
 
     protected function configure()
     {
@@ -31,7 +34,12 @@ class StatsCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         try {
-            $url = "https://graph.facebook.com/v9.0/17841406271014748?fields=id%2Cname%2Cfollowers_count&access_token=" . $this->ig_token;
+            $url = "https://graph.facebook.com/v16.0/" . $this->igAccountId;
+            $params = [
+                "fields" => "id,name,followers_count",
+                "access_token" => $this->igToken
+            ];
+            $url .= "?" . http_build_query($params);
             // TODO: gestion erreur HTTP != 200
             $json = file_get_contents($url);
             $data = json_decode($json, null, 512, JSON_THROW_ON_ERROR);
@@ -46,16 +54,16 @@ class StatsCommand extends Command
             $this->em->persist($stat);
             $this->em->flush();
 
-            if ($this->hc_token) {
-                file_get_contents('https://hc-ping.com/'.$this->hc_token);
+            if ($this->hcToken) {
+                file_get_contents('https://hc-ping.com/'.$this->hcToken);
             }
             $io->success('OK');
             return Command::SUCCESS;
         }
         catch (\Exception $e) {
             $io->error($e->getMessage());
-            if ($this->hc_token) {
-                file_get_contents('https://hc-ping.com/'.$this->hc_token.'/fail');
+            if ($this->hcToken) {
+                file_get_contents('https://hc-ping.com/'.$this->hcToken.'/fail');
             }
             return Command::FAILURE;
         }

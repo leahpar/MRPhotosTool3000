@@ -22,12 +22,12 @@ class Publication
     /**
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="publication")
      */
-    private \Doctrine\Common\Collections\ArrayCollection|array $photos;
+    private Collection $photos;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class)
      */
-    private \Doctrine\Common\Collections\ArrayCollection|array $tags;
+    private Collection $tags;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

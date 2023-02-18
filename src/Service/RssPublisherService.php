@@ -12,8 +12,7 @@ class RssPublisherService implements PublisherInterface
     public function __construct(
         private readonly string $publicDirectory,
         private readonly UrlGeneratorInterface $router
-    ) {
-    }
+    ) {}
 
     public function publish(Photo $photo)
     {
@@ -23,7 +22,6 @@ class RssPublisherService implements PublisherInterface
             "filter" => "instagram",
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        //$desc = nl2br($this->getDescription($photo));
         $desc = str_replace("\n", "<br>", $this->getDescription($photo));
 
         $xml = $this->createXml($link, $desc);

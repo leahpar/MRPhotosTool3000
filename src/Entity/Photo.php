@@ -23,7 +23,7 @@ class Photo implements \Stringable
      * @ORM\ManyToOne(targetEntity=Shooting::class, inversedBy="photos")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?\App\Entity\Shooting $shooting = null;
+    private ?Shooting $shooting = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -43,13 +43,13 @@ class Photo implements \Stringable
     /**
      * @ORM\ManyToMany(targetEntity=Galerie::class, mappedBy="photos", cascade={"persist"})
      */
-    private $galeries;
+    private Collection $galeries;
 
     /**
      * @ORM\ManyToOne(targetEntity=Publication::class, inversedBy="photos")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
-    private ?\App\Entity\Publication $publication = null;
+    private ?Publication $publication = null;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -59,7 +59,7 @@ class Photo implements \Stringable
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class)
      */
-    private \Doctrine\Common\Collections\Collection|array|null $tags = null;
+    private Collection $tags;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -80,6 +80,7 @@ class Photo implements \Stringable
     public function __construct()
     {
         $this->galeries = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int

@@ -49,13 +49,13 @@ class Shooting implements \Stringable
     /**
      * @ORM\ManyToMany(targetEntity=Modele::class, inversedBy="shootings")
      */
-    private \Doctrine\Common\Collections\ArrayCollection|array $modeles;
+    private Collection $modeles;
 
     /**
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="shooting", orphanRemoval=true)
      * @ORM\OrderBy({"file" = "ASC"})
      */
-    private \Doctrine\Common\Collections\ArrayCollection|array $photos;
+    private Collection $photos;
 
     /**
      * @ORM\Column(type="string", length=255)

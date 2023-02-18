@@ -39,7 +39,7 @@ class Modele implements UserInterface, PasswordAuthenticatedUserInterface, \Stri
     /**
      * @ORM\ManyToMany(targetEntity=Shooting::class, mappedBy="modeles")
      */
-    private \Doctrine\Common\Collections\ArrayCollection|array $shootings;
+    private Collection $shootings;
 
 
     /**

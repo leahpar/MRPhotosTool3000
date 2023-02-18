@@ -93,16 +93,39 @@ Obtention d'un token longue durée :
 
 https://developers.facebook.com/docs/facebook-login/access-tokens/refreshing/
 
-curl -i -X GET "https://graph.facebook.com/v9.0/oauth/access_token\
+curl -i -X GET "https://graph.facebook.com/v16.0/oauth/access_token\
 ?grant_type=fb_exchange_token\
 &client_id=xxxx\
 &client_secret=xxxx\
 &fb_exchange_token=xxxx"
 
-`fb_exchange_token` = 'token utilisteur' sur https://developers.facebook.com/tools/explorer/
+`fb_exchange_token` = 'token utilisteur'
+sur https://developers.facebook.com/tools/explorer/
 
-`client_id` et `client_secret` = 'identifiant d'application' et 'clé secrète' sur https://developers.facebook.com/apps/<APP>/settings/basic/ 
+`client_id` et `client_secret` = 'identifiant d'application' et 'clé secrète' 
+sur https://developers.facebook.com/apps/<APP>/settings/basic/ 
 
+# Prolonger la durée de validité du token
+
+https://developers.facebook.com/tools/debug/accesstoken/?access_token=xxxx
+
+
+# rsync
+
+rsync -avz -e "ssh" --progress raphael@elune.ovh:/home/raphael/mr-photographes.fr/var/shootings .
+
+# certbot
+
+certbot certonly --webroot \ 
+    -w /home/raphael/mr-photographes.fr/public \
+    -d mr-photographes.fr \
+    -d www.mr-photographes.fr \
+    -d mrphotographes.fr \
+    -d www.mrphotographes.fr \
+    -d mrphotographes.com \
+    -d www.mrphotographes.com \
+    -d mr-photographes.com \
+    -d www.mr-photographes.com
 
 ## TODO
 
