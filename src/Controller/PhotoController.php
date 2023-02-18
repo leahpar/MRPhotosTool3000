@@ -23,10 +23,6 @@ class PhotoController extends AbstractController
      * @Route("shootings/{slug}/{file}")
      *
      * @TODO: "304 Not Modified" ?
-     *
-     * @param Shooting $shooting
-     * @param Photo $photo
-     * @return Response
      */
     public function photo(Request $request, Shooting $shooting, Photo $photo, PhotoFilterService $filterService, ?Profiler $profiler): Response
     {
@@ -64,10 +60,6 @@ class PhotoController extends AbstractController
     /**
      * //Route("shootings/{file}")
      * //Security("is_granted('view', photo)")
-     *
-     * @param Photo $photo
-     * @param FilterService $imagine
-     * @return Response
      */
     public function photoDirect(Photo $photo, FilterService $imagine): Response
     {
@@ -104,8 +96,6 @@ class PhotoController extends AbstractController
      * Applique un floutage
      *
      * @Route("admin/photo/{id}/censure", name="photo_censure")
-     * @param Photo $photo
-     * @param EntityManagerInterface $em
      */
     public function photoCensurePosition(Request $request, Photo $photo, EntityManagerInterface $em, FilterService $imagine)
     {

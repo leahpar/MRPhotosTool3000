@@ -16,10 +16,8 @@ class StatsController extends AbstractController
      * https://developers.facebook.com/docs/instagram-api/reference/ig-user/
      * https://www.instagram.com/mrphotographes/?__a=1
      */
-
     /**
      * @Route("/admin/stats", name="admin_stats")
-     * @return Response
      */
     public function index(EntityManagerInterface $em): Response
     {

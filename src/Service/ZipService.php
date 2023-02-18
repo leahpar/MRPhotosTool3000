@@ -9,19 +9,11 @@ use ZipArchive;
 
 class ZipService
 {
-    private string $publicDirectory;
-    private string $shootingsDirectory;
-
-
     /**
      * ZipService constructor.
-     * @param string $public_directory
-     * @param string $shootings_directory
      */
-    public function __construct(string $public_directory, string $shootings_directory)
+    public function __construct(private readonly string $publicDirectory, private readonly string $shootingsDirectory)
     {
-        $this->publicDirectory = $public_directory;
-        $this->shootingsDirectory = $shootings_directory;
     }
 
     public function zip(Shooting $shooting, string $filename): string
@@ -63,7 +55,7 @@ class ZipService
         $zipdir = basename($zipfile, '.zip');
 
         foreach ($files as $file) {
-            $filename = basename($file);
+            $filename = basename((string) $file);
             $zip->addFile($file, $zipdir."/".$filename);
         }
 

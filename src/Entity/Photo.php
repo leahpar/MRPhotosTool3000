@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=PhotoRepository::class)
  */
-class Photo
+class Photo implements \Stringable
 {
     /**
      * @ORM\Id
@@ -23,22 +23,22 @@ class Photo
      * @ORM\ManyToOne(targetEntity=Shooting::class, inversedBy="photos")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $shooting;
+    private ?\App\Entity\Shooting $shooting = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $motsCles;
+    private ?string $motsCles = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $file;
+    private ?string $file = null;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $ratio;
+    private ?float $ratio = null;
 
     /**
      * @ORM\ManyToMany(targetEntity=Galerie::class, mappedBy="photos", cascade={"persist"})
@@ -49,32 +49,32 @@ class Photo
      * @ORM\ManyToOne(targetEntity=Publication::class, inversedBy="photos")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
-    private $publication;
+    private ?\App\Entity\Publication $publication = null;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $datePublication;
+    private ?\DateTimeInterface $datePublication = null;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class)
      */
-    private $tags;
+    private \Doctrine\Common\Collections\Collection|array|null $tags = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $moreTags;
+    private ?string $moreTags = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    private ?string $description = null;
 
     /**
      * @ORM\Column(type="json", nullable=true)
      */
-    private $censure = [];
+    private ?array $censure = [];
 
 
     public function __construct()
@@ -125,7 +125,6 @@ class Photo
 
     /**
      * URL de l'image pour l'affichage dans l'admin
-     * @return string
      */
     public function getThumbnail(?string $filtre = "thumbnail"): string
     {

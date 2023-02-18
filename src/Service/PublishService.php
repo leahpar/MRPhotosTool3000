@@ -10,12 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class PublishService
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-    
-    private $calendrier = [
+    private array $calendrier = [
         //    lun  mar  mer  jeu  ven  sam  dim
         //    0    1    2    3    4    5    6
         1 => [1,   0,   0,   0,   0,   0,   0   ],  
@@ -26,20 +21,12 @@ class PublishService
         6 => [1,   2,   3,   4,   5,   6,   0   ],
         7 => [1,   2,   3,   4,   5,   6,   7   ],
     ];
-    /**
-     * @var PublisherInterface
-     */
-    private PublisherInterface $publisher;
 
     /**
      * PublishService constructor.
-     * @param EntityManagerInterface $em
-     * @param PublisherInterface $publisher
      */
-    public function __construct(EntityManagerInterface $em, PublisherInterface $publisher)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly PublisherInterface $publisher)
     {
-        $this->em = $em;
-        $this->publisher = $publisher;
     }
 
     /**

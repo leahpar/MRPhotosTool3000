@@ -12,16 +12,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class StatsCommand extends Command
 {
     protected static $defaultName = 'app:stats';
-    private string $ig_token;
-    private string $hc_token;
-    private EntityManagerInterface $em;
 
-    public function __construct(string $ig_token, string $hc_token, EntityManagerInterface $em)
+    public function __construct(private readonly string $ig_token, private readonly string $hc_token, private readonly EntityManagerInterface $em)
     {
         parent::__construct();
-        $this->ig_token = $ig_token;
-        $this->hc_token = $hc_token;
-        $this->em = $em;
     }
 
 
@@ -40,7 +34,7 @@ class StatsCommand extends Command
             $url = "https://graph.facebook.com/v9.0/17841406271014748?fields=id%2Cname%2Cfollowers_count&access_token=" . $this->ig_token;
             // TODO: gestion erreur HTTP != 200
             $json = file_get_contents($url);
-            $data = json_decode($json);
+            $data = json_decode($json, null, 512, JSON_THROW_ON_ERROR);
 
             /** @var Stat $stat */
             $stat = $this->em->getRepository(Stat::class)->findOneBy([

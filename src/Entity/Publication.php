@@ -22,27 +22,27 @@ class Publication
     /**
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="publication")
      */
-    private $photos;
+    private \Doctrine\Common\Collections\ArrayCollection|array $photos;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class)
      */
-    private $tags;
+    private \Doctrine\Common\Collections\ArrayCollection|array $tags;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $moreTags;
+    private ?string $moreTags = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    private ?string $description = null;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $date;
+    private ?\DateTime $date = null;
 
 
     public function __construct()

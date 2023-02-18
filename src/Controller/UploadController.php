@@ -47,7 +47,7 @@ class UploadController extends AbstractController
                 $uploadedFile->move($dir, $filename);
 
                 // Lecture infos image (IPTC)
-                list($width, $height) = getimagesize($dir .'/'. $filename, $infos);
+                [$width, $height] = getimagesize($dir .'/'. $filename, $infos);
                 $iptc = iptcparse($infos['APP13']??null);
                 $motsCles = [];
                 if ($iptc) {
@@ -72,7 +72,7 @@ class UploadController extends AbstractController
                 $em->flush();
 
             }
-            catch (FileException $e) {
+            catch (FileException) {
                 // ... handle exception if something happens during file upload
                 //dump($e);
             }

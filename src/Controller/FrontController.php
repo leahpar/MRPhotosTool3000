@@ -27,7 +27,7 @@ class FrontController extends AbstractController
 
         $galeries = $em->getRepository(Galerie::class)->findBy(["isCover" => true]);
         /** @var Galerie $galerie */
-        $galerie = $galeries[rand(0, count($galeries)-1)];
+        $galerie = $galeries[random_int(0, count($galeries)-1)];
         $cover = $galerie->getRandomPhoto();
 
         $width = 500; // px
@@ -70,9 +70,6 @@ class FrontController extends AbstractController
     /**
      * @Route("/shootings", name="front_shootings")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_MODELE')")
-     *
-     * @param EntityManagerInterface $em
-     * @return Response
      */
     public function shootings(EntityManagerInterface $em): Response
     {
@@ -90,9 +87,6 @@ class FrontController extends AbstractController
      * @Route("/shootings/{slug}", name="front_shooting")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_MODELE')")
      * @TODO ShootingAccessVoter
-     *
-     * @param Shooting $shooting
-     * @return Response
      */
     public function shooting(Shooting $shooting): Response
     {
@@ -116,9 +110,6 @@ class FrontController extends AbstractController
      * @Route("/shootings/{slug}/zip", name="front_shooting_zip")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_MODELE')")
      * @TODO ShootingAccessVoter
-     *
-     * @param Shooting $shooting
-     * @return Response
      */
     public function shootingZip(Shooting $shooting, ZipService $zipService): Response
     {
@@ -142,7 +133,6 @@ class FrontController extends AbstractController
 
     /**
      * @Route("/galeries")
-     * @return Response
      */
     public function galeries(): Response
     {
@@ -152,8 +142,6 @@ class FrontController extends AbstractController
     /**
      * @Route("/galeries/{slug}", name="front_galerie")
      *
-     * @param Galerie $galerie
-     * @return Response
      * @throws \Exception
      */
     public function galerie(Galerie $galerie): Response

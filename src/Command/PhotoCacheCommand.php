@@ -18,18 +18,13 @@ class PhotoCacheCommand extends Command
 {
     protected static $defaultName = 'app:photo:cache';
 
-    private PhotoFilterService $filterService;
-    private EntityManagerInterface $em;
-
     /**
      * @param PhotoFilterService $filterService
      * @param EntityManagerInterface $em
      */
-    public function __construct(PhotoFilterService $filterService, EntityManagerInterface $em)
+    public function __construct(private readonly PhotoFilterService $filterService, private readonly EntityManagerInterface $em)
     {
         parent::__construct();
-        $this->filterService = $filterService;
-        $this->em = $em;
     }
 
     protected function configure()

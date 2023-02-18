@@ -39,7 +39,7 @@ class CensureImageFilter implements LoaderInterface
         if ($options["enabled"]) {
 
             foreach ($options['positions'] as $position) {
-                $pos = explode(',', $position);
+                $pos = explode(',', (string) $position);
                 //dump($pos);
                 $w = 50;
                 $h = 50;

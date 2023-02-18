@@ -40,23 +40,19 @@ class ShootingCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         $action1 = Action::new('Upload', '', 'fa fa-upload')
-            ->linkToRoute('admin_upload', function (Shooting $shooting) {
-                return [
-                    'id' => $shooting->getId(),
-                ];
-            });
+            ->linkToRoute('admin_upload', fn(Shooting $shooting) => [
+                'id' => $shooting->getId(),
+            ]);
 
         /** @var AdminUrlGenerator $adminUrlGenerator */
         $adminUrlGenerator = $this->get(AdminUrlGenerator::class);
 
         $action2 = Action::new('Photos', '', 'fa fa-images')
-            ->linkToUrl(function (Shooting $shooting) use ($adminUrlGenerator) {
-                return $adminUrlGenerator//->build()
-                ->setController(PhotoCrudController::class)
-                    ->setAction('index')
-                    ->set('query', $shooting->getNom())
-                    ->generateUrl();
-            }
+            ->linkToUrl(fn(Shooting $shooting) => $adminUrlGenerator//->build()
+            ->setController(PhotoCrudController::class)
+                ->setAction('index')
+                ->set('query', $shooting->getNom())
+                ->generateUrl()
             );
 
 

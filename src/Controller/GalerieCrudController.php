@@ -41,13 +41,11 @@ class GalerieCrudController extends AbstractCrudController
         $adminUrlGenerator = $this->get(AdminUrlGenerator::class);
 
         $action = Action::new('Photos', '', 'fa fa-images')
-            ->linkToUrl(function (Galerie $galerie) use ($adminUrlGenerator) {
-                return $adminUrlGenerator//->build()
-                    ->setController(PhotoCrudController::class)
-                    ->setAction('index')
-                    ->set('query', $galerie->getSlug())
-                    ->generateUrl();
-            }
+            ->linkToUrl(fn(Galerie $galerie) => $adminUrlGenerator//->build()
+                ->setController(PhotoCrudController::class)
+                ->setAction('index')
+                ->set('query', $galerie->getSlug())
+                ->generateUrl()
         );
 
         return $actions->add(Crud::PAGE_INDEX, $action);

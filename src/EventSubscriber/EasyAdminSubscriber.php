@@ -13,23 +13,10 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var UserPasswordEncoderInterface
-     */
-    private UserPasswordEncoderInterface $passwordEncoder;
-    /**
-     * @var EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
      * EasyAdminSubscriber constructor.
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param EntityManagerInterface $em
      */
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
+    public function __construct(private readonly UserPasswordEncoderInterface $passwordEncoder, private readonly EntityManagerInterface $em)
     {
-        $this->passwordEncoder = $passwordEncoder;
-        $this->em = $em;
     }
 
     public static function getSubscribedEvents()

@@ -11,14 +11,8 @@ use Symfony\Component\Security\Core\Security;
 
 class PhotoAccessVoter extends Voter
 {
-    /**
-     * @var Security
-     */
-    private Security $security;
-
-    public function __construct(Security $security)
+    public function __construct(private readonly Security $security)
     {
-        $this->security = $security;
     }
 
     protected function supports($attribute, $subject)

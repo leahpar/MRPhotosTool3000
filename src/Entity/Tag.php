@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=TagRepository::class)
  */
-class Tag
+class Tag implements \Stringable
 {
     /**
      * @ORM\Id
@@ -20,12 +20,12 @@ class Tag
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private ?string $nom = null;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $tags;
+    private ?string $tags = null;
 
     public function getId(): ?int
     {

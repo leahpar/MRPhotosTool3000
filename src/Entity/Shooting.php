@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass=ShootingRepository::class)
  */
-class Shooting
+class Shooting implements \Stringable
 {
     /**
      * @ORM\Id
@@ -29,38 +29,38 @@ class Shooting
      *     dateFormat="Y-m-d")
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $slug;
+    private ?string $slug = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $bookshoot;
+    private ?string $bookshoot = null;
 
     /**
      * @ORM\Column(type="date", nullable=false)
      */
-    private $date;
+    private ?\DateTimeInterface $date = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $statut = "Brouillon";
+    private string $statut = "Brouillon";
 
     /**
      * @ORM\ManyToMany(targetEntity=Modele::class, inversedBy="shootings")
      */
-    private $modeles;
+    private \Doctrine\Common\Collections\ArrayCollection|array $modeles;
 
     /**
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="shooting", orphanRemoval=true)
      * @ORM\OrderBy({"file" = "ASC"})
      */
-    private $photos;
+    private \Doctrine\Common\Collections\ArrayCollection|array $photos;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private ?string $nom = null;
 
 
     public function __construct()

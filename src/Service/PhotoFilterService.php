@@ -10,20 +10,8 @@ use Liip\ImagineBundle\Service\FilterService;
 
 class PhotoFilterService
 {
-    private string $publicDirectory;
-    private string $shootingsDirectory;
-    private FilterService $imagine;
-
-    /**
-     * @param FilterService $imagine
-     * @param string $public_directory
-     * @param string $shootings_directory
-     */
-    public function __construct(FilterService $imagine, string $public_directory, string $shootings_directory)
+    public function __construct(private readonly FilterService $imagine, private readonly string $publicDirectory, private readonly string $shootingsDirectory)
     {
-        $this->publicDirectory = $public_directory;
-        $this->shootingsDirectory = $shootings_directory;
-        $this->imagine = $imagine;
     }
 
     public function getFilteredPhoto(Photo $photo, string $filter): string
@@ -35,7 +23,7 @@ class PhotoFilterService
         $path = $shooting->getSlug().'/'.$photo->getFile();
         
         if ($filter == "instagram") {
-            list($width, $height, $type, $attr) = getimagesize($this->shootingsDirectory . '/' . $path);
+            [$width, $height, $type, $attr] = getimagesize($this->shootingsDirectory . '/' . $path);
             $ratioImg = $height / $width;
             $ratioInsta = 5 / 4;
 

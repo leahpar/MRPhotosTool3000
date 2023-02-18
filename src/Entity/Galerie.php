@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass=GalerieRepository::class)
  */
-class Galerie
+class Galerie implements \Stringable
 {
     /**
      * @ORM\Id
@@ -28,32 +28,32 @@ class Galerie
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private ?string $nom = null;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $slug;
+    private ?string $slug = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isCover = false;
+    private bool $isCover = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isCouv = false;
+    private bool $isCouv = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isFront = false;
+    private bool $isFront = false;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $statut;
+    private ?string $statut = null;
 
     public function __construct()
     {
@@ -118,12 +118,12 @@ class Galerie
 
     public function getRandomPhoto(): Photo
     {
-        return $this->photos[rand(0, count($this->photos)-1)];
+        return $this->photos[random_int(0, count($this->photos)-1)];
     }
 
     public function __toString(): string
     {
-        return $this->nom;
+        return (string) $this->nom;
     }
 
     public function isCover(): ?bool

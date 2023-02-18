@@ -13,7 +13,7 @@ class TwigExtension extends AbstractExtension
     function getFilters()
     {
         return [
-            new TwigFilter('date', [$this, 'formatDate']),
+            new TwigFilter('date', $this->formatDate(...)),
         ];
     }
     function formatDate($date = null, ?string $format = null): ?string
@@ -24,7 +24,7 @@ class TwigExtension extends AbstractExtension
         $str = $date;
         try {
             if ($format) {
-                if (strstr($format, '%') !== false) {
+                if (str_contains($format, '%')) {
                     // advanced format
                     $timestamp = (new \DateTime($str))->getTimestamp();
                     setlocale(LC_ALL, "fr_FR.UTF-8");
@@ -36,7 +36,7 @@ class TwigExtension extends AbstractExtension
                 }
             }
         }
-        catch (\Exception $e) {
+        catch (\Exception) {
             // Do nothing
         }
         return $str;

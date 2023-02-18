@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=ModeleRepository::class)
  */
-class Modele implements UserInterface, PasswordAuthenticatedUserInterface
+class Modele implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
 {
     /**
      * @ORM\Id
@@ -24,40 +24,39 @@ class Modele implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private ?string $nom = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $instagram;
+    private ?string $instagram = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $pseudo;
+    private ?string $pseudo = null;
 
     /**
      * @ORM\ManyToMany(targetEntity=Shooting::class, mappedBy="modeles")
      */
-    private $shootings;
+    private \Doctrine\Common\Collections\ArrayCollection|array $shootings;
 
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $username;
+    private ?string $username = null;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
-     * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
-    private $plainPassword;
+    private ?string $password = null;
+    private ?string $plainPassword = null;
 
 
     public function __construct()
@@ -139,7 +138,7 @@ class Modele implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->pseudo) {
             $str .= " (".$this->getPseudo() .")";
         }
-        return $str;
+        return (string) $str;
     }
 
     /**

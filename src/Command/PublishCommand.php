@@ -17,25 +17,13 @@ class PublishCommand extends Command
     protected static $defaultName = 'app:publish';
 
     /**
-     * @var PublishService
-     */
-    private PublishService $pubService;
-    /**
-     * @var EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
      * PublishCommand constructor.
      * @param PublishService $pubService
      * @param EntityManagerInterface $em
      */
-    public function __construct(PublishService $pubService, EntityManagerInterface $em)
+    public function __construct(private readonly PublishService $pubService, private readonly EntityManagerInterface $em)
     {
-        $this->pubService = $pubService;
-
         parent::__construct();
-        $this->em = $em;
     }
 
     protected function configure()
