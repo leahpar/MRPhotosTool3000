@@ -136,6 +136,9 @@ certbot certonly --webroot \
 - [X] Shooting > lien "retour" 
 - [X] Accès admin sur la page d'accueil
 - [ ] page d'erreur
+- [ ] admin.css : ".index-" => ".ea-index-"
+- [ ] admin.css : ".content-panel" => ".content"
+- [ ] admin.css : ".ea-index-Photo .content .table.datagrid tbody tr td.field-image" => bg-color KO (mode sombre)
 
 ### DEV
 

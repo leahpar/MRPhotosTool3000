@@ -20,7 +20,7 @@ class PublicationCrudController extends AbstractCrudController
     {
         return $crud
 
-            ->setDefaultSort(['date' => 'ASC'])
+            ->setDefaultSort(['date' => 'DESC'])
 
             // don't forget to add EasyAdmin's form theme at the end of the list
             // (otherwise you'll lose all the styles for the rest of form fields)

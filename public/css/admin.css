@@ -82,19 +82,19 @@
     object-fit: contain;
 }
 
-.index-Photo .content-panel, .index-Photo .content-panel .content-panel-body, .index-Photo .content-panel .table.datagrid{
+.ea-index-Photo .content, .ea-index-Photo .content .content-body, .ea-index-Photo .content .table.datagrid{
     background: none;
     box-shadow: none;
 }
-.index-Photo .content-panel .table.datagrid thead{
+.ea-index-Photo .content .table.datagrid thead{
     display: none;
 }
-.index-Photo .content-panel .table.datagrid tbody{
+.ea-index-Photo .content .table.datagrid tbody{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.index-Photo .content-panel .table.datagrid tbody tr{
+.ea-index-Photo .content .table.datagrid tbody tr{
     display: flex;
     flex-direction: column;
 
@@ -104,38 +104,38 @@
 
     margin: 10px;
 }
-.index-Photo .content-panel .table.datagrid tbody tr td{
+.ea-index-Photo .content .table.datagrid tbody tr td{
     border: 0px;
 }
-.index-Photo .content-panel .table.datagrid tbody tr.selected-row td{
+.ea-index-Photo .content .table.datagrid tbody tr.selected-row td{
     background: none;
 }
-.index-Photo .content-panel .table.datagrid tbody tr td:not(.field-image, :first-child, .actions){
+.ea-index-Photo .content .table.datagrid tbody tr td:not(.field-image, :first-child, .actions){
     display: none;
 }
-.index-Photo .content-panel .table.datagrid tbody tr td.field-image{
+.ea-index-Photo .content .table.datagrid tbody tr td.field-image{
     height: 280px;
     padding: 0px;
     margin: 0px;
-    background: #fff;
+    /*background: #fff;*/
     border-radius: 10px;
     box-shadow: 0px 5px 5px rgba(0,0,0,.1);
 }
-.index-Photo .content-panel .table.datagrid tbody tr td.field-image .photoThumb{
+.ea-index-Photo .content .table.datagrid tbody tr td.field-image .photoThumb{
     display: flex;
     justify-content: center;
     align-items: center;
 
     height: inherit;
 }
-.index-Photo .content-panel .table.datagrid tbody tr td.field-image .photoThumb img{
+.ea-index-Photo .content .table.datagrid tbody tr td.field-image .photoThumb img{
     width: 280px !important;
     height: 280px !important;
     object-fit: contain !important;
     overflow: hidden;
     border-radius: 10px;
 }
-.index-Photo .content-panel .table.datagrid tbody tr td:first-child{
+.ea-index-Photo .content .table.datagrid tbody tr td:first-child{
     position: absolute;
     top: 0px;
     left: 0px;
@@ -151,10 +151,10 @@
 
     border-radius: 5px;
 }
-.index-Photo .content-panel .table.datagrid tbody tr td:first-child:hover{
+.ea-index-Photo .content .table.datagrid tbody tr td:first-child:hover{
     background: none;
 }
-.index-Photo .content-panel .table.datagrid tbody tr td:first-child input[type=checkbox]{
+.ea-index-Photo .content .table.datagrid tbody tr td:first-child input[type=checkbox]{
     -webkit-appearance: none;
     width: 280px;
     height: 280px;
@@ -162,18 +162,18 @@
     border-radius: 10px;
     cursor: pointer;
 }
-.index-Photo .content-panel .table.datagrid tbody tr td:first-child input:checked{
+.ea-index-Photo .content .table.datagrid tbody tr td:first-child input:checked{
     border: 3px solid var(--color-primary);
     box-shadow: 0px 0px 15px rgba(255,255,255,1);
 }
-.index-Photo .content-panel .table.datagrid tbody tr td:first-child input:focus{
+.ea-index-Photo .content .table.datagrid tbody tr td:first-child input:focus{
     outline: none;
 }
 
-.index-Photo .content-panel .table.datagrid tbody tr:hover td:not(.field-image){
+.ea-index-Photo .content .table.datagrid tbody tr:hover td:not(.field-image){
     background: none;
 }
-.index-Photo .content-panel .table.datagrid tbody tr:hover td:first-child{
+.ea-index-Photo .content .table.datagrid tbody tr:hover td:first-child{
     display: flex;
 }
 

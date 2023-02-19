@@ -5,14 +5,14 @@ namespace App\Controller;
 use App\Entity\Galerie;
 use App\Entity\Photo;
 use App\Entity\Publication;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\BatchActionDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class PhotoCrudController extends AbstractCrudController
 {
@@ -21,6 +21,11 @@ class PhotoCrudController extends AbstractCrudController
     {
         return Photo::class;
     }
+
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly AdminUrlGenerator $adminUrlGenerator,
+    ){}
 
     public function configureCrud(Crud $crud): Crud
     {
@@ -61,51 +66,26 @@ class PhotoCrudController extends AbstractCrudController
             fn (Action $a) => $a->setIcon('fa fa-pencil-alt')->setLabel(false)
         );
 
-        /*
-        $actions->add(
-            Crud::PAGE_INDEX,
-            Action::new('Censure')
-                ->linkToUrl(fn(Photo $p) => "admin/photo/".$p->getId()."/censure")
-                //->addCssClass('btn btn-primary')
-                ->setIcon('fa fa-eye-slash')
-                ->displayAsLink()
-                //->setHtmlAttributes(["target" => "_blank"])
-                ->setLabel(false)
-        );
-        */
-
-        $actions->add(
-            Crud::PAGE_INDEX,
-            Action::new('Site front')
-            ->createAsBatchAction()
+        $actions->addBatchAction(Action::new('Site front')
             ->linkToCrudAction('addToGalerieFront')
             ->addCssClass('btn btn-primary')
-            ->setIcon('fa fa-bookmark')
-        );
-        $actions->add(
-            Crud::PAGE_INDEX,
-            Action::new('Site covers')
-            ->createAsBatchAction()
+            ->setIcon('fa fa-bookmark'))
+        ;
+        $actions->addBatchAction(Action::new('Site covers')
             ->linkToCrudAction('addToGalerieCovers')
             ->addCssClass('btn btn-primary')
-            ->setIcon('fa fa-bookmark')
-        );
-        $actions->add(
-            Crud::PAGE_INDEX,
-            Action::new('Couvs')
-            ->createAsBatchAction()
+            ->setIcon('fa fa-bookmark'))
+        ;
+        $actions->addBatchAction(Action::new('Couvs')
             ->linkToCrudAction('addToGalerieCouvs')
             ->addCssClass('btn btn-primary')
-            ->setIcon('fa fa-bookmark')
-        );
-        $actions->add(
-            Crud::PAGE_INDEX,
-            Action::new('Publication')
-            ->createAsBatchAction()
+            ->setIcon('fa fa-bookmark'))
+        ;
+        $actions->addBatchAction(Action::new('Publication')
             ->linkToCrudAction('publishPhotos')
             ->addCssClass('btn btn-primary')
-            ->setIcon('fa fa-bullhorn')
-        );
+            ->setIcon('fa fa-bullhorn'))
+        ;
 
         return $actions;
     }
@@ -171,75 +151,40 @@ class PhotoCrudController extends AbstractCrudController
         ];
     }
 
-    public function addToGalerie(array $ids, Galerie $galerie, AdminContext $context)
+    public function addToGalerie(array $ids, string $galerieType)
     {
-        $entityClass = $context->getEntity()->getFqcn();
-        $em = $this->getDoctrine()->getManagerForClass($entityClass);
-
+        $galerie = $this->em->getRepository(Galerie::class)->findOneBy([$galerieType => true]);
         foreach ($ids as $id) {
-            $photo = $em->find($entityClass, $id);
-        }
-
-        //$em->flush();
-
-        return $this->redirect($context->getReferrer());
-    }
-
-
-    public function addToGalerieFront(array $ids, AdminContext $context)
-    {
-        $entityClass = $context->getEntity()->getFqcn();
-        $em = $this->getDoctrine()->getManagerForClass($entityClass);
-        $galerie = $em->getRepository(Galerie::class)->findOneBy(["isFront" => true]);
-
-        foreach ($ids as $id) {
-            $photo = $em->getRepository(Photo::class)->find($id);
+            $photo = $this->em->getRepository(Photo::class)->find($id);
             $galerie->addPhoto($photo);
         }
-        $em->flush();
-
-        return $this->redirect($context->getReferrer());
+        $this->em->flush();
     }
 
-    public function addToGalerieCouvs(array $ids, AdminContext $context)
+    public function addToGalerieFront(BatchActionDto $batchActionDto)
     {
-        $entityClass = $context->getEntity()->getFqcn();
-        $em = $this->getDoctrine()->getManagerForClass($entityClass);
-        $galerie = $em->getRepository(Galerie::class)->findOneBy(["isCouv" => true]);
-
-        foreach ($ids as $id) {
-            $photo = $em->getRepository(Photo::class)->find($id);
-            $galerie->addPhoto($photo);
-        }
-        $em->flush();
-
-        return $this->redirect($context->getReferrer());
+        $this->addToGalerie($batchActionDto->getEntityIds(), "isFront");
+        return $this->redirect($batchActionDto->getReferrerUrl());
     }
 
-    public function addToGalerieCovers(array $ids, AdminContext $context)
+    public function addToGalerieCouvs(BatchActionDto $batchActionDto)
     {
-        $entityClass = $context->getEntity()->getFqcn();
-        $em = $this->getDoctrine()->getManagerForClass($entityClass);
-        $galerie = $em->getRepository(Galerie::class)->findOneBy(["isCover" => true]);
-
-        foreach ($ids as $id) {
-            $photo = $em->getRepository(Photo::class)->find($id);
-            $galerie->addPhoto($photo);
-        }
-        $em->flush();
-
-        return $this->redirect($context->getReferrer());
+        $this->addToGalerie($batchActionDto->getEntityIds(), "isCouv");
+        return $this->redirect($batchActionDto->getReferrerUrl());
     }
 
-    public function publishPhotos(array $ids, AdminContext $context)
+    public function addToGalerieCovers(BatchActionDto $batchActionDto)
+    {
+        $this->addToGalerie($batchActionDto->getEntityIds(), "isCover");
+        return $this->redirect($batchActionDto->getReferrerUrl());
+    }
+
+    public function publishPhotos(BatchActionDto $batchActionDto)
     {
         $publication = new Publication();
 
-        $entityClass = $context->getEntity()->getFqcn();
-        $em = $this->getDoctrine()->getManagerForClass($entityClass);
-
         // Dernière publication
-        $lastPubs = $em->getRepository(Publication::class)->findBy([], ['date' => "desc"], 1);
+        $lastPubs = $this->em->getRepository(Publication::class)->findBy([], ['date' => "desc"], 1);
         $lastPub = $lastPubs[0] ?? null;
         /** @var Publication $lastPub */
         if ($lastPub) {
@@ -250,16 +195,14 @@ class PhotoCrudController extends AbstractCrudController
         }
         $publication->setDate($date);
 
-        foreach ($ids as $id) {
-            $photo = $em->getRepository(Photo::class)->find($id);
+        foreach ($batchActionDto->getEntityIds() as $id) {
+            $photo = $this->em->getRepository(Photo::class)->find($id);
             $publication->addPhoto($photo);
         }
-        $em->persist($publication);
-        $em->flush();
+        $this->em->persist($publication);
+        $this->em->flush();
 
-        /** @var AdminUrlGenerator $adminUrlGenerator */
-        $adminUrlGenerator = $this->get(AdminUrlGenerator::class);
-        $url = $adminUrlGenerator
+        $url = $this->adminUrlGenerator
             ->setController(PublicationCrudController::class)
             ->setAction(ACTION::EDIT)
             ->setEntityId($publication->getId())
@@ -267,7 +210,5 @@ class PhotoCrudController extends AbstractCrudController
 
         return $this->redirect($url);
     }
-
-
 
 }
