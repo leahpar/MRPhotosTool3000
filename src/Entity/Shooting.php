@@ -66,7 +66,7 @@ class Shooting implements \Stringable
     public function __construct()
     {
         $this->photos = new ArrayCollection();
-        $this->tags = new ArrayCollection();
+        //$this->tags = new ArrayCollection();
         $this->modeles = new ArrayCollection();
     }
 

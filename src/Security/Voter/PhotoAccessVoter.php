@@ -7,7 +7,7 @@ use App\Entity\Modele;
 use App\Entity\Photo;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class PhotoAccessVoter extends Voter
 {
@@ -15,25 +15,19 @@ class PhotoAccessVoter extends Voter
     {
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports(string $attribute, mixed $subject): bool
     {
         return in_array($attribute, ['view', 'edit'])
             && $subject instanceof Photo;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         /** @var Modele $user */
         $user = $token->getUser();
 
-        //if ($token instanceof NullToken) {
-        //    // the user is not authenticated
-        //    return false;
-        //}
-
         /** @var Photo $photo */
         $photo = $subject;
-        //dump($photo);
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {

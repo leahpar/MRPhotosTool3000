@@ -4,7 +4,7 @@ security:
         #Symfony\Component\Security\Core\User\User: plaintext # (inMemory)
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
-    enable_authenticator_manager: true
+    #enable_authenticator_manager: true
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -21,13 +21,18 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\LoginFormAuthenticator
+            #custom_authenticator: App\Security\LoginFormAuthenticator
+
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
 
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 31536000 # 1 year in seconds
                 path: /
-                
+
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -38,6 +43,12 @@ security:
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
+
+    # role hierarchy
+    # https://symfony.com/doc/current/security.html#role-hierarchy
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_MODELE
+
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

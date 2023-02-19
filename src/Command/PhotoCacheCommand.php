@@ -46,7 +46,7 @@ class PhotoCacheCommand extends Command
             $io->write("Photo ". str_pad($photo->getFile() . "...", 40));
             $t = microtime(true);
             $this->filterService->getFilteredPhoto($photo, 'cover');
-            $t = str_pad(round((microtime(true) - $t) * 1000), 5, ' ', STR_PAD_LEFT);
+            $t = str_pad((string)(round((microtime(true) - $t) * 1000)), 5, ' ', STR_PAD_LEFT);
             $io->writeln("OK $t ms");
         }
 
@@ -66,7 +66,7 @@ class PhotoCacheCommand extends Command
                 $io->write("Photo " . str_pad($photo->getFile() . "...", 40));
                 $t = microtime(true);
                 $this->filterService->getFilteredPhoto($photo, "front");
-                $t = str_pad(round((microtime(true) - $t) * 1000), 5, ' ', STR_PAD_LEFT);
+                $t = str_pad((string)(round((microtime(true) - $t) * 1000)), 5, ' ', STR_PAD_LEFT);
                 $io->writeln("OK $t ms");
             }
         }

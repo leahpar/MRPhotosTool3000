@@ -28,7 +28,7 @@ class RssPublisherService implements PublisherInterface
         file_put_contents($this->publicDirectory."/publication.rss", $xml);
     }
 
-    private function getDescription(Photo $photo): ?string
+    private function getDescription(Photo $photo): string
     {
         $shooting = $photo->getShooting();
 
@@ -58,7 +58,7 @@ class RssPublisherService implements PublisherInterface
         return $str;
     }
 
-    private function createXml($link, $desc): string
+    private function createXml(string $link, string $desc): string
     {
 
         $date = date(\DateTime::RSS);

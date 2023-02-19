@@ -105,9 +105,6 @@ class Modele implements UserInterface, PasswordAuthenticatedUserInterface, \Stri
         return $this;
     }
 
-    /**
-     * @return Collection|Shooting[]
-     */
     public function getShootings(): Collection
     {
         return $this->shootings;
@@ -225,4 +222,11 @@ class Modele implements UserInterface, PasswordAuthenticatedUserInterface, \Stri
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
+    }
 }

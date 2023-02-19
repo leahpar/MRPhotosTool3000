@@ -1,0 +1,47 @@
+includes:
+    # Custom baseline
+    - phpstan-baseline.neon
+
+    # Doctrine
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-doctrine/rules.neon
+
+    # Symfony
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
+
+parameters:
+    #level: 6
+    paths:
+        - src
+    excludePaths:
+        - src/Migrations/*
+
+    # Pas de contrôle des types des Collection (doctrine)
+    #checkGenericClassInNonGenericObjectType: false
+
+    # Pas de contrôle des types des array
+    checkMissingIterableValueType: false
+
+    # Récupération du type dans le consutructeur si pas de phpdoc
+    #inferPrivatePropertyTypeFromConstructor: true
+
+    # Pas de contrôle des types des array
+    checkGenericClassInNonGenericObjectType: false
+
+    ignoreErrors:
+        # Pas de typage des propriétés des entités (pas complètement compatible doctrine pour l'instant)
+        - "#^Property .* has no type specified\\.$#"
+        #- "#^Property .*::\\$id is never written, only read\\.$#"
+
+        # à voir éventuellement plus tard...
+        - "#^Method .* has no return type specified\\.$#"
+
+        # PhpStam pas capable de gérer les templates ?
+#        - "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository#"
+
+        # string *est* callable (nom d'une fonction native)
+#        - "#expects callable.* '.*' given#"
+
+#        - "#^PHPDoc tag @param has invalid value#"
+#        - "#^Method .* has parameter .* with no typehint specified\\.$#"

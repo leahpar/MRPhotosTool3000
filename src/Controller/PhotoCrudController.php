@@ -186,7 +186,7 @@ class PhotoCrudController extends AbstractCrudController
         // Dernière publication
         $lastPubs = $this->em->getRepository(Publication::class)->findBy([], ['date' => "desc"], 1);
         $lastPub = $lastPubs[0] ?? null;
-        /** @var Publication $lastPub */
+        /** @var ?Publication $lastPub */
         if ($lastPub) {
             $date = (clone ($lastPub->getDate()))->modify("monday next week");
         }

@@ -10,13 +10,14 @@ use Twig\TwigFilter;
 class TwigExtension extends AbstractExtension
 {
 
-    function getFilters()
+    public function getFilters()
     {
         return [
             new TwigFilter('date', $this->formatDate(...)),
         ];
     }
-    function formatDate($date = null, ?string $format = null): ?string
+
+    public function formatDate(\DateTime|string|null $date = null, ?string $format = null): ?string
     {
         if ($date instanceof \DateTime) {
             $date = $date->format("Y-m-d");
@@ -28,7 +29,12 @@ class TwigExtension extends AbstractExtension
                     // advanced format
                     $timestamp = (new \DateTime($str))->getTimestamp();
                     setlocale(LC_ALL, "fr_FR.UTF-8");
-                    return strftime($format, $timestamp);
+                    //return strftime($format, $timestamp);
+                    // same code but with intl
+                    $formatter = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
+                    $formatter->setPattern($format);
+                    return $formatter->format($timestamp);
+
                 }
                 else {
                     // Classic format

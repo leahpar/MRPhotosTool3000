@@ -17,6 +17,10 @@ class ShootingCrudController extends AbstractCrudController
         return Shooting::class;
     }
 
+    public function __construct(
+        private readonly AdminUrlGenerator $adminUrlGenerator,
+    ) {}
+
     public function configureCrud(Crud $crud): Crud
     {
         // https://symfony.com/doc/current/bundles/EasyAdminBundle/crud.html
@@ -44,17 +48,13 @@ class ShootingCrudController extends AbstractCrudController
                 'id' => $shooting->getId(),
             ]);
 
-        /** @var AdminUrlGenerator $adminUrlGenerator */
-        $adminUrlGenerator = $this->get(AdminUrlGenerator::class);
-
         $action2 = Action::new('Photos', '', 'fa fa-images')
-            ->linkToUrl(fn(Shooting $shooting) => $adminUrlGenerator//->build()
-            ->setController(PhotoCrudController::class)
-                ->setAction('index')
-                ->set('query', $shooting->getNom())
-                ->generateUrl()
+            ->linkToUrl(fn(Shooting $shooting) => $this->adminUrlGenerator
+                    ->setController(PhotoCrudController::class)
+                    ->setAction('index')
+                    ->set('query', $shooting->getNom())
+                    ->generateUrl()
             );
-
 
         return $actions
             ->add(Crud::PAGE_INDEX, $action1)

@@ -43,8 +43,8 @@ class CensureImageFilter implements LoaderInterface
                 //dump($pos);
                 $w = 50;
                 $h = 50;
-                $x = $pos[0] - $w/2;
-                $y = $pos[1] - $h/2;
+                $x = (int)($pos[0]) - $w/2;
+                $y = (int)($pos[1]) - $h/2;
 
                 $point = new Point($x, $y);
                 $box = new Box($w, $h);

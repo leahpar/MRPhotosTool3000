@@ -9,11 +9,7 @@ class InstagramPublisherService implements PublisherInterface
 
     public function publish(Photo $photo)
     {
-
+        throw new \Exception("Not implemented yet");
     }
 
-    private function createMediaContainer()
-    {
-
-    }
 }

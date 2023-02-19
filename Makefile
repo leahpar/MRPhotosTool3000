@@ -35,6 +35,10 @@ sfstart: sfstop ## Start local Symfony werserver
 sfstop: ## Stop local Symfony werserver
 	symfony server:stop
 
+stan: ## PHPStan
+	# https://phpstan.org/user-guide/rule-levels
+	$(PHP) vendor/bin/phpstan analyse -c phpstan.neon -l 6
+
 .PHONY: sfstart sfstop
 
 

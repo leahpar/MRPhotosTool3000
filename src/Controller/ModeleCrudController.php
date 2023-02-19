@@ -40,7 +40,7 @@ class ModeleCrudController extends AbstractCrudController
             Field\TextField::new('username')
                 ->setLabel("Login")
                 ->onlyOnForms(),
-            Field\textField::new('plainPassword')
+            Field\TextField::new('plainPassword')
                 ->setLabel("Nouveau mot de passe")
                 ->onlyOnForms(),
         ];

@@ -70,7 +70,7 @@ class Galerie implements \Stringable
         return $this->photos;
     }
 
-    public function setPhotos($photos): self
+    public function setPhotos(Collection $photos): self
     {
         $this->photos = $photos;
         return $this;

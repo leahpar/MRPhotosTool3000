@@ -13,11 +13,16 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminDashboardController extends AbstractDashboardController
 {
+
+    public function __construct(
+        private readonly AdminUrlGenerator $adminUrlGenerator,
+    ) {}
 
     public function configureAssets(): Assets
     {
@@ -79,18 +84,15 @@ class AdminDashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        // redirect to some CRUD controller
-        $routeBuilder = $this->get(AdminUrlGenerator::class);
-        return $this->redirect($routeBuilder->setController(PhotoCrudController::class)->generateUrl());
+        /** @var Modele $user */
+        $user = $this->getUser();
+        if ($user->hasRole("ROLE_MODELE")) {
+            return $this->redirectToRoute('front_shootings');
+        }
 
-        // you can also redirect to different pages depending on the current user
-        //if ('jane' === $this->getUser()->getUsername()) {
-        //    return $this->redirect('...');
-        //}
-
-        // you can also render some template to display a proper Dashboard
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //return $this->render('some/path/my-dashboard.html.twig');
+        return $this->redirect(
+            $this->adminUrlGenerator->setController(PhotoCrudController::class)->generateUrl()
+        );
     }
 
 }

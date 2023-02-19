@@ -17,6 +17,10 @@ class GalerieCrudController extends AbstractCrudController
         return Galerie::class;
     }
 
+    public function __construct(
+        private readonly AdminUrlGenerator $adminUrlGenerator,
+    ) {}
+
 
     public function configureFields(string $pageName): iterable
     {
@@ -37,11 +41,8 @@ class GalerieCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        /** @var AdminUrlGenerator $adminUrlGenerator */
-        $adminUrlGenerator = $this->get(AdminUrlGenerator::class);
-
         $action = Action::new('Photos', '', 'fa fa-images')
-            ->linkToUrl(fn(Galerie $galerie) => $adminUrlGenerator//->build()
+            ->linkToUrl(fn(Galerie $galerie) => $this->adminUrlGenerator
                 ->setController(PhotoCrudController::class)
                 ->setAction('index')
                 ->set('query', $galerie->getSlug())

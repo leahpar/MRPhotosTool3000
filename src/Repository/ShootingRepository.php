@@ -8,6 +8,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @extends ServiceEntityRepository<Shooting>
+ *
  * @method Shooting|null find($id, $lockMode = null, $lockVersion = null)
  * @method Shooting|null findOneBy(array $criteria, array $orderBy = null)
  * @method Shooting[]    findAll()

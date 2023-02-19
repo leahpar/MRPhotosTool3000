@@ -55,6 +55,7 @@ class StatsCommand extends Command
             $this->em->flush();
 
             if ($this->hcToken) {
+                // = requete HTTP GET
                 file_get_contents('https://hc-ping.com/'.$this->hcToken);
             }
             $io->success('OK');
@@ -63,6 +64,7 @@ class StatsCommand extends Command
         catch (\Exception $e) {
             $io->error($e->getMessage());
             if ($this->hcToken) {
+                // = requete HTTP GET
                 file_get_contents('https://hc-ping.com/'.$this->hcToken.'/fail');
             }
             return Command::FAILURE;

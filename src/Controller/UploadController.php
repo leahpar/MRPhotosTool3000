@@ -32,7 +32,7 @@ class UploadController extends AbstractController
      */
     public function upload(Request $request, Shooting $shooting, EntityManagerInterface $em)
     {
-        /** @var UploadedFile $uploadedFile */
+        /** @var ?UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get('file');
 
         if ($uploadedFile) {

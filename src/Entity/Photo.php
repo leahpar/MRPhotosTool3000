@@ -149,7 +149,7 @@ class Photo implements \Stringable
         return $this->galeries;
     }
 
-    public function setGaleries($galeries): self
+    public function setGaleries(Collection $galeries): self
     {
         $this->galeries = $galeries;
         return $this;
@@ -181,10 +181,6 @@ class Photo implements \Stringable
 
     public function getModeles(): string
     {
-        //return implode('\n', array_map(
-        //    function (Modele $m) { return $m->getNom();},
-        //    $this->getShooting()->getModeles()->toArray()
-        //));
         return implode('\n',
             $this->getShooting()->getModeles()->toArray()
         );
@@ -310,7 +306,7 @@ class Photo implements \Stringable
 
     public function isCouv(): bool
     {
-        /** @var Galerie $galery */
+        /** @var Galerie $galerie */
         foreach ($this->galeries as $galerie) {
             if ($galerie->isCouv()) return true;
         }
@@ -319,7 +315,7 @@ class Photo implements \Stringable
 
     public function isCover(): bool
     {
-        /** @var Galerie $galery */
+        /** @var Galerie $galerie */
         foreach ($this->galeries as $galerie) {
             if ($galerie->isCover()) return true;
         }
@@ -328,7 +324,7 @@ class Photo implements \Stringable
 
     public function isSite(): bool
     {
-        /** @var Galerie $galery */
+        /** @var Galerie $galerie */
         foreach ($this->galeries as $galerie) {
             if ($galerie->isFront()) return true;
         }

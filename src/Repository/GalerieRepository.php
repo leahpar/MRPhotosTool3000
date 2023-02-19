@@ -7,6 +7,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ *
+ * @extends ServiceEntityRepository<Galerie>
+ *
  * @method Galerie|null find($id, $lockMode = null, $lockVersion = null)
  * @method Galerie|null findOneBy(array $criteria, array $orderBy = null)
  * @method Galerie[]    findAll()

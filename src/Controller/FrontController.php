@@ -8,7 +8,6 @@ use App\Entity\Photo;
 use App\Entity\Shooting;
 use App\Service\ZipService;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,7 +68,7 @@ class FrontController extends AbstractController
 
     /**
      * @Route("/shootings", name="front_shootings")
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_MODELE')")
+     * @IsGranted("ROLE_MODELE")
      */
     public function shootings(EntityManagerInterface $em): Response
     {
@@ -85,7 +84,7 @@ class FrontController extends AbstractController
 
     /**
      * @Route("/shootings/{slug}", name="front_shooting")
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_MODELE')")
+     * @IsGranted("ROLE_MODELE")
      * @TODO ShootingAccessVoter
      */
     public function shooting(Shooting $shooting): Response
@@ -108,7 +107,7 @@ class FrontController extends AbstractController
 
     /**
      * @Route("/shootings/{slug}/zip", name="front_shooting_zip")
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_MODELE')")
+     * @IsGranted("ROLE_MODELE")
      * @TODO ShootingAccessVoter
      */
     public function shootingZip(Shooting $shooting, ZipService $zipService): Response
