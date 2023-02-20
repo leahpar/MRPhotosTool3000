@@ -43,11 +43,7 @@ class PhotoCacheCommand extends Command
 
         /** @var Photo $photo */
         foreach ($photos as $photo) {
-            $io->write("Photo ". str_pad($photo->getFile() . "...", 40));
-            $t = microtime(true);
-            $this->filterService->getFilteredPhoto($photo, 'cover');
-            $t = str_pad((string)(round((microtime(true) - $t) * 1000)), 5, ' ', STR_PAD_LEFT);
-            $io->writeln("OK $t ms");
+            $this->cachePhoto($io, $photo, 'front');
         }
 
         // Front
@@ -63,17 +59,28 @@ class PhotoCacheCommand extends Command
 
             /** @var Photo $photo */
             foreach ($photos as $photo) {
-                $io->write("Photo " . str_pad($photo->getFile() . "...", 40));
-                $t = microtime(true);
-                $this->filterService->getFilteredPhoto($photo, "front");
-                $t = str_pad((string)(round((microtime(true) - $t) * 1000)), 5, ' ', STR_PAD_LEFT);
-                $io->writeln("OK $t ms");
+                $this->cachePhoto($io, $photo, 'front');
             }
         }
 
         $io->success('OK');
 
         return Command::SUCCESS;
+    }
+
+    private function cachePhoto($io, Photo $photo, string $filter): void
+    {
+        $io->write("Photo ". str_pad($photo->getFile() . "...", 40));
+        $t = microtime(true);
+        try {
+            $this->filterService->getFilteredPhoto($photo, $filter);
+            $t = str_pad((string)(round((microtime(true) - $t) * 1000)), 5, ' ', STR_PAD_LEFT);
+            $io->writeln("OK $t ms");
+        }
+        catch (\Exception $e) {
+            $io->writeln("ERROR");
+            $io->writeln($e->getMessage());
+        }
     }
 
 }

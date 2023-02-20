@@ -15,21 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class UploadController extends AbstractController
 {
 
-    /**
-     * @Route("/admin/shootings/{id}/upload", name="admin_upload")
-     * @return Response
-     */
-    public function index(Shooting $shooting, EntityManagerInterface $em)
+    #[Route(path: '/admin/shootings/{id}/upload', name: 'admin_upload')]
+    public function index(Shooting $shooting)
     {
         return $this->render('upload/index.html.twig', [
             "shooting" => $shooting,
         ]);
     }
 
-    /**
-     * @Route("/admin/shootings/{id}/upload/img", name="admin_upload_img", methods={"POST"})
-     * @return Response
-     */
+    #[Route(path: '/admin/shootings/{id}/upload/img', name: 'admin_upload_img', methods: ['POST'])]
     public function upload(Request $request, Shooting $shooting, EntityManagerInterface $em)
     {
         /** @var ?UploadedFile $uploadedFile */

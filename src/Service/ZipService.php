@@ -36,7 +36,7 @@ class ZipService
 
 
     /**
-     * Zip images in a directori
+     * Zip images in a directory
      * @param string $dir       input directory
      * @param string $zipfile   output zip
      */

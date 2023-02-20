@@ -13,12 +13,11 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class FrontController extends AbstractController
 {
-    /**
-     * @Route("/", name="index")
-     */
+    #[Route(path: '/', name: 'index')]
     public function index(EntityManagerInterface $em): Response
     {
         $photos = $em->getRepository(Photo::class)->findByGalerieIsFront();
@@ -66,10 +65,8 @@ class FrontController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/shootings", name="front_shootings")
-     * @IsGranted("ROLE_MODELE")
-     */
+    #[Route(path: '/shootings', name: 'front_shootings')]
+    #[IsGranted('ROLE_MODELE')]
     public function shootings(EntityManagerInterface $em): Response
     {
         /** @var Modele $user */
@@ -83,10 +80,10 @@ class FrontController extends AbstractController
     }
 
     /**
-     * @Route("/shootings/{slug}", name="front_shooting")
-     * @IsGranted("ROLE_MODELE")
      * @TODO ShootingAccessVoter
      */
+    #[Route(path: '/shootings/{slug}', name: 'front_shooting')]
+    #[IsGranted('ROLE_MODELE')]
     public function shooting(Shooting $shooting): Response
     {
         /** @var Modele $user */
@@ -106,10 +103,10 @@ class FrontController extends AbstractController
     }
 
     /**
-     * @Route("/shootings/{slug}/zip", name="front_shooting_zip")
-     * @IsGranted("ROLE_MODELE")
      * @TODO ShootingAccessVoter
      */
+    #[Route(path: '/shootings/{slug}/zip', name: 'front_shooting_zip')]
+    #[IsGranted('ROLE_MODELE')]
     public function shootingZip(Shooting $shooting, ZipService $zipService): Response
     {
         /** @var Modele $user */
@@ -130,19 +127,13 @@ class FrontController extends AbstractController
         return $response;
     }
 
-    /**
-     * @Route("/galeries")
-     */
+    #[Route(path: '/galeries')]
     public function galeries(): Response
     {
         return $this->redirectToRoute("index");
     }
 
-    /**
-     * @Route("/galeries/{slug}", name="front_galerie")
-     *
-     * @throws \Exception
-     */
+    #[Route(path: '/galeries/{slug}', name: 'front_galerie')]
     public function galerie(Galerie $galerie): Response
     {
         // @TODO GalerieAccessVoter ?

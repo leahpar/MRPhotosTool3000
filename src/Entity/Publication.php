@@ -7,41 +7,27 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=PublicationRepository::class)
- */
+#[ORM\Entity(repositoryClass: PublicationRepository::class)]
 class Publication
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="publication")
-     */
+    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'publication')]
     private Collection $photos;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Tag::class)
-     */
+    #[ORM\ManyToMany(targetEntity: Tag::class)]
     private Collection $tags;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $moreTags = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: 'date', nullable: true)]
     private ?\DateTime $date = null;
 
 

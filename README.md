@@ -116,7 +116,7 @@ rsync -avz -e "ssh" --progress raphael@elune.ovh:/home/raphael/mr-photographes.f
 
 # certbot
 
-certbot certonly --webroot \ 
+certbot certonly --webroot \
     -w /home/raphael/mr-photographes.fr/public \
     -d mr-photographes.fr \
     -d www.mr-photographes.fr \

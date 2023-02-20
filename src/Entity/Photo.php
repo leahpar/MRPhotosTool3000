@@ -7,73 +7,47 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=PhotoRepository::class)
- */
+#[ORM\Entity(repositoryClass: PhotoRepository::class)]
 class Photo implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Shooting::class, inversedBy="photos")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Shooting::class, inversedBy: 'photos')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Shooting $shooting = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $motsCles = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $file = null;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: 'float')]
     private ?float $ratio = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Galerie::class, mappedBy="photos", cascade={"persist"})
-     */
+    #[ORM\ManyToMany(targetEntity: Galerie::class, mappedBy: 'photos', cascade: ['persist'])]
     private Collection $galeries;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Publication::class, inversedBy="photos")
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
+    #[ORM\ManyToOne(targetEntity: Publication::class, inversedBy: 'photos')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?Publication $publication = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: 'date', nullable: true)]
     private ?\DateTimeInterface $datePublication = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Tag::class)
-     */
+    #[ORM\ManyToMany(targetEntity: Tag::class)]
     private Collection $tags;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $moreTags = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
     private ?array $censure = [];
 
 

@@ -13,7 +13,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -79,14 +78,10 @@ class AdminDashboardController extends AbstractDashboardController
         ];
     }
 
-    /**
-     * @Route("/admin")
-     */
+    #[Route(path: '/admin')]
     public function index(): Response
     {
-        /** @var Modele $user */
-        $user = $this->getUser();
-        if ($user->hasRole("ROLE_MODELE")) {
+        if (!$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('front_shootings');
         }
 

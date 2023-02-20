@@ -28,7 +28,7 @@ class PhotoFilterService
         if ($filter == "instagram") {
             [$width, $height, $type, $attr] = getimagesize($this->shootingsDirectory . '/' . $path);
             $ratioImg = $height / $width;
-            $ratioInsta = 5 / 4;
+            //$ratioInsta = 5 / 4;
 
             $runtimeConfig = [
                 'background' => [
@@ -48,7 +48,7 @@ class PhotoFilterService
                 ];
             }
 
-            dump($runtimeConfig);
+            //dump($runtimeConfig);
 
             $resourcePath = $this->imagine->getUrlOfFilteredImageWithRuntimeFilters(
                 $path,

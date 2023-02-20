@@ -58,7 +58,7 @@ class StatsCommand extends Command
                 // = requete HTTP GET
                 file_get_contents('https://hc-ping.com/'.$this->hcToken);
             }
-            $io->success('OK');
+            $io->success($data->followers_count);
             return Command::SUCCESS;
         }
         catch (\Exception $e) {

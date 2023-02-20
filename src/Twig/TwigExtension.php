@@ -32,6 +32,8 @@ class TwigExtension extends AbstractExtension
                     //return strftime($format, $timestamp);
                     // same code but with intl
                     $formatter = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
+                    // Convert the format to ICU format
+                    $format = str_replace(['%d', '%m', '%B', '%Y'], ['dd', 'MM', 'MMMM', 'yyyy'], $format);
                     $formatter->setPattern($format);
                     return $formatter->format($timestamp);
 

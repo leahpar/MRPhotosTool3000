@@ -8,16 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-/**
- * @ORM\Entity(repositoryClass=ShootingRepository::class)
- */
+#[ORM\Entity(repositoryClass: ShootingRepository::class)]
 class Shooting implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
     /**
@@ -27,39 +23,27 @@ class Shooting implements \Stringable
      *     updatable=false,
      *     unique=true,
      *     dateFormat="Y-m-d")
-     * @ORM\Column(type="string", length=255, unique=true)
      */
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private ?string $slug = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $bookshoot = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=false)
-     */
+    #[ORM\Column(type: 'date', nullable: false)]
     private ?\DateTimeInterface $date = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private string $statut = "Brouillon";
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Modele::class, inversedBy="shootings")
-     */
+    #[ORM\ManyToMany(targetEntity: Modele::class, inversedBy: 'shootings')]
     private Collection $modeles;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="shooting", orphanRemoval=true)
-     * @ORM\OrderBy({"file" = "ASC"})
-     */
+    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'shooting', orphanRemoval: true)]
+    #[ORM\OrderBy(['file' => 'ASC'])]
     private Collection $photos;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $nom = null;
 
 

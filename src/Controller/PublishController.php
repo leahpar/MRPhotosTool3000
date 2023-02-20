@@ -14,9 +14,7 @@ use Symfony\Component\Uid\Uuid;
 class PublishController extends AbstractController
 {
 
-    /**
-     * @Route("/test")
-     */
+    #[Route(path: '/test')]
     public function cron(PublishService $pubService, RssPublisherService $rssService)
     {
         // https://www.php.net/manual/fr/datetime.formats.relative.php

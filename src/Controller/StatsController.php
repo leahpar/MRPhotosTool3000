@@ -16,9 +16,7 @@ class StatsController extends AbstractController
      * https://developers.facebook.com/docs/instagram-api/reference/ig-user/
      * https://www.instagram.com/mrphotographes/?__a=1
      */
-    /**
-     * @Route("/admin/stats", name="admin_stats")
-     */
+    #[Route(path: '/admin/stats', name: 'admin_stats')]
     public function index(EntityManagerInterface $em): Response
     {
         $from = (new \DateTime())->modify('-30 days');
