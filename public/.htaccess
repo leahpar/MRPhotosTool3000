@@ -52,6 +52,12 @@ DirectoryIndex index.php
     RewriteCond %{ENV:REDIRECT_STATUS} =""
     RewriteRule ^index\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=301,L]
 
+    # if the requested path is a directory, add a trailing slash and "index.html"
+    # to the path. This is a workaround for the fact that Apache does not allow
+    # us to serve a directory as index file.
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ %{REQUEST_URI}/index.html [L]
+
     # If the requested filename exists, simply serve it.
     # We only want to let Apache serve files and not directories.
     # Rewrite all other queries to the front controller.

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Photo;
+use App\Entity\Shooting;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -52,6 +53,19 @@ class PhotoRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function findOneByShootingSlugAndFile(string $slug, string $filename): ?Photo
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.shooting', 's')
+            ->andWhere('s.slug = :slug')
+            ->andWhere('p.file = :filename')
+            ->setParameter(':slug', $slug)
+            ->setParameter(':filename', $filename)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
 
 }

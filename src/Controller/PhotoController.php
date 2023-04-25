@@ -3,16 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Photo;
-use App\Entity\Shooting;
 use App\Service\PhotoFilterService;
 use Doctrine\ORM\EntityManagerInterface;
 use Liip\ImagineBundle\Service\FilterService;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,14 +19,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class PhotoController extends AbstractController
 {
     #[Route(path: 'shootings/{slug}/{file}')]
-    public function photo(Request $request,
-                          Shooting $shooting,
-                          Photo $photo,
-                          PhotoFilterService $filterService,
-                          ?Profiler $profiler
+    public function photo(
+        Request $request,
+        #[MapEntity(expr: 'repository.findOneByShootingSlugAndFile(slug, file)')]
+        Photo $photo,
+        PhotoFilterService $filterService,
+        ?Profiler $profiler
     ): Response
     {
         // @TODO: "304 Not Modified" ?
+
         $filter = $request->query->get('filter', 'thumbnail');
 
         // Accès instagram autorisé sur les photos publiées
@@ -62,39 +63,43 @@ class PhotoController extends AbstractController
         }
     }
 
-    #[Route(path: 'shootings/{slug}/{file}')]
-    public function photoDirect(Photo $photo, FilterService $imagine): Response
-    {
-        $this->denyAccessUnlessGranted('view', $photo);
-
-        try {
-            $path = $photo->getShooting()->getSlug() . '/' . $photo->getFile();
-            $resourcePath = $imagine->getUrlOfFilteredImage($path, 'thumbnail');
-            $filename = parse_url($resourcePath, PHP_URL_PATH);
-            $file = $this->getParameter('public_directory') . $filename;
-
-            $response = new BinaryFileResponse($file);
-            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $photo->getFile());
-
-            // Pour mettre en cache (client & proxys) les images
-            //$response->setPublic();
-            //$response->setMaxAge(86400);
-            $response->setSharedMaxAge(86400);
-            // Cache géré manuellement, on désactive la gestion par symfony
-            $response->headers->set('Symfony-Session-NoAutoCacheControl', 'true');
-
-            // Pour mettre en cache (navigateur mais pas proxy (=> private)) les images
-            $response->setPrivate();
-            $response->setMaxAge(86400);
-            // Cache géré manuellement, on désactive la gestion par symfony
-            $response->headers->set('Symfony-Session-NoAutoCacheControl', 'true');
-
-            return $response;
-        }
-        catch (\Exception) {
-            throw new ServiceUnavailableHttpException(60, "Impossible de générer l'image demandée");
-        }
-    }
+//    #[Route(path: 'shootings/{slug}/{file}')]
+//    public function photoDirect(
+//        #[MapEntity(expr: 'repository.findOneByShootingSlugAndFile(slug, file)')]
+//        Photo $photo,
+//        FilterService $imagine
+//    ): Response
+//    {
+//        $this->denyAccessUnlessGranted('view', $photo);
+//
+//        try {
+//            $path = $photo->getShooting()->getSlug() . '/' . $photo->getFile();
+//            $resourcePath = $imagine->getUrlOfFilteredImage($path, 'thumbnail');
+//            $filename = parse_url($resourcePath, PHP_URL_PATH);
+//            $file = $this->getParameter('public_directory') . $filename;
+//
+//            $response = new BinaryFileResponse($file);
+//            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $photo->getFile());
+//
+//            // Pour mettre en cache (client & proxys) les images
+//            //$response->setPublic();
+//            //$response->setMaxAge(86400);
+//            $response->setSharedMaxAge(86400);
+//            // Cache géré manuellement, on désactive la gestion par symfony
+//            $response->headers->set('Symfony-Session-NoAutoCacheControl', 'true');
+//
+//            // Pour mettre en cache (navigateur mais pas proxy (=> private)) les images
+//            $response->setPrivate();
+//            $response->setMaxAge(86400);
+//            // Cache géré manuellement, on désactive la gestion par symfony
+//            $response->headers->set('Symfony-Session-NoAutoCacheControl', 'true');
+//
+//            return $response;
+//        }
+//        catch (\Exception) {
+//            throw new ServiceUnavailableHttpException(60, "Impossible de générer l'image demandée");
+//        }
+//    }
 
     /**
      * Applique un floutage
