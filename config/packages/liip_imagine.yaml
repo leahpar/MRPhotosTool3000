@@ -23,25 +23,37 @@ liip_imagine:
 
         full: ~
 
+        # Miniatures dans l'admin ?
         thumbnail:
             quality: 60
             filters:
                 thumbnail: { size : [120, 120], mode : inset }
-
+        # Miniatures dans l'admin ?
         mini:
             quality: 60
             filters:
                 thumbnail: { size : [280, 280], mode : inset }
-
+        # ?
         cover:
             quality: 80
             filters:
                 thumbnail: { size : [2000, 1500], mode : inset }
+        # SD, pour les sous-sites (maternité, ...)
+        sd:
+            quality: 80
+            filters:
+                thumbnail: { size : [1000, 1000], mode : inset }
+        # HD, pour les sous-sites (maternité, ...)
+        hd:
+            quality: 80
+            filters:
+                thumbnail: { size : [2000, 2000], mode : inset }
+        # Site front
         front:
             quality: 70
             filters:
                 thumbnail: { size : [500, 700], mode : inset }
-
+        # Instagram
         instagram:
             quality: 90
             filters:
