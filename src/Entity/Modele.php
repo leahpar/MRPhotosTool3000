@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ModeleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,7 +30,6 @@ class Modele implements UserInterface, PasswordAuthenticatedUserInterface, \Stri
     #[ORM\ManyToMany(targetEntity: Shooting::class, mappedBy: 'modeles')]
     private Collection $shootings;
 
-
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private ?string $username = null;
 
@@ -40,6 +40,8 @@ class Modele implements UserInterface, PasswordAuthenticatedUserInterface, \Stri
     private ?string $password = null;
     private ?string $plainPassword = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $resetPasswordToken = null;
 
     public function __construct()
     {
@@ -211,4 +213,17 @@ class Modele implements UserInterface, PasswordAuthenticatedUserInterface, \Stri
     {
         return $this->getUsername();
     }
+
+    public function getResetPasswordToken(): ?string
+    {
+        return $this->resetPasswordToken;
+    }
+
+    public function setResetPasswordToken(?string $resetPasswordToken): self
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
+
+        return $this;
+    }
+
 }

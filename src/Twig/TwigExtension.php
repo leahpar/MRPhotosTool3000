@@ -4,6 +4,8 @@
 namespace App\Twig;
 
 
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -14,6 +16,7 @@ class TwigExtension extends AbstractExtension
     {
         return [
             new TwigFilter('date', $this->formatDate(...)),
+            new TwigFilter('qrcode',  [$this, 'qrcode'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -49,4 +52,20 @@ class TwigExtension extends AbstractExtension
         }
         return $str;
     }
+
+    public function qrCode(?string $value = null): ?string
+    {
+        $options = [
+            'version' => 6, // https://www.qrcode.com/en/about/version.html
+            //'versionMin' => 5,
+            //'versionMax' => 10,
+            'eccLevel' => QRCode::ECC_L,
+            //'outputType' => QRCode::OUTPUT_MARKUP_SVG,
+            'imageTransparent' => true,
+        ];
+
+        $qrcode = new QRCode(new QROptions($options));
+        return $qrcode->render($value);
+    }
+
 }

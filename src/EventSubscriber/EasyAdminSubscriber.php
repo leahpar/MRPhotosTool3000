@@ -5,6 +5,9 @@ namespace App\EventSubscriber;
 use App\Entity\Modele;
 use App\Entity\Publication;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Events;
+use EasyCorp\Bundle\EasyAdminBundle\Event\AbstractLifecycleEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -20,13 +23,14 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
+            //Events::preUpdate => ['encodePassword', 0], // TODO: why not triggered ?
             BeforeEntityPersistedEvent::class => [
                 ['encodePassword', 0],
             ],
             BeforeEntityUpdatedEvent::class => [
                 ['setPhotosPublicationDetails', 0],
                 ['encodePassword', 0],
-            ]
+            ],
         ];
     }
 
@@ -56,9 +60,16 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function encodePassword(BeforeEntityUpdatedEvent|BeforeEntityPersistedEvent $event)
+    public function encodePassword(AbstractLifecycleEvent|PrePersistEventArgs $event)
     {
-        $entity = $event->getEntityInstance();
+        $entity = match (true) {
+            $event instanceof BeforeEntityPersistedEvent,
+            $event instanceof BeforeEntityUpdatedEvent,
+            $event instanceof AbstractLifecycleEvent => $event->getEntityInstance(),
+            $event instanceof PrePersistEventArgs => $event->getObject(),
+            default => null,
+        };
+        dump($event, $entity);
 
         if (!($entity instanceof Modele)) {
             return;

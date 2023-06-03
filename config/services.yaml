@@ -6,7 +6,6 @@
 parameters:
     public_directory: '%kernel.project_dir%/public'
     shootings_directory: '%kernel.project_dir%/var/shootings'
-
     router.request_context.host: '%env(ROUTER_HOST)%'
     router.request_context.scheme: '%env(ROUTER_SCHEME)%'
     #router.request_context.base_url: ''

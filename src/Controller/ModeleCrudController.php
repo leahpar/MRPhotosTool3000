@@ -3,13 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\Modele;
+use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field;
 
 class ModeleCrudController extends AbstractCrudController
 {
+
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+    ) {
+    }
+
     public static function getEntityFqcn(): string
     {
         return Modele::class;
@@ -28,6 +38,17 @@ class ModeleCrudController extends AbstractCrudController
             ;
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+        $action = Action::new('resetPassword', 'Reset mot de passe')
+            ->linkToCrudAction('resetPassword')
+            ->setIcon('fa fa-key')
+            //->setCssClass('btn btn-warning')
+            ;
+        return $actions
+            ->add(Crud::PAGE_INDEX, $action);
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -44,6 +65,19 @@ class ModeleCrudController extends AbstractCrudController
                 ->setLabel("Nouveau mot de passe")
                 ->onlyOnForms(),
         ];
+    }
+
+    public function resetPassword(AdminContext $context)
+    {
+        /** @var Modele $user */
+        $user = $context->getEntity()->getInstance();
+        $user->setResetPasswordToken(bin2hex(random_bytes(32)));
+        $this->em->flush();
+
+        return $this->render('admin/reset_password.html.twig', [
+            'user' => $user,
+        ]);
+
     }
 
 }
