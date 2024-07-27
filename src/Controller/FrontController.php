@@ -147,4 +147,9 @@ class FrontController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/politique-de-confidentialite', name: 'privacy')]
+    public function privacy(): Response
+    {
+        return $this->render('front/privacy.html.twig');
+    }
 }
