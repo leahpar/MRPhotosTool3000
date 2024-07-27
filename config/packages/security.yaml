@@ -1,7 +1,7 @@
 security:
 
     password_hashers:
-        #Symfony\Component\Security\Core\User\User: plaintext # (inMemory)
+        Symfony\Component\Security\Core\User\InMemoryUser: 'plaintext'
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
     #enable_authenticator_manager: true
@@ -13,11 +13,28 @@ security:
             entity:
                 class: App\Entity\Modele
                 property: username
+        in_memory:
+            memory:
+                users:
+                    admin:
+                        password: '%env(ADMIN_PWD)%'
+                        roles: 'ROLE_ADMIN'
+#                    profiler:
+#                        password: '%env(PROFILER_PWD)%'
+#                        roles: 'ROLE_PROFILER'
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
             
+#        admin:
+#            lazy: true
+#            pattern: ^/admin/
+#            provider: in_memory
+#            http_basic:
+#                realm: Secured Area
+
         main:
             lazy: true
             provider: app_user_provider
@@ -47,7 +64,6 @@ security:
     # role hierarchy
     # https://symfony.com/doc/current/security.html#role-hierarchy
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_MODELE
 
 
     # Easy way to control access for large sections of your site
