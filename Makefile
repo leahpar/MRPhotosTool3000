@@ -22,7 +22,7 @@ GIT             = git
 #ENCORE			= ./node_modules/.bin/encore
 
 # Port pour le serveur symfony local
-PORT            = 8011
+PORT            = 8013
 
 #TARGET_PHP		= 8.1
 
