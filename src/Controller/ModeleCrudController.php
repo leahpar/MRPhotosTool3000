@@ -43,7 +43,6 @@ class ModeleCrudController extends AbstractCrudController
         $action = Action::new('resetPassword', 'Reset mot de passe')
             ->linkToCrudAction('resetPassword')
             ->setIcon('fa fa-key')
-            //->setCssClass('btn btn-warning')
             ;
         return $actions
             ->add(Crud::PAGE_INDEX, $action);
@@ -55,6 +54,10 @@ class ModeleCrudController extends AbstractCrudController
             'nom',
             'pseudo',
             'instagram',
+            Field\DateField::new('dateDernierShooting')->onlyOnIndex(),
+            'aSuivre',
+            'dernierContact',
+            'prochainContact',
 
             Field\FormField::addPanel("Connexion")
                 ->onlyOnForms(),

@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\ModeleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,24 +12,24 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: ModeleRepository::class)]
 class Modele implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
 {
+    use ResetPwdTrait;
+    use CRMTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $nom = null;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $instagram = null;
+    private ?string $nom = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $pseudo = null;
 
-    #[ORM\ManyToMany(targetEntity: Shooting::class, mappedBy: 'modeles')]
-    private Collection $shootings;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $instagram = null;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[ORM\Column(type: 'string', length: 180, unique: true, nullable: true)]
     private ?string $username = null;
 
     #[ORM\Column(type: 'json')]
@@ -40,8 +39,11 @@ class Modele implements UserInterface, PasswordAuthenticatedUserInterface, \Stri
     private ?string $password = null;
     private ?string $plainPassword = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $resetPasswordToken = null;
+    #[ORM\ManyToMany(targetEntity: Shooting::class, mappedBy: 'modeles')]
+    private Collection $shootings;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    public ?\Datetime $dateDernierShooting = null;
 
     public function __construct()
     {
@@ -115,16 +117,11 @@ class Modele implements UserInterface, PasswordAuthenticatedUserInterface, \Stri
 
     public function __toString(): string
     {
-        $str = $this->getNom();
-        if ($this->pseudo) {
-            $str .= " (".$this->getPseudo() .")";
-        }
-        return (string) $str;
+        return $this->getPseudo() ?? $this->getNom() ?? ("@".$this->getInstagram());
     }
 
     /**
      * A visual identifier that represents this user.
-     *
      * @see UserInterface
      */
     public function getUsername(): string
@@ -214,16 +211,15 @@ class Modele implements UserInterface, PasswordAuthenticatedUserInterface, \Stri
         return $this->getUsername();
     }
 
-    public function getResetPasswordToken(): ?string
+    public function updateDateDernierShooting(): void
     {
-        return $this->resetPasswordToken;
+        $date = null;
+        /** @var Shooting $shooting */
+        foreach ($this->getShootings() as $shooting) {
+            if ($date === null || $shooting->getDate() > $date) {
+                $date = $shooting->getDate();
+            }
+        }
+        $this->dateDernierShooting = $date;
     }
-
-    public function setResetPasswordToken(?string $resetPasswordToken): self
-    {
-        $this->resetPasswordToken = $resetPasswordToken;
-
-        return $this;
-    }
-
 }

@@ -9,12 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: ShootingRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Shooting implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id = null;
 
     /**
      * @Gedmo\Slug(
@@ -39,7 +40,7 @@ class Shooting implements \Stringable
     #[ORM\ManyToMany(targetEntity: Modele::class, inversedBy: 'shootings')]
     private Collection $modeles;
 
-    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'shooting', orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'shooting', targetEntity: Photo::class, orphanRemoval: true)]
     #[ORM\OrderBy(['file' => 'ASC'])]
     private Collection $photos;
 
@@ -192,6 +193,16 @@ class Shooting implements \Stringable
             }
         }
         return null;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateModeleDateDernierShooting(): void
+    {
+        /** @var Modele $modele */
+        foreach ($this->modeles as $modele) {
+            $modele->updateDateDernierShooting();
+        }
     }
 
 }
