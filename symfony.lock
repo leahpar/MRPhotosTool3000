@@ -124,6 +124,18 @@
     "nikic/php-parser": {
         "version": "v4.10.4"
     },
+    "phpstan/phpstan": {
+        "version": "1.11",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "5e490cc197fb6bb1ae22e5abbc531ddc633b6767"
+        },
+        "files": [
+            "phpstan.dist.neon"
+        ]
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -439,6 +451,15 @@
     },
     "symfony/string": {
         "version": "v5.2.1"
+    },
+    "symfony/telegram-notifier": {
+        "version": "6.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.0",
+            "ref": "6cecb59a0e96c9e1cee469f2b82fa920101a68e8"
+        }
     },
     "symfony/test-pack": {
         "version": "v1.0.7"

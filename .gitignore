@@ -28,3 +28,7 @@ php_errors.log
 public/publication.rss
 
 public/9mois
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

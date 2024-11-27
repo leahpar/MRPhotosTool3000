@@ -20,10 +20,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         private readonly EntityManagerInterface $em
     ) {}
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
-            //Events::preUpdate => ['encodePassword', 0], // TODO: why not triggered ?
             BeforeEntityPersistedEvent::class => [
                 ['encodePassword', 0],
             ],
@@ -69,7 +68,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             $event instanceof PrePersistEventArgs => $event->getObject(),
             default => null,
         };
-        dump($event, $entity);
 
         if (!($entity instanceof Modele)) {
             return;

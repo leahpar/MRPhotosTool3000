@@ -14,6 +14,8 @@ chmod 777 media
 
 ### Ajout annotation 'date' dans les types sluggables
 
+**plus nécessaire**
+
 ```php
 # ./vendor/gedmo/doctrine-extensions/src/Sluggable/Mapping/Driver/Annotation.php
 # line 42
@@ -99,11 +101,21 @@ curl -i -X GET "https://graph.facebook.com/v16.0/oauth/access_token\
 &client_secret=xxxx\
 &fb_exchange_token=xxxx"
 
+curl -i -X GET "https://graph.facebook.com/v16.0/oauth/access_token\
+?grant_type=fb_exchange_token\
+&client_id=403558550207195\
+&client_secret=9b7311a14a504befa30a29a43bb209bd\
+&fb_exchange_token=EAAFvCMwHZBtsBO37kdzGTtBh693UMHNrjVnoLO551xbYUd9OG3GRIEFGUdCEmiXSKt3O87ZAAEOniVWV1niZAGlynG8cESypJxM9jZChRDTVfFhgKVZAwZBjuXaoZCQz52P6kR8Dm7TeaCzsyU7nqKm66PYOpcJonQAa8uRXAmZCZCPPypTjjVyXmIjXUueKuvAJyM6pgkeDkRZA0zzkw1zbm02i7X"
+
+https://graph.facebook.com/v16.0/17841406271014748?fields=id%2Cname%2Cfollowers_count&access_token=EAAFvCMwHZBtsBAEwE5C6A3oeO7jPI0zHSBDOHu0fKEdVnyyNaH0D7BFc0kKsUXZB6ZAgpVQ0T9GsVo9uasECMdR1oIL2znp12PdgZC0utmfrkM6LEwXd0nqEW1QfbtsYZBy7G0FJvXEz6sWZBHOxH1R5XLLBAVurQxiwiTNYRPNAZDZD
+https://graph.facebook.com/v16.0/?fields=id%2Cname%2Cfollowers_count&access_token=EAAFvCMwHZBtsBAEwE5C6A3oeO7jPI0zHSBDOHu0fKEdVnyyNaH0D7BFc0kKsUXZB6ZAgpVQ0T9GsVo9uasECMdR1oIL2znp12PdgZC0utmfrkM6LEwXd0nqEW1QfbtsYZBy7G0FJvXEz6sWZBHOxH1R5XLLBAVurQxiwiTNYRPNAZDZD
+
 `fb_exchange_token` = 'token utilisteur'
 sur https://developers.facebook.com/tools/explorer/
 
 `client_id` et `client_secret` = 'identifiant d'application' et 'clé secrète' 
-sur https://developers.facebook.com/apps/<APP>/settings/basic/ 
+sur https://developers.facebook.com/apps/<APP>/settings/basic/
+https://developers.facebook.com/apps/403558550207195/settings/basic/
 
 # Prolonger la durée de validité du token
 
@@ -127,7 +139,17 @@ certbot certonly --webroot \
     -d mr-photographes.com \
     -d www.mr-photographes.com
 
+
 ## TODO
+
+### MAJ date dernier shooting
+
+```sql
+UPDATE modele m SET date_dernier_shooting = (
+    SELECT MAX(date) FROM shooting s left join shooting_modele sm on s.id = sm.shooting_id WHERE sm.modele_id = m.id
+);
+
+```
 
 ### DESIGN
 

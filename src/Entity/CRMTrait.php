@@ -8,10 +8,10 @@ trait CRMTrait
 {
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    public ?\Datetime $dernierContact = null;
+    public ?\Datetime $dateDernierContact = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    public ?\Datetime $prochainContact = null;
+    public ?\Datetime $dateProchainContact = null;
 
     #[ORM\Column(type: 'boolean')]
     public bool $aSuivre = false;

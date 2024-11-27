@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Service\PublishService;
 use App\Service\RssPublisherService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,10 +13,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'app:publish',
+    description: 'Publish photo',
+)]
 class PublishCommand extends Command
 {
-    protected static $defaultName = 'app:publish';
-
     public function __construct(
         private readonly PublishService $pubService,
         private readonly EntityManagerInterface $em
@@ -23,10 +26,9 @@ class PublishCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setDescription('Add a short description for your command')
             ->addOption('test', 't', InputOption::VALUE_OPTIONAL, 'Test', false)
         ;
     }

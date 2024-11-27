@@ -12,7 +12,7 @@ use Twig\TwigFilter;
 class TwigExtension extends AbstractExtension
 {
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('date', $this->formatDate(...)),
